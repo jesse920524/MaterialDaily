@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ToolbarTitleAppearance" parent="android:Widget.TextView">
+        <!--toolbar title font-->
+        <item name="android:fontFamily">sans-serif-light</item>
+
+        <!--toolbar text color-->
+        <item name="android:textColor">@color/bluegrey_100</item>
+
+        <!--toolbar title text soze-->
+        <item name="android:textSize">14sp</item>
+    </style>
+</resources>

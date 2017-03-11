@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    android:id="@+id/layout_main_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.design.widget.AppBarLayout
+    android:id="@+id/layout_ln_appbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    <android.support.design.widget.CollapsingToolbarLayout
+        android:id="@+id/layout_ctb"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        app:contentScrim="?attr/colorPrimary"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:titleEnabled="true"
+        app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Title">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/tb_main"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:layout_collapseMode="pin"
+            app:contentInsetStart="0dp"
+            >
+            <!--app:layout_scrollFlags="scroll|enterAlways"-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+                <TextView
+                    android:id="@+id/tv_main_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textStyle="normal"
+                    android:textSize="20sp"
+                    android:textColor="@color/white"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    />
+                <ImageView
+                    android:id="@+id/iv_main_menu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_subject_white_24dp"
+                    android:layout_marginLeft="@dimen/dp_16"
+                    android:layout_marginRight="@dimen/dp_16"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"/>
+                <ImageView
+                    android:id="@+id/iv_main_drive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_drive_eta_white_24dp"
+                    android:layout_marginLeft="@dimen/dp_16"
+                    android:layout_marginRight="@dimen/dp_16"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/iv_main_menu"
+                    android:visibility="visible"/>
+            </RelativeLayout>
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.CollapsingToolbarLayout>
+</android.support.design.widget.AppBarLayout>
+
+    <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
+        android:id="@+id/bn_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"></com.aurelhubert.ahbottomnavigation.AHBottomNavigation>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:layout_marginBottom="88dp"
+        android:src="@mipmap/ic_shuffle_white_24dp"
+        android:visibility="visible"
+        app:useCompatPadding="true"/>
+
+    <com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager
+        android:id="@+id/vp_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"></com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager>
+    
+</android.support.design.widget.CoordinatorLayout>

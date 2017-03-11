@@ -1,0 +1,48 @@
+<resources>
+    <string name="version">版本</string>
+    <string name="version_summary">dev</string>
+    <string name="app_name">知乎日报mvp</string>
+    <string name="developer">作者</string>
+    <string name="developer_name">傅堯</string>
+    <string name="location">沈阳,辽宁</string>
+    <string name="star_me_zhihu">在知乎关注我</string>
+    <string name="developer_at_zhihu">"@傅堯"</string>
+    <string name="support">支持</string>
+    <string name="support_detail">反馈Bug/建议</string>
+    <string name="open_resource_license">开源许可</string>
+
+    <!--设置模块-->
+    <string name="settings">设置</string>
+    <string name="setting_basic">基本设置</string>
+    <string name="setting_no_pic">无图模式</string>
+    <string name="setting_no_pic_summary_on"></string>
+    <string name="setting_no_pic_summary_off"></string>
+    <string name="setting_hide_function">隐藏功能</string>
+    <string name="setting_hide_function_off">满18岁才可以开启哦~</string>
+    <string name="setting_hide_function_on">请谨慎驾驶~</string>
+    <string name="setting_other">其他设置</string>
+    <string name="setting_clear_pic_cache">清除图片缓存</string>
+
+    <string name="feedback">反馈</string>
+    <string name="bottom_nav_0">news</string>
+    <string name="bottom_nav_1">subject</string>
+    <string name="bottom_nav_2">former</string>
+    <string name="toolbar_name">文章列表</string>
+    <string name="confirm">确定</string>
+    <string name="back_to_today">回今天</string>
+    <string name="cancel">取消</string>
+    <string name="menu_settings">设置</string>
+    <string name="title_today">今日日报</string>
+    <string name="title_theme">主题日报</string>
+    <string name="title_past">往期日报</string>
+    <string name="about">关于</string>
+    <string name="activity_large_pic">查看大图</string>
+    <string name="gank_girls">福利列表</string>
+    <string name="activity_about">关于</string>
+    <string name="activity_web">文章详情</string>
+    <string name="activity_theme_news">主题新闻列表</string>
+    <string name="activity_main">主页</string>
+
+
+
+</resources>

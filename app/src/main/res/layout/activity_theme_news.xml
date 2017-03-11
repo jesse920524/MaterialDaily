@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/layout_themenews_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/layout_themenews_ctb"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:contentScrim="@color/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways">
+            <Toolbar
+                android:id="@+id/tb_themenews"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+
+                app:layout_scrollFlags="scroll|enterAlways"></Toolbar>
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/layout_themenews_swiper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_themenews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</android.support.design.widget.CoordinatorLayout>

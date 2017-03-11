@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:title="@string/setting_basic">
+        <SwitchPreference
+            android:title="@string/setting_no_pic"
+            android:key="no_pic_mode"
+            android:defaultValue="false"
+            android:summaryOn="@string/setting_no_pic_summary_on"
+            android:summaryOff="@string/setting_no_pic_summary_off"></SwitchPreference>
+        <SwitchPreference
+            android:title="@string/setting_hide_function"
+            android:key="hide_function"
+            android:defaultValue="false"
+            android:summaryOff="@string/setting_hide_function_off"
+            android:summaryOn="@string/setting_hide_function_on"></SwitchPreference>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/setting_other">
+        <Preference
+            android:title="@string/setting_clear_pic_cache"
+            android:key="clear_pic_cache"></Preference>
+    </PreferenceCategory>
+</PreferenceScreen>

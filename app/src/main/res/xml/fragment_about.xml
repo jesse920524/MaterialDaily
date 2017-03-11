@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <android.support.v7.preference.PreferenceCategory android:title="@string/app_name">
+
+        <android.support.v7.preference.Preference android:title="@string/version"
+            android:key="version"
+            android:summary="@string/version_summary"/>
+
+        <!--<android.support.v7.preference.Preference android:title="@string/rate"
+            android:key="rate"
+            android:summary="@string/rate_description" />-->
+    </android.support.v7.preference.PreferenceCategory>
+
+    <android.support.v7.preference.PreferenceCategory android:title="@string/developer">
+
+        <android.support.v7.preference.Preference
+            android:title="@string/developer_name"
+            android:key="developer_name"
+            android:summary="@string/location"
+            />
+
+        <android.support.v7.preference.Preference
+            android:title="@string/star_me_zhihu"
+            android:key="star_me_zhihu"
+            android:summary="@string/developer_at_zhihu"
+            />
+    </android.support.v7.preference.PreferenceCategory>
+
+    <android.support.v7.preference.PreferenceCategory
+        android:title="@string/support">
+
+        <android.support.v7.preference.Preference
+            android:title="@string/support_detail"
+            android:key="support_detail"
+            android:summary="邮箱:jesse920524@163.com"
+            />
+
+        <android.support.v7.preference.Preference
+            android:title="@string/open_resource_license"
+            android:key="open_resource_license"
+            />
+    </android.support.v7.preference.PreferenceCategory>
+
+</android.support.v7.preference.PreferenceScreen>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <DatePicker
+        android:id="@+id/dp_dialog_datepicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"></DatePicker>
+    <Button
+        android:id="@+id/btn_dialog_datepicker_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/confirm"
+        android:layout_below="@id/dp_dialog_datepicker"
+        android:layout_toLeftOf="@+id/btn_dialog_datepicker_back"
+
+        style="@style/Widget.AppCompat.Button.Borderless.Colored" />
+
+    <Button
+        android:id="@+id/btn_dialog_datepicker_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/back_to_today"
+        android:layout_below="@id/dp_dialog_datepicker"
+        android:layout_toLeftOf="@+id/btn_dialog_dtepicker_cancel"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored" />
+
+    <Button
+        android:id="@+id/btn_dialog_dtepicker_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel"
+        android:layout_below="@+id/dp_dialog_datepicker"
+        android:layout_alignParentRight="true"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored" />
+
+
+</RelativeLayout>

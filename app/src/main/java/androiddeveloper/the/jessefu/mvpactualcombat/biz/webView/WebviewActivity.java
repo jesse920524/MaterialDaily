@@ -2,6 +2,7 @@ package androiddeveloper.the.jessefu.mvpactualcombat.biz.webView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -56,6 +57,8 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
 
     private WebviewContract.IWebviewPresenter presenter;
 
+
+
     /**接收来自context的文章id与文章标题*/
     private String receivedId;
     private String receivedTitle;
@@ -70,6 +73,7 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
         ButterKnife.bind(this);
         presenter = new WebviewPresenter(this);
         presenter.start();
+
         initViews();
     }
 
@@ -96,6 +100,7 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
     public void initViews() {
         webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);//能够和js交互
+        webSettings.setBlockNetworkImage(presenter.checkNoPicMode());
         //缩放,设置为不能缩放可以防止页面上出现放大和缩小的图标
         webSettings.setBuiltInZoomControls(false);
         webSettings.setDomStorageEnabled(true);//开启DOM api
@@ -107,10 +112,6 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mCollapsingToolbarLayout.setTitle("");
-
-
-
-        //mAppbarLayout.addOnOffsetChangedListener(this);
     }
 
 
@@ -134,12 +135,20 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
     @Override
     public void getData(ArticleDetailBean bean) {
         getSupportActionBar().setTitle(receivedTitle);
-        Glide.with(this)
-                .load(bean.getImage())
-                .asBitmap()
-                .animate(R.anim.alpha_in)
-                .centerCrop()
-                .into(mBackdrop);
+
+        /**根据sharedpreference取出的值 no_pic_mode,
+         * 决定是否加载图片*/
+        if (!presenter.checkNoPicMode()){
+            Glide.with(this)
+                    .load(bean.getImage())
+                    .asBitmap()
+                    .animate(R.anim.alpha_in)
+                    .centerCrop()
+                    .into(mBackdrop);
+        }else{
+
+        }
+
         String css = "<link rel=\"stylesheet\" href=\"file:///android_asset/css/zhihu.css\" type=\"text/css\">";
         String html = "<html><head>" + css + "</head><body>" + bean.getBody() + "</body></html>";
         html = html.replace("<div class=\"img-place-holder\">", "");

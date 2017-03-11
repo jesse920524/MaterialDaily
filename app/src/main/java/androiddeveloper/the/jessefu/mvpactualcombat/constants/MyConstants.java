@@ -29,7 +29,7 @@ public interface MyConstants {
     String ARTICLE_TITLE = "article_title";//for key
     String IMAGE_URL = "image_url";
 
-    String SP_SETTINGS = "sp_settings";//设置sharedpreference
+    String USER_SETTINGS = "user_settings";//设置sharedpreference
 
     int[] COLORS = new int[]{ContextCompat.getColor(BaseApplication.getContext(), R.color.red_500),
             ContextCompat.getColor(BaseApplication.getContext(), R.color.green_500),

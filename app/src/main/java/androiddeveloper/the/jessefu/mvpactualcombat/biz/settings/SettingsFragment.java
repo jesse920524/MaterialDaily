@@ -37,6 +37,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
 
         findPreference("no_pic_mode").setOnPreferenceClickListener(this);
         findPreference("hide_function").setOnPreferenceClickListener(this);
+        findPreference("clear_pic_cache").setOnPreferenceClickListener(this);
 
         presenter = new SettingPresenter(this);
         presenter.start();
@@ -59,6 +60,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
             case "hide_function":
                 presenter.setHideFunction(preference);
                 boolean b1 = preference.getSharedPreferences().getBoolean("hide_function", false);
+                break;
+            case "clear_pic_cache":
+                presenter.clearCache();
                 break;
         }
         return true;
@@ -89,7 +93,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
     @Override
     public void showClearCacheResult() {
         //发送事件给activity,activity会显示snackbar
-        EventBus.getDefault().post("清除成功");
+        //EventBus.getDefault().post("清除成功");
     }
 
     @Override

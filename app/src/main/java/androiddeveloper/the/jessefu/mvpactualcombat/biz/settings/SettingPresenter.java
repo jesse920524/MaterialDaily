@@ -2,8 +2,10 @@ package androiddeveloper.the.jessefu.mvpactualcombat.biz.settings;
 
 import android.content.SharedPreferences;
 import android.support.v7.preference.Preference;
+import android.util.Log;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseApplication;
+import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -28,7 +30,7 @@ public class SettingPresenter implements SettingsContract.ISettingsPresenter {
      */
     @Override
     public void start() {
-        sp = BaseApplication.getContext().getSharedPreferences("user_settings",MODE_PRIVATE);
+        sp = BaseApplication.getContext().getSharedPreferences(MyConstants.USER_SETTINGS,MODE_PRIVATE);
         editor = sp.edit();
     }
 
@@ -47,5 +49,8 @@ public class SettingPresenter implements SettingsContract.ISettingsPresenter {
     @Override
     public void clearCache() {
         view.showClearCacheResult();
+        boolean b = sp.getBoolean("no_pic_mode", false);
+        Log.d(TAG, "无图模式: " + b);
+
     }
 }

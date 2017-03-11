@@ -19,5 +19,8 @@ public interface WebviewContract {
     }
     interface IWebviewPresenter extends BasePresenter{
         void getData();
+
+        //检查是否无图模式
+        boolean checkNoPicMode();
     }
 }

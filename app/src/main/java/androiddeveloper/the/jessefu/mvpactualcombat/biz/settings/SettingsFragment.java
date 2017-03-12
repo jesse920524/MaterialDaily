@@ -1,15 +1,22 @@
 package androiddeveloper.the.jessefu.mvpactualcombat.biz.settings;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.design.widget.Snackbar;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceScreen;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+
+import com.bumptech.glide.Glide;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.R;
+import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseApplication;
 
 /**
  * Created by Jesse Fu on 2017/3/10 0010.
@@ -19,6 +26,22 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
     private static final String TAG = SettingsFragment.class.getSimpleName();
 
     private SettingsContract.ISettingsPresenter presenter;
+
+    private Toolbar mToolbar;
+
+    private static final int CLEAR_CACHE_DONE = 1;
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case CLEAR_CACHE_DONE:
+                    Snackbar.make(mToolbar, R.string.clear_cache_done, Snackbar.LENGTH_SHORT)
+                            .show();
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
 
     /**
      * Called during {@link #onCreate(Bundle)} to supply the preferences for this fragment.
@@ -32,12 +55,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
      */
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        EventBus.getDefault().register(this);
         addPreferencesFromResource(R.xml.fragment_settings);
 
         findPreference("no_pic_mode").setOnPreferenceClickListener(this);
         findPreference("hide_function").setOnPreferenceClickListener(this);
         findPreference("clear_pic_cache").setOnPreferenceClickListener(this);
+
+        mToolbar = (Toolbar) getActivity().findViewById(R.id.tb_settings);
 
         presenter = new SettingPresenter(this);
         presenter.start();
@@ -68,12 +92,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
         return true;
     }
 
-    @Subscribe
-    public void onEventStartPresenter(SettingsFragment fragment){
-        Log.d(TAG, "收到activity传来的消息: 初始化presenter");
-        presenter = new SettingPresenter(fragment);
-        presenter.start();
-    }
 
     @Override
     public void setPresenter(SettingsContract.ISettingsPresenter presenter) {
@@ -92,13 +110,22 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
 
     @Override
     public void showClearCacheResult() {
-        //发送事件给activity,activity会显示snackbar
-        //EventBus.getDefault().post("清除成功");
+       new Thread(new Runnable() {
+           @Override
+           public void run() {
+               Glide.get(BaseApplication.getContext())
+                       .clearDiskCache();
+               Message message = Message.obtain();
+               message.what = CLEAR_CACHE_DONE;
+               mHandler.sendMessage(message);
+           }
+       }).start();
+        Glide.get(BaseApplication.getContext())
+                .clearMemory();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 }

@@ -48,9 +48,9 @@ public class SettingPresenter implements SettingsContract.ISettingsPresenter {
 
     @Override
     public void clearCache() {
+
         view.showClearCacheResult();
-        boolean b = sp.getBoolean("no_pic_mode", false);
-        Log.d(TAG, "无图模式: " + b);
+
 
     }
 }

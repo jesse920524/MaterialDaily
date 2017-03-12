@@ -42,7 +42,7 @@
     <string name="activity_web">文章详情</string>
     <string name="activity_theme_news">主题新闻列表</string>
     <string name="activity_main">主页</string>
-
+    <string name="clear_cache_done">清除成功</string>
 
 
 </resources>

@@ -70,7 +70,7 @@ public class AboutFragment extends PreferenceFragmentCompat implements AboutCont
                 String authorName = "傅堯";
                 ClipData clipData = ClipData.newPlainText("name", authorName);
                 clipboardManager.setPrimaryClip(clipData);
-                Snackbar.make(mToolbar, "复制成功", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(mToolbar, "复制到剪贴板成功", Snackbar.LENGTH_SHORT).show();
                 return true;
             }
         });

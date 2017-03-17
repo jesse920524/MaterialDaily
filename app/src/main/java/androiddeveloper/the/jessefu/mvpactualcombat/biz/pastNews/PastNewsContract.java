@@ -16,6 +16,8 @@ public interface PastNewsContract {
     interface IPastNewsView extends BaseView<IPastNewsPresenter>{
         void getData(List<PastNewsStoryEntity> pastNewsStoryEntities);
 
+        void getDataError(String errMsg);
+
         void showLoading();
 
         void dismissLoading();

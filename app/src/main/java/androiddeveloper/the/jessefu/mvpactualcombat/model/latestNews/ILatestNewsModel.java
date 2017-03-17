@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface ILatestNewsModel {
 
+
     //获取最新文章列表
     void getLatestNews(LatestNewsModelImpl.onDataLoadedListener loadedListener);
 

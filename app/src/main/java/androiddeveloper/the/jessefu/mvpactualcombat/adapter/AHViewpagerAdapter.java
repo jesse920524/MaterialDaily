@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.biz.lastestNews.LatestNewsFragment;
+import androiddeveloper.the.jessefu.mvpactualcombat.biz.oneMoment.OneMomentFragment;
 import androiddeveloper.the.jessefu.mvpactualcombat.biz.pastNews.PastNewsFragment;
-import androiddeveloper.the.jessefu.mvpactualcombat.biz.themeNews.themes.ThemeFragment;
 
 /**
  * Created by Jesse Fu on 2017/2/19.
@@ -28,7 +28,8 @@ public class AHViewpagerAdapter extends FragmentPagerAdapter {
         fragmentList.clear();
 
         fragmentList.add(LatestNewsFragment.newInstance("0"));
-        fragmentList.add(ThemeFragment.newInstance("1"));
+        //fragmentList.add(ThemeFragment.newInstance("1"));
+        fragmentList.add(OneMomentFragment.newInstance("1"));
         fragmentList.add(PastNewsFragment.newInstance("2"));
 
 

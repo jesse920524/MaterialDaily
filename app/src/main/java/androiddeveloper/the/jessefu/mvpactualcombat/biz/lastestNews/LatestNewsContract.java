@@ -18,6 +18,8 @@ public interface LatestNewsContract {
 
         void getData(List<LatestNewsStoryEntity> latestNewsStoryEntityList);
 
+        void getDataError(String errMsg);
+
         void showLoading();
 
         void dismissLoading();

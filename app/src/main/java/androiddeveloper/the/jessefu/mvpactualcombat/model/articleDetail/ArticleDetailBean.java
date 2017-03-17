@@ -2,13 +2,19 @@ package androiddeveloper.the.jessefu.mvpactualcombat.model.articleDetail;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.greenrobot.greendao.annotation.Transient;
+
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Jesse Fu on 2017/3/3 0003.
  */
 
-public class ArticleDetailBean {
+public class ArticleDetailBean implements Serializable{
+
+    @Transient
+    private static final long serialVersionUID = 1000;
 
     /**
      * body : <div class="main-wrap content-wrap">

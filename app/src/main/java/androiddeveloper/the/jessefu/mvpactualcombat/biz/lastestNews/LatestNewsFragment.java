@@ -73,7 +73,6 @@ public class LatestNewsFragment extends BaseFragment implements LatestNewsContra
         /**
          * 根据网络情况加载本地数据||请求网络数据*/
 
-
         //init RecyclerView
         linearLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -83,8 +82,10 @@ public class LatestNewsFragment extends BaseFragment implements LatestNewsContra
                 Intent intent = new Intent(getActivity(), WebviewActivity.class);
                 LatestNewsStoryEntity entity = (LatestNewsStoryEntity) adapter.getData().get(position);
                 Log.d(TAG, String.valueOf(entity));
-                intent.putExtra(MyConstants.ARTICLE_ID, String.valueOf(entity.getId()));
-                intent.putExtra(MyConstants.ARTICLE_TITLE, entity.getTitle());
+               /* intent.putExtra(MyConstants.ARTICLE_ID, String.valueOf(entity.getId()));
+                intent.putExtra(MyConstants.ARTICLE_TITLE, entity.getTitle());*/
+                intent.putExtra(MyConstants.SERIALIZABLE_ITEM, entity);
+                intent.putExtra(MyConstants.ARTICLE_TYPE, MyConstants.ARTICLE_TYPE_ZHIHU_LATEST);//传递文章类型
                 startActivity(intent);
             }
         });
@@ -141,6 +142,12 @@ public class LatestNewsFragment extends BaseFragment implements LatestNewsContra
     }
 
     @Override
+    public void getDataError(String errMsg) {
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_empty, null);
+        mRecyclerAdapter.setEmptyView(view);
+    }
+
+    @Override
     public void showLoading() {
         mSwiper.setRefreshing(true);
     }
@@ -170,8 +177,11 @@ public class LatestNewsFragment extends BaseFragment implements LatestNewsContra
             LatestNewsStoryEntity entity = mRecyclerAdapter.getData().get(random);
 
             Intent intent = new Intent(getActivity(), WebviewActivity.class);
-            intent.putExtra(MyConstants.ARTICLE_ID, String.valueOf(entity.getId()));
-            intent.putExtra(MyConstants.ARTICLE_TITLE, entity.getTitle());
+            /*intent.putExtra(MyConstants.ARTICLE_ID, String.valueOf(entity.getId()));
+            intent.putExtra(MyConstants.ARTICLE_TITLE, entity.getTitle());*/
+
+            intent.putExtra(MyConstants.SERIALIZABLE_ITEM, entity);
+            intent.putExtra(MyConstants.ARTICLE_TYPE, MyConstants.ARTICLE_TYPE_ZHIHU_LATEST);//传递文章类型
             startActivity(intent);
         }
     }

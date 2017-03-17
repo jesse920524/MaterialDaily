@@ -44,7 +44,9 @@ public class PastNewsPresenter implements PastNewsContract.IPastNewsPresenter, P
 
     @Override
     public void onError() {
+
         view.dismissLoading();
+        view.getDataError(null);
     }
 
     @Override

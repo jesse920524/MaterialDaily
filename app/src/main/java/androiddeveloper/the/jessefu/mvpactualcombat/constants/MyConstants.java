@@ -19,6 +19,18 @@ public interface MyConstants {
     //Gank.io baseUri
     String GANK_URI = "http://gank.io/";
 
+    //douban baseUri
+    String YIKE_BASE = "https://moment.douban.com/";
+
+    // 豆瓣一刻
+    // 根据日期查询消息列表
+    // eg:https://moment.douban.com/api/stream/date/2016-08-11
+    String DOUBAN_MOMENT = "https://moment.douban.com/api/stream/date/";
+
+    // 获取文章具体内容
+    // eg:https://moment.douban.com/api/post/100484
+    String DOUBAN_ARTICLE_DETAIL = "https://moment.douban.com/api/post/";
+
 
     int DEFAULT_TIME_OUT = 5;//默认超时
     int DEFAULT_DELAY_TIME = 30000;
@@ -28,6 +40,13 @@ public interface MyConstants {
     String ARTICLE_ID = "article_id";//for key
     String ARTICLE_TITLE = "article_title";//for key
     String IMAGE_URL = "image_url";
+    String SERIALIZABLE_ITEM = "serializable_item";
+
+    //文章类型
+    String ARTICLE_TYPE = "article_type";
+    String ARTICLE_TYPE_ZHIHU_LATEST = "article_type_zhihu_latest";
+    String ARTICLE_TYPE_ZHIHU_PAST = "article_type_zhihu_past";
+    String ARTICLE_TYPE_ONEMOMENT = "article_type_onemoment";
 
     String USER_SETTINGS = "user_settings";//设置sharedpreference
 
@@ -60,6 +79,7 @@ public interface MyConstants {
             ContextCompat.getColor(BaseApplication.getContext(), R.color.steelblue),
             ContextCompat.getColor(BaseApplication.getContext(), R.color.black),
     };
+
 
 
 }

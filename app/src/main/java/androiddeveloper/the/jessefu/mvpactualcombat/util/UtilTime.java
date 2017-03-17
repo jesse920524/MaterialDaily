@@ -16,6 +16,25 @@ import java.util.Locale;
 public class UtilTime {
     private static final String TAG = UtilTime.class.getSimpleName();
 
+    /**得到指定日期的前一天
+     * @param d 输入日期
+     * @return 前一天的日期*/
+    public static Date getSpecifiedBefore(Date d){
+        Calendar calendar = Calendar.getInstance();
+        Date date = null;
+        try{
+            date = new SimpleDateFormat("yyyy-MM-dd").parse(String.valueOf(d));
+            Log.d(TAG, "date: " + date);
+            calendar.setTime(date);
+            int day = calendar.get(Calendar.DATE);
+            calendar.set(Calendar.DATE, day -1 );
+            return calendar.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static Date convertStringToDate(String s){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date d;
@@ -26,7 +45,6 @@ public class UtilTime {
             e.printStackTrace();
         }
         return null;
-
     }
 
     public static String getYesterday(){
@@ -76,6 +94,24 @@ public class UtilTime {
     /**
      * @param specifiedDay 特定日期
      * @return 指定日期的后,格式yyyy-MM-dd*/
+    public static String getSpecifiedBefore(String specifiedDay){
+        Calendar calendar = Calendar.getInstance();
+        Date date = null;
+        try{
+            date = new SimpleDateFormat("yyyy-MM-dd").parse(specifiedDay);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        calendar.setTime(date);
+        int day = calendar.get(Calendar.DATE);
+        calendar.set(Calendar.DATE, day - 1 );
+        String result = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
+        return result;
+    }
+    /**
+     * @param specifiedDay 特定日期
+     * @return 指定日期的后,格式yyyy-MM-dd*/
     public static String getSpecifiedAfter(String specifiedDay){
         Calendar calendar = Calendar.getInstance();
         Date date = null;
@@ -93,12 +129,23 @@ public class UtilTime {
     }
 
 
+
+
     public static String get8StringDate(Date date){
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String dateString = format.format(date);
         String d = dateString.replace("-", "");
         Log.d(TAG, "日期转换yyyymmdd" + d);
         return d;
+    }
+
+    /**
+     * @return 格式: 2017-03-13
+     **/
+    public static String getDateWithMiddleLine(Date date){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String dateStr = format.format(date);
+        return dateStr;
     }
 
     /***/

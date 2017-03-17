@@ -2,7 +2,6 @@ package androiddeveloper.the.jessefu.mvpactualcombat.biz.webView;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -21,11 +19,17 @@ import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
 
+import java.util.List;
+
 import androiddeveloper.the.jessefu.mvpactualcombat.R;
 import androiddeveloper.the.jessefu.mvpactualcombat.R2;
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseActivity;
 import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.articleDetail.ArticleDetailBean;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.latestNews.LatestNewsStoryEntity;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMoment.OneMomentEntity;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMomentDetail.OneMomentDetailBean;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.pastNews.PastNewsStoryEntity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -62,6 +66,8 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
     /**接收来自context的文章id与文章标题*/
     private String receivedId;
     private String receivedTitle;
+    private static String articleType;
+    private Intent intent;
 
     private WebSettings webSettings;
 
@@ -71,6 +77,8 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
         setContentView(R.layout.activity_web);
         setUIFlags();//透明状态栏
         ButterKnife.bind(this);
+        intent = getIntent();//获取收到的intent
+
         presenter = new WebviewPresenter(this);
         presenter.start();
 
@@ -111,7 +119,7 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mCollapsingToolbarLayout.setTitle("");
+        //mCollapsingToolbarLayout.setTitle("");
     }
 
 
@@ -133,7 +141,7 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
 
     //loadData
     @Override
-    public void getData(ArticleDetailBean bean) {
+    public void getZhihuArticleDetail(ArticleDetailBean bean) {
         getSupportActionBar().setTitle(receivedTitle);
 
         /**根据sharedpreference取出的值 no_pic_mode,
@@ -146,7 +154,7 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
                     .centerCrop()
                     .into(mBackdrop);
         }else{
-
+            //无图模式则什么也不加载
         }
 
         String css = "<link rel=\"stylesheet\" href=\"file:///android_asset/css/zhihu.css\" type=\"text/css\">";
@@ -155,21 +163,99 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
         mWebView.loadDataWithBaseURL("x-data://base", html, "text/html", "UTF-8", null);
     }
 
+    @Override
+    public void getOneMomentDetail(OneMomentDetailBean oneMomentDetailBean) {
+        try {
+
+
+            getSupportActionBar().setTitle(receivedTitle);
+
+            if (!presenter.checkNoPicMode()) {
+                /**豆瓣一刻文章有可能无图,需要在这里判断*/
+
+                if (oneMomentDetailBean.getThumbs().get(0).getMedium().getUrl() != null) {
+                    Glide.with(this)
+                            .load(oneMomentDetailBean.getThumbs().get(0).getMedium().getUrl())
+                            .asBitmap()
+                            .animate(R.anim.alpha_in)
+                            .centerCrop()
+                            .into(mBackdrop);
+                }
+
+            } else {
+                //无图模式则什么也不加载
+            }
+        }catch(Exception e){
+
+        }finally {
+            String css = "<link rel=\"stylesheet\" href=\"file:///android_asset/css/yike.css\" type=\"text/css\">";
+           /* String html = "<html><head>" + css + "</head><body>" + oneMomentDetailBean.getContent() + "</body></html>";
+            html = html.replace("<div class=\"img-place-holder\">", "");*/
+
+            //copy
+            String content = oneMomentDetailBean.getContent();
+            List<OneMomentDetailBean.PhotosBean> imageList = oneMomentDetailBean.getPhotos();
+            for (int i = 0; i < imageList.size(); i++) {
+                String old = "<img id=\"" + imageList.get(i).getTagName() + "\" />";
+                String newStr = "<img id=\"" + imageList.get(i).getTagName() + "\" "
+                        + "src=\"" + imageList.get(i).getMedium().getUrl() + "\"/>";
+                content = content.replace(old, newStr);
+            }
+            StringBuilder builder = new StringBuilder();
+            builder.append( "<!DOCTYPE html>\n");
+            builder.append("<html lang=\"ZH-CN\" xmlns=\"http://www.w3.org/1999/xhtml\">\n");
+            builder.append("<head>\n<meta charset=\"utf-8\" />\n");
+            builder.append(css);
+            builder.append("\n</head>\n<body>\n");
+            builder.append("<div class=\"container bs-docs-container\">\n");
+            builder.append("<div class=\"post-container\">\n");
+            builder.append(content);
+            builder.append("</div>\n</div>\n</body>\n</html>");
+            mWebView.loadDataWithBaseURL("x-data://base", builder.toString(), "text/html", "UTF-8", null);
+
+        }
+
+
+
+    }
+
 
     /**
      *接收Context传递来的文章id*/
     @Override
-    public String getArticleId() {
+    public String getArticleId(Intent intent) {
 
-        Intent intent = getIntent();
         if (intent != null){
-            receivedId = intent.getStringExtra(MyConstants.ARTICLE_ID);
-            receivedTitle = intent.getStringExtra(MyConstants.ARTICLE_TITLE);
+
+            if (intent.getStringExtra(MyConstants.ARTICLE_TYPE).equals(MyConstants.ARTICLE_TYPE_ZHIHU_LATEST)){
+                LatestNewsStoryEntity entity = (LatestNewsStoryEntity) intent.getSerializableExtra(MyConstants.SERIALIZABLE_ITEM);
+                receivedId = String.valueOf(entity.getId());
+                receivedTitle = entity.getTitle();
+
+            }else if (intent.getStringExtra(MyConstants.ARTICLE_TYPE).equals(MyConstants.ARTICLE_TYPE_ZHIHU_PAST)){
+                PastNewsStoryEntity entity = (PastNewsStoryEntity) intent.getSerializableExtra(MyConstants.SERIALIZABLE_ITEM);
+                receivedId = String.valueOf(entity.getId());
+                receivedTitle = entity.getTitle();
+            }else if (intent.getStringExtra(MyConstants.ARTICLE_TYPE).equals(MyConstants.ARTICLE_TYPE_ONEMOMENT)){
+                OneMomentEntity entity = (OneMomentEntity) intent.getSerializableExtra(MyConstants.SERIALIZABLE_ITEM);
+                receivedId = String.valueOf(entity.getId());
+                receivedTitle = entity.getTitle();
+            }
             Log.d(TAG, "received title: " + receivedTitle);
-            /*mHeaderView.bindTo(receivedTitle);
-            mFloatingHeaderView.bindTo(receivedTitle);*/
+
         }
         return receivedId;
+    }
+
+    @Override
+    public String getArticleType(Intent intent) {
+        return intent.getStringExtra(MyConstants.ARTICLE_TYPE);
+    }
+
+    /**intent传递给presenter*/
+    @Override
+    public Intent getActivityIntent() {
+        return intent;
     }
 
 

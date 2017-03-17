@@ -1,6 +1,7 @@
 package androiddeveloper.the.jessefu.mvpactualcombat.biz.webView;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.anotations.HttpRequest;
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseApplication;
@@ -8,6 +9,9 @@ import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.articleDetail.ArticleDetailBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.articleDetail.ArticleDetailModelImpl;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.articleDetail.IArticleDetailModel;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMomentDetail.IOneMomentDetailModel;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMomentDetail.OneMomentDetailBean;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMomentDetail.OneMomentDetailModelImpl;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -15,20 +19,22 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by Jesse Fu on 2017/3/3 0003.
  */
 
-public class WebviewPresenter implements WebviewContract.IWebviewPresenter, ArticleDetailModelImpl.onLoadedListener {
+public class WebviewPresenter implements WebviewContract.IWebviewPresenter, ArticleDetailModelImpl.onLoadedListener, OneMomentDetailModelImpl.onDataLoadedListener {
 
     private static final String TAG = WebviewPresenter.class.getSimpleName();
 
     private SharedPreferences sp;
 
     private WebviewContract.IWebviewView view;
-    private IArticleDetailModel model;
+    private IArticleDetailModel modelZhihuArticle;
+    private IOneMomentDetailModel modelOneMomentDetail;
 
     public WebviewPresenter(WebviewContract.IWebviewView view) {
         //获取sharedPreference,判断是否无图模式
         sp = BaseApplication.getContext().getSharedPreferences(MyConstants.USER_SETTINGS, MODE_PRIVATE);
         this.view = view;
-        model = new ArticleDetailModelImpl();
+        modelZhihuArticle = new ArticleDetailModelImpl();
+        modelOneMomentDetail = new OneMomentDetailModelImpl();
         view.setPresenter(this);
 
     }
@@ -40,16 +46,22 @@ public class WebviewPresenter implements WebviewContract.IWebviewPresenter, Arti
     @Override
     public void start() {
         view.showLoading();
-        getData();
+        getData(view.getArticleId(view.getActivityIntent()), view.getArticleType(view.getActivityIntent()));
     }
 
     /**发送http请求获取文章详情,需要文章id*/
     @HttpRequest(httpMethod = "get")
     @Override
-    public void getData() {
+    public void getData(String receivedId, String receivedType) {
+        Log.d(TAG, "getZhihuArticleDetail: " + receivedId + " " + receivedType);
+        if (receivedType.equals(MyConstants.ARTICLE_TYPE_ZHIHU_LATEST)){
+            modelZhihuArticle.getArticleDetail(this, receivedId);
+        }else if (receivedType.equals(MyConstants.ARTICLE_TYPE_ZHIHU_PAST)){
+            modelZhihuArticle.getArticleDetail(this, receivedId);
+        }else if (receivedType.equals(MyConstants.ARTICLE_TYPE_ONEMOMENT) ){
+            modelOneMomentDetail.getOneMomentDetailBean(this, receivedId);
+        }
 
-        String id = view.getArticleId();
-        model.getArticleDetail(this, id);
     }
 
     @Override
@@ -60,11 +72,22 @@ public class WebviewPresenter implements WebviewContract.IWebviewPresenter, Arti
     @Override
     public void onSuccess(ArticleDetailBean articleDetailBean) {
         view.dismissLoading();
-        view.getData(articleDetailBean);
+        view.getZhihuArticleDetail(articleDetailBean);
     }
 
     @Override
     public void onError() {
+        view.dismissLoading();
+    }
+
+    @Override
+    public void onSuccess(OneMomentDetailBean bean) {
+        view.dismissLoading();
+        view.getOneMomentDetail(bean);
+    }
+
+    @Override
+    public void onError(String errMsg) {
         view.dismissLoading();
     }
 }

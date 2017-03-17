@@ -203,7 +203,7 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
                                 fabStatus = 0;
                                 break;
                             case 1:
-                                mTitle.setText(R.string.title_theme);
+                                mTitle.setText(R.string.title_one_moment);
                                 mFAB.setImageResource(R.mipmap.ic_settings_white_24dp);
                                 mFAB.setVisibility(View.INVISIBLE);
                                 fabStatus = 1;
@@ -273,22 +273,6 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
     public void dismissLoading() {
 
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()){
-//            case R.id.menu_main_about:
-//                Log.d(TAG, "clicked setting");
-//                break;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     @Override
     public void showDatePickDialog() {

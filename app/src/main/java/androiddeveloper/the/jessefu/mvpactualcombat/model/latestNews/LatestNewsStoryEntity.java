@@ -3,6 +3,9 @@ package androiddeveloper.the.jessefu.mvpactualcombat.model.latestNews;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Keep;
+import org.greenrobot.greendao.annotation.Transient;
+
+import java.io.Serializable;
 import org.greenrobot.greendao.annotation.Generated;
 
 /**
@@ -11,10 +14,10 @@ import org.greenrobot.greendao.annotation.Generated;
 @Entity(
         nameInDb = "ZHIHU_LATEST_STORY"
 )
-public class LatestNewsStoryEntity {
+public class LatestNewsStoryEntity implements Serializable{
 
-
-
+    @Transient
+    private static final long serialVersionUID = 1000;
     /**
      * images : ["http://pic3.zhimg.com/c132c867feb6f92dd8f0614881bfb172.jpg"]
      * type : 0

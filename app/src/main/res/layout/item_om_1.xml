@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="220dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="2dp"
+    android:layout_marginLeft="@dimen/dp_8"
+    android:layout_marginRight="@dimen/dp_8"
+    android:layout_marginTop="@dimen/dp_4"
+    android:layout_marginBottom="@dimen/dp_4">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_item_om1_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="test title"
+            android:textSize="@dimen/sp_20"
+            android:textColor="@color/colorPrimary"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+
+            android:layout_marginTop="@dimen/dp_16"
+
+            android:maxLines="2"
+            />
+
+        <ImageView
+            android:id="@+id/iv_item_om1_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimary"
+            android:layout_below="@id/tv_item_om1_title"
+            android:layout_margin="@dimen/dp_8"
+            />
+
+        <TextView
+            android:id="@+id/tv_item_om1_description"
+            android:layout_below="@id/iv_item_om1_line"
+            android:layout_marginLeft="@dimen/dp_32"
+            android:layout_marginRight="@dimen/dp_32"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:typeface="serif"
+
+            android:gravity="center_horizontal"
+            android:maxLines="5"
+            android:text="test description"
+            android:textSize="@dimen/sp_16"
+            android:ellipsize="end"/>
+
+        <ImageView
+            android:id="@+id/iv_item_om1_avatar"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="@dimen/dp_16"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:id="@+id/tv_item_om1_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginRight="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_16"
+
+            android:text="test author name"
+            android:textSize="@dimen/sp_14"
+            android:textColor="@color/colorPrimary"
+            android:layout_toRightOf="@id/iv_item_om1_avatar"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_vertical"/>
+
+        <TextView
+            android:id="@+id/tv_item_om1_column"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_16"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="column"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/sp_14"/>
+
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>

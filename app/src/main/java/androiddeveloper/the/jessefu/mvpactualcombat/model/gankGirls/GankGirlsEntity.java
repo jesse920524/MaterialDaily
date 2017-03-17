@@ -1,10 +1,17 @@
 package androiddeveloper.the.jessefu.mvpactualcombat.model.gankGirls;
 
+import org.greenrobot.greendao.annotation.Transient;
+
+import java.io.Serializable;
+
 /**
  * Created by Jesse Fu on 2017/3/9 0009.
  */
 
-public class GankGirlsEntity {
+public class GankGirlsEntity implements Serializable{
+
+    @Transient
+    private static final long serialVersionUID = 1000;
 
     private Long ID;
 

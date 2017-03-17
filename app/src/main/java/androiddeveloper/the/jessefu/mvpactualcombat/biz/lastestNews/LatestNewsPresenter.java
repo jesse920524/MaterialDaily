@@ -45,5 +45,6 @@ public class LatestNewsPresenter implements LatestNewsContract.ILNPresenter, Lat
     @Override
     public void onError() {
         view.dismissLoading();
+        view.getDataError(null);
     }
 }

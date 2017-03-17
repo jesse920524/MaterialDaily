@@ -11,4 +11,11 @@
     <dimen name="header_view_end_margin_right">14dp</dimen>
 
     <dimen name="header_view_start_margin_bottom">14dp</dimen>
+    <dimen name="sp_24">24sp</dimen>
+    <dimen name="sp_20">20sp</dimen>
+    <dimen name="sp_18">18sp</dimen>
+    <dimen name="dp_14">14sp</dimen>
+    <dimen name="margin_8">8dp</dimen>
+    <dimen name="dp_8">8dp</dimen>
+    <dimen name="dp_32">32dp</dimen>
 </resources>

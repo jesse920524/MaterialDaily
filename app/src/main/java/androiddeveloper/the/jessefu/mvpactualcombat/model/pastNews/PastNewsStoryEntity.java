@@ -3,12 +3,18 @@ package androiddeveloper.the.jessefu.mvpactualcombat.model.pastNews;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Transient;
+
+import java.io.Serializable;
 
 /**
  * Created by Jesse Fu on 2017/2/28 0028.
  */
 @Entity(nameInDb = "ZHIHU_PAST_STORY")
-public class PastNewsStoryEntity {
+public class PastNewsStoryEntity implements Serializable{
+
+    @Transient
+    private static final long serialVersionUID = 1000;
     /**
      * images : ["http://p4.zhimg.com/7b/c8/7bc8ef5947b069513c51e4b9521b5c82.jpg"]
      * type : 0

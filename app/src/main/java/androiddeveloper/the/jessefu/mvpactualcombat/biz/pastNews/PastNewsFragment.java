@@ -77,8 +77,10 @@ public class PastNewsFragment extends BaseFragment implements PastNewsContract.I
                 Intent intent = new Intent(getActivity(), WebviewActivity.class);
                 PastNewsStoryEntity entity = (PastNewsStoryEntity) adapter.getData().get(position);
                 Log.d(TAG, String.valueOf(entity));
-                intent.putExtra(MyConstants.ARTICLE_ID, String.valueOf(entity.getId()));
-                intent.putExtra(MyConstants.ARTICLE_TITLE, entity.getTitle());
+                /*intent.putExtra(MyConstants.ARTICLE_ID, String.valueOf(entity.getId()));
+                intent.putExtra(MyConstants.ARTICLE_TITLE, entity.getTitle());*/
+                intent.putExtra(MyConstants.SERIALIZABLE_ITEM, entity);
+                intent.putExtra(MyConstants.ARTICLE_TYPE, MyConstants.ARTICLE_TYPE_ZHIHU_PAST);
                 startActivity(intent);
             }
         });
@@ -106,6 +108,11 @@ public class PastNewsFragment extends BaseFragment implements PastNewsContract.I
         }, MyConstants.DEFAULT_DELAY_TIME);
     }
 
+    @Override
+    public void getDataError(String errMsg) {
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_empty, null);
+        mRecyclerViewAdapter.setEmptyView(view);
+    }
 
 
     @Override

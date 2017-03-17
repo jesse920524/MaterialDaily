@@ -25,7 +25,7 @@
 
     <string name="feedback">反馈</string>
     <string name="bottom_nav_0">news</string>
-    <string name="bottom_nav_1">subject</string>
+    <string name="bottom_nav_1">one moment</string>
     <string name="bottom_nav_2">former</string>
     <string name="toolbar_name">文章列表</string>
     <string name="confirm">确定</string>
@@ -43,6 +43,7 @@
     <string name="activity_theme_news">主题新闻列表</string>
     <string name="activity_main">主页</string>
     <string name="clear_cache_done">清除成功</string>
+    <string name="title_one_moment">一刻</string>
 
 
 </resources>

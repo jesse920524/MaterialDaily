@@ -3,6 +3,12 @@
     package="androiddeveloper.the.jessefu.mvpactualcombat">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
     <application
         android:name=".base.BaseApplication"
         android:allowBackup="true"
@@ -10,7 +16,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".biz.main.MainActivity">
+        <activity android:name=".biz.main.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,27 +26,33 @@
         </activity>
 
         <activity android:name=".biz.themeNews.themeNews.ThemeNewsActivity"
-            android:label="@string/activity_theme_news">
+            android:label="@string/activity_theme_news"
+            android:screenOrientation="portrait">
         </activity>
 
         <activity android:name=".biz.webView.WebviewActivity"
-            android:label="@string/activity_web"></activity>
+            android:label="@string/activity_web"
+            android:screenOrientation="portrait"></activity>
 
         <activity android:name=".biz.about.AboutActivity"
             android:label="@string/activity_about"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"></activity>
 
         <activity android:name=".biz.settings.SettingsActivity"
             android:label="@string/settings"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"></activity>
 
         <activity android:name=".biz.gankGirls.GankGirlsActivity"
-            android:label="@string/gank_girls">
+            android:label="@string/gank_girls"
+            android:screenOrientation="portrait">
         </activity>
 
         <activity android:name=".biz.largePic.LargePicActivity"
             android:label="@string/activity_large_pic"
-            android:theme="@style/LargePicActivityTheme"></activity>
+            android:theme="@style/LargePicActivityTheme"
+            android:screenOrientation="portrait"></activity>
 
     </application>
 

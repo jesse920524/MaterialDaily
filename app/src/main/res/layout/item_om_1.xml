@@ -48,10 +48,10 @@
 
             android:typeface="serif"
 
-            android:gravity="center_horizontal"
+            android:gravity="left"
             android:maxLines="5"
             android:text="test description"
-            android:textSize="@dimen/sp_16"
+            android:textSize="@dimen/sp_15"
             android:ellipsize="end"/>
 
         <ImageView

@@ -10,8 +10,8 @@ android {
         applicationId "androiddeveloper.the.jessefu.mvpactualcombat"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 3
+        versionName "1.0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         //multiDexEnabled false
     }
@@ -81,6 +81,8 @@ dependencies {
 
     //photoView
     compile 'com.github.chrisbanes:PhotoView:1.3.1'
+
+    compile 'com.lovedise:permissiongen:0.0.6'//Android6.0动态权限类库
 
     //约束布局
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'

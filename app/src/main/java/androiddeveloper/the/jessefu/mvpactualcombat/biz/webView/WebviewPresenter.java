@@ -1,6 +1,8 @@
 package androiddeveloper.the.jessefu.mvpactualcombat.biz.webView;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.anotations.HttpRequest;
@@ -28,6 +30,11 @@ public class WebviewPresenter implements WebviewContract.IWebviewPresenter, Arti
     private WebviewContract.IWebviewView view;
     private IArticleDetailModel modelZhihuArticle;
     private IOneMomentDetailModel modelOneMomentDetail;
+
+    //share func
+    private String shareArticleType;
+    private String shareUrl;
+    private String shareTitle;
 
     public WebviewPresenter(WebviewContract.IWebviewView view) {
         //获取sharedPreference,判断是否无图模式
@@ -67,6 +74,47 @@ public class WebviewPresenter implements WebviewContract.IWebviewPresenter, Arti
     @Override
     public boolean checkNoPicMode() {
         return sp.getBoolean("no_pic_mode", false)?true : false;
+    }
+
+    @Override
+    public void share(String type, String url, String title) {
+        if (!checkArticleType(type)){
+            BaseApplication.showToast("error");
+            return;
+        }
+
+        try{
+            Intent shareIntent = new Intent(Intent.ACTION_SEND).setType("text/plain");
+            StringBuilder sb = new StringBuilder();
+            sb.append("分享自 『Material Daily』:");
+            sb.append("\n").append(title).append(" ");
+
+            switch (type){
+                case MyConstants.ARTICLE_TYPE_ZHIHU_LATEST:
+                case MyConstants.ARTICLE_TYPE_ZHIHU_PAST:
+                    sb.append(url);
+                    break;
+                case MyConstants.ARTICLE_TYPE_ONEMOMENT:
+                    sb.append(url);
+                    break;
+            }
+            sb.append("\t\t\t");
+            shareIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
+            ((AppCompatActivity)view).startActivity(Intent.createChooser(shareIntent, "to: "));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+    }
+
+    @Override
+    public boolean checkArticleType(String type) {
+        if (type.equals(MyConstants.ARTICLE_TYPE_ONEMOMENT)
+                ||type.equals(MyConstants.ARTICLE_TYPE_ZHIHU_LATEST)
+                ||type.equals(MyConstants.ARTICLE_TYPE_ZHIHU_PAST))
+            return true;
+        return false;
     }
 
     @Override

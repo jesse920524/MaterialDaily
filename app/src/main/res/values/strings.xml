@@ -1,6 +1,6 @@
 <resources>
     <string name="version">版本</string>
-    <string name="version_summary">1.0.0</string>
+    <string name="version_summary">1.0.2</string>
     <string name="app_name">Material Daily</string>
     <string name="developer">作者</string>
     <string name="developer_name">傅堯</string>
@@ -8,7 +8,7 @@
     <string name="star_me_zhihu">在知乎关注我</string>
     <string name="developer_at_zhihu">"@傅堯"</string>
     <string name="support">支持</string>
-    <string name="support_detail">反馈Bug/建议</string>
+    <string name="support_detail">反馈Bug/ 建议</string>
     <string name="open_resource_license">开源许可</string>
 
     <!--设置模块-->
@@ -44,6 +44,8 @@
     <string name="activity_main">主页</string>
     <string name="clear_cache_done">清除成功</string>
     <string name="title_one_moment">一刻</string>
+    <string name="save_img">保存图片</string>
+    <string name="share">分享</string>
 
 
 </resources>

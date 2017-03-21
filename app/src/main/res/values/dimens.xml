@@ -18,4 +18,5 @@
     <dimen name="margin_8">8dp</dimen>
     <dimen name="dp_8">8dp</dimen>
     <dimen name="dp_32">32dp</dimen>
+    <dimen name="sp_15">15sp</dimen>
 </resources>

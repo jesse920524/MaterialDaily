@@ -10,6 +10,7 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -67,6 +68,7 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
     private String receivedId;
     private String receivedTitle;
     private static String articleType;
+    private String articleUrl;
     private Intent intent;
 
     private WebSettings webSettings;
@@ -144,6 +146,8 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
     public void getZhihuArticleDetail(ArticleDetailBean bean) {
         getSupportActionBar().setTitle(receivedTitle);
 
+        articleUrl = bean.getShareUrl();//获取shareUrl
+
         /**根据sharedpreference取出的值 no_pic_mode,
          * 决定是否加载图片*/
         if (!presenter.checkNoPicMode()){
@@ -166,10 +170,9 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
     @Override
     public void getOneMomentDetail(OneMomentDetailBean oneMomentDetailBean) {
         try {
-
-
             getSupportActionBar().setTitle(receivedTitle);
 
+            articleUrl = oneMomentDetailBean.getShortUrl();//get shareUrl
             if (!presenter.checkNoPicMode()) {
                 /**豆瓣一刻文章有可能无图,需要在这里判断*/
 
@@ -198,7 +201,7 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
             for (int i = 0; i < imageList.size(); i++) {
                 String old = "<img id=\"" + imageList.get(i).getTagName() + "\" />";
                 String newStr = "<img id=\"" + imageList.get(i).getTagName() + "\" "
-                        + "src=\"" + imageList.get(i).getMedium().getUrl() + "\"/>";
+                        + "src=\"" + imageList.get(i).getMedium().getUrl() + "\"  class=\"thuminfo\" />";
                 content = content.replace(old, newStr);
             }
             StringBuilder builder = new StringBuilder();
@@ -231,7 +234,6 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
                 LatestNewsStoryEntity entity = (LatestNewsStoryEntity) intent.getSerializableExtra(MyConstants.SERIALIZABLE_ITEM);
                 receivedId = String.valueOf(entity.getId());
                 receivedTitle = entity.getTitle();
-
             }else if (intent.getStringExtra(MyConstants.ARTICLE_TYPE).equals(MyConstants.ARTICLE_TYPE_ZHIHU_PAST)){
                 PastNewsStoryEntity entity = (PastNewsStoryEntity) intent.getSerializableExtra(MyConstants.SERIALIZABLE_ITEM);
                 receivedId = String.valueOf(entity.getId());
@@ -260,18 +262,20 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
 
 
 
-/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.sample_actions, menu);
+        getMenuInflater().inflate(R.menu.menu_web, menu);
         return super.onCreateOptionsMenu(menu);
-    }*/
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
                 finish();
+                break;
+            case R.id.menu_web_share:
+                presenter.share(getArticleType(intent), articleUrl, receivedTitle);
                 break;
         }
         return super.onOptionsItemSelected(item);

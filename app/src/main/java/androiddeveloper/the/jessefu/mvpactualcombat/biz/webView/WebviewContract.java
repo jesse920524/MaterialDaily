@@ -32,5 +32,11 @@ public interface WebviewContract {
 
         //检查是否无图模式
         boolean checkNoPicMode();
+
+        //分享
+        void share(String type, String url, String title);
+
+        //检查文章类型合法性
+        boolean checkArticleType(String type);
     }
 }

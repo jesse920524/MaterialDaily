@@ -173,6 +173,16 @@ public class OneMomentFragment extends BaseFragment implements OneMomentContract
     }
 
     @Override
+    public void recyclerViewSmoothScroll() {
+        mRecyclerView.smoothScrollToPosition(0);
+    }
+
+    @Override
+    public int getRecyclerViewPosition(LinearLayoutManager linearLayoutManager) {
+        return linearLayoutManager.findFirstCompletelyVisibleItemPosition();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         presenter.onDestroy();

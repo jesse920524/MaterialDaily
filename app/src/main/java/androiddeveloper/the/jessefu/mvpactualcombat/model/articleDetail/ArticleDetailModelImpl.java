@@ -25,7 +25,9 @@ public class ArticleDetailModelImpl implements IArticleDetailModel {
 
             @Override
             public void onError(Throwable e) {
+
                 Log.d(TAG, "获取文章详情 onError: " + e.getMessage());
+                loadedListener.onError();
             }
 
             @Override

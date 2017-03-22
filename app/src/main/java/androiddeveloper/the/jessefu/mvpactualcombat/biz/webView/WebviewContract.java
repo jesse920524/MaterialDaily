@@ -26,6 +26,8 @@ public interface WebviewContract {
         Intent getActivityIntent();
 
         void setImageLoadMode(boolean loadMode);
+
+        void showErrorSnack();
     }
     interface IWebviewPresenter extends BasePresenter{
         void getData(String id, String type);

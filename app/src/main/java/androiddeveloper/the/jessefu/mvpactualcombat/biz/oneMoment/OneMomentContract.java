@@ -1,5 +1,7 @@
 package androiddeveloper.the.jessefu.mvpactualcombat.biz.oneMoment;
 
+import android.support.v7.widget.LinearLayoutManager;
+
 import java.util.List;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BasePresenter;
@@ -18,6 +20,10 @@ public interface OneMomentContract {
 
         void getDataError(String errMsg);
         void getDataMoreError(String errMsg);
+
+        void recyclerViewSmoothScroll();
+
+        int getRecyclerViewPosition(LinearLayoutManager linearLayoutManager);
     }
 
     interface IOneMomentPresenter extends BasePresenter{

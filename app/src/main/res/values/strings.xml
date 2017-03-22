@@ -8,7 +8,7 @@
     <string name="star_me_zhihu">在知乎关注我</string>
     <string name="developer_at_zhihu">"@傅堯"</string>
     <string name="support">支持</string>
-    <string name="support_detail">反馈Bug/ 建议</string>
+    <string name="support_detail">意见反馈</string>
     <string name="open_resource_license">开源许可</string>
 
     <!--设置模块-->
@@ -25,7 +25,7 @@
 
     <string name="feedback">反馈</string>
     <string name="bottom_nav_0">news</string>
-    <string name="bottom_nav_1">one moment</string>
+    <string name="bottom_nav_1">article</string>
     <string name="bottom_nav_2">former</string>
     <string name="toolbar_name">文章列表</string>
     <string name="confirm">确定</string>

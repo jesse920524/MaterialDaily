@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,6 +32,7 @@ import androiddeveloper.the.jessefu.mvpactualcombat.model.latestNews.LatestNewsS
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMoment.OneMomentEntity;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMomentDetail.OneMomentDetailBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.pastNews.PastNewsStoryEntity;
+import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -67,7 +69,6 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
     /**接收来自context的文章id与文章标题*/
     private String receivedId;
     private String receivedTitle;
-    private static String articleType;
     private String articleUrl;
     private Intent intent;
 
@@ -114,8 +115,17 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
         //缩放,设置为不能缩放可以防止页面上出现放大和缩小的图标
         webSettings.setBuiltInZoomControls(false);
         webSettings.setDomStorageEnabled(true);//开启DOM api
-        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);//缓存
-        webSettings.setAppCacheEnabled(false);//appCache功能
+        webSettings.setAppCacheEnabled(true);//appCache功能
+        webSettings.setDatabaseEnabled(true);
+
+        /**
+         * 根据网络状态设置不同缓存策略*/
+        if (UtilManager.getNetworkState()){
+            webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        }else{
+            webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);//no network, load local
+        }
+
 
 
         mToolbar.setTitle("");
@@ -294,5 +304,10 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
     public void setImageLoadMode(boolean loadMode) {
         /**设置webView是否显示图片*/
         webSettings.setBlockNetworkImage(loadMode);
+    }
+
+    @Override
+    public void showErrorSnack() {
+        Snackbar.make(mWebView, "无法连接到网络", Snackbar.LENGTH_LONG).show();
     }
 }

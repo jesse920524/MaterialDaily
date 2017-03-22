@@ -32,9 +32,9 @@ import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseApplication;
 import androiddeveloper.the.jessefu.mvpactualcombat.biz.about.AboutActivity;
 import androiddeveloper.the.jessefu.mvpactualcombat.biz.gankGirls.GankGirlsActivity;
 import androiddeveloper.the.jessefu.mvpactualcombat.biz.lastestNews.LatestNewsFragment;
+import androiddeveloper.the.jessefu.mvpactualcombat.biz.oneMoment.OneMomentFragment;
 import androiddeveloper.the.jessefu.mvpactualcombat.biz.pastNews.PastNewsFragment;
 import androiddeveloper.the.jessefu.mvpactualcombat.biz.settings.SettingsActivity;
-import androiddeveloper.the.jessefu.mvpactualcombat.biz.themeNews.themes.ThemeFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -142,8 +142,6 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
         });
     }
 
-
-
     private void initToolbar() {
         mTitle.setText(R.string.title_today);
         //mToolbar.setTitle("今日");
@@ -152,8 +150,6 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
     }
-
-
 
     private void initViewPager() {
         mViewPager.setPagingEnabled(false);//禁止滑动
@@ -314,11 +310,9 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
             }else{
                 finish();
             }
-
-
-        }else if (currentFragment instanceof ThemeFragment){
-            if (((ThemeFragment) currentFragment).getRecyclerViewPosition(((ThemeFragment) currentFragment).gridLayoutManager) != 0){
-                ((ThemeFragment) currentFragment).recyclerViewSmoothScroll();
+        }else if (currentFragment instanceof OneMomentFragment){
+            if (((OneMomentFragment) currentFragment).getRecyclerViewPosition(((OneMomentFragment) currentFragment).linearLayoutManager) != 0){
+                ((OneMomentFragment) currentFragment).recyclerViewSmoothScroll();
                 mBottomNavigation.restoreBottomNavigation();
             }else{
                 finish();
@@ -365,15 +359,10 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
 
     @PermissionSuccess(requestCode=100)
     public void successGetPermission(){
-        //Toast.makeText(FirstActivity.this, "权限获取成功", Toast.LENGTH_SHORT).show();
-        //Dlog.debug("open camera success");
 
     }
     @PermissionFail(requestCode=200)
     public void failGetPermission(){
-
-        //Toast.makeText(this,"权限获取失败",Toast.LENGTH_SHORT).show();
-
     }
 }
 

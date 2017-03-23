@@ -14,7 +14,7 @@ import androiddeveloper.the.jessefu.mvpactualcombat.model.articleDetail.IArticle
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMomentDetail.IOneMomentDetailModel;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMomentDetail.OneMomentDetailBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMomentDetail.OneMomentDetailModelImpl;
-import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilManager;
+import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilConnection;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -127,7 +127,7 @@ public class WebviewPresenter implements WebviewContract.IWebviewPresenter, Arti
     @Override
     public void onError() {
         view.dismissLoading();
-        if (!UtilManager.getNetworkState()){
+        if (!UtilConnection.getNetworkState()){
             view.showErrorSnack();
         }
     }

@@ -32,7 +32,7 @@ import androiddeveloper.the.jessefu.mvpactualcombat.model.latestNews.LatestNewsS
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMoment.OneMomentEntity;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMomentDetail.OneMomentDetailBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.pastNews.PastNewsStoryEntity;
-import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilManager;
+import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilConnection;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -120,7 +120,7 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
 
         /**
          * 根据网络状态设置不同缓存策略*/
-        if (UtilManager.getNetworkState()){
+        if (UtilConnection.getNetworkState()){
             webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
         }else{
             webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);//no network, load local

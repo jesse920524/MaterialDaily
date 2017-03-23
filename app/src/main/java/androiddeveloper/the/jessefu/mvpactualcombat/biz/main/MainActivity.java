@@ -48,7 +48,6 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
 
     private MainContract.IMainPresenter presenter;
 
-
         @BindView(R2.id.tb_main)
         Toolbar mToolbar;
         @BindView(R2.id.tv_main_title)
@@ -314,6 +313,7 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
             if (((OneMomentFragment) currentFragment).getRecyclerViewPosition(((OneMomentFragment) currentFragment).linearLayoutManager) != 0){
                 ((OneMomentFragment) currentFragment).recyclerViewSmoothScroll();
                 mBottomNavigation.restoreBottomNavigation();
+
             }else{
                 finish();
             }

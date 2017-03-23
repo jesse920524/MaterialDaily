@@ -20,7 +20,7 @@ import androiddeveloper.the.jessefu.mvpactualcombat.R;
  * Created by Jesse Fu on 2017/3/8 0008.
  */
 
-public class AboutFragment extends PreferenceFragmentCompat implements AboutContract.IAboutView {
+public class AboutFragment extends PreferenceFragmentCompat implements AboutContract.IAboutView, Preference.OnPreferenceClickListener {
 
     private static final String TAG = AboutFragment.class.getSimpleName();
 
@@ -63,17 +63,16 @@ public class AboutFragment extends PreferenceFragmentCompat implements AboutCont
         Preference prefStarMeZhihu = findPreference("star_me_zhihu");
         Preference prefSupportDetail = findPreference("support_detail");
         Preference prefOpenResourceLicense = findPreference("open_resource_license");
-        prefStarMeZhihu.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        /*prefStarMeZhihu.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                ClipboardManager clipboardManager = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-                String authorName = "傅堯";
-                ClipData clipData = ClipData.newPlainText("name", authorName);
-                clipboardManager.setPrimaryClip(clipData);
-                Snackbar.make(mToolbar, "复制到剪贴板成功", Snackbar.LENGTH_SHORT).show();
+
                 return true;
             }
-        });
+        });*/
+
+        prefOpenResourceLicense.setOnPreferenceClickListener(this);
+        prefStarMeZhihu.setOnPreferenceClickListener(this);
     }
 
     @Override
@@ -95,5 +94,37 @@ public class AboutFragment extends PreferenceFragmentCompat implements AboutCont
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    /**
+     * Called when a Preference has been clicked.
+     *
+     * @param preference The Preference that was clicked.
+     * @return True if the click was handled.
+     */
+    @Override
+    public boolean onPreferenceClick(Preference preference) {
+        switch (preference.getKey()){
+            case "open_resource_license":
+                showOpenLicense();
+                break;
+            case "star_me_zhihu":
+                clipName();
+                break;
+        }
+        return true;
+    }
+
+    private void clipName() {
+        ClipboardManager clipboardManager = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+        String authorName = "傅堯";
+        ClipData clipData = ClipData.newPlainText("name", authorName);
+        clipboardManager.setPrimaryClip(clipData);
+        Snackbar.make(mToolbar, "复制到剪贴板成功", Snackbar.LENGTH_SHORT).show();
+    }
+
+    private void showOpenLicense() {
+        LicenseDialogFragment fragment = new LicenseDialogFragment();
+        fragment.show(getActivity().getSupportFragmentManager(), "license");
     }
 }

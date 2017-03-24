@@ -99,6 +99,7 @@ public class LargePicActivity extends AppCompatActivity {
         Glide.with(BaseApplication.getContext())
                 .load(imageUrl)
                 .asBitmap()
+//                .placeholder(R.color.black)
                 .into(mPhotoView);
 
         setupPhotoAttacher();

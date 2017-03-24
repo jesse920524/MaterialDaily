@@ -5,6 +5,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.preference.Preference;
@@ -58,6 +59,7 @@ public class AboutFragment extends PreferenceFragmentCompat implements AboutCont
         presenter.start();
 
     }
+
     private void initViews(View view) {
         mToolbar = (Toolbar) getActivity().findViewById(R.id.tb_about);
 
@@ -67,6 +69,7 @@ public class AboutFragment extends PreferenceFragmentCompat implements AboutCont
         Preference prefOpenResourceLicense = findPreference("open_resource_license");
         Preference prefGithubAddress = findPreference("github_address");
 
+        prefSupportDetail.setOnPreferenceClickListener(this);
         prefOpenResourceLicense.setOnPreferenceClickListener(this);
         prefStarMeZhihu.setOnPreferenceClickListener(this);
         prefGithubAddress.setOnPreferenceClickListener(this);
@@ -106,21 +109,33 @@ public class AboutFragment extends PreferenceFragmentCompat implements AboutCont
                 showOpenLicense();
                 break;
             case "star_me_zhihu":
-                clipName();
+                //clipName();
+                followOnZhihu();
                 break;
             case "github_address":
                 openInBrowser();
+                break;
+            case "support_detail":
+                sendFeedbackEmail();
+                break;
+
         }
         return true;
     }
 
-    
+    /**在浏览器打开github*/
     private void openInBrowser() {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse("https://github.com/jesse920524/ZhihuDailyMvp"));
-        getActivity().startActivity(intent);
+        try{
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse("https://github.com/jesse920524/ZhihuDailyMvp"));
+            getActivity().startActivity(intent);
+        }catch(Exception e){
+            showOpenGithubError();
+        }
+
     }
 
+    /**复制到剪贴板*/
     private void clipName() {
         ClipboardManager clipboardManager = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
         String authorName = "傅堯";
@@ -129,8 +144,48 @@ public class AboutFragment extends PreferenceFragmentCompat implements AboutCont
         Snackbar.make(mToolbar, "复制到剪贴板成功", Snackbar.LENGTH_SHORT).show();
     }
 
+    private void followOnZhihu(){
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse("https://www.zhihu.com/people/jesse920524/")));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     private void showOpenLicense() {
         LicenseDialogFragment fragment = new LicenseDialogFragment();
         fragment.show(getActivity().getSupportFragmentManager(), "license");
     }
+
+    private void sendFeedbackEmail(){
+        try {
+            StringBuilder sb = new StringBuilder();
+            sb.append("设备型号: ")
+                    .append(Build.MODEL)
+                    .append("\n")
+                    .append("SDK版本: ")
+                    .append(Build.VERSION.RELEASE)
+                    .append("\n")
+                    .append(getString(R.string.version_summary));
+
+            Uri uri = Uri.parse("mailto:jesse920524@163.com");
+            Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+            intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_msg));
+            intent.putExtra(Intent.EXTRA_TEXT, sb.toString());
+            startActivity(intent);
+        }catch (Exception e){
+            showFeedbackError();
+        }
+    }
+
+    @Override
+    public void showFeedbackError() {
+        Snackbar.make(mToolbar, "未安装邮件类app", Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showOpenGithubError() {
+        Snackbar.make(mToolbar, "未安装浏览器", Snackbar.LENGTH_SHORT).show();
+    }
+
 }

@@ -10,7 +10,9 @@ import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseView;
 public interface AboutContract {
 
     interface IAboutView extends BaseView<IAboutPresenter>{
+        void showFeedbackError();
 
+        void showOpenGithubError();
     }
 
     interface IAboutPresenter extends BasePresenter{

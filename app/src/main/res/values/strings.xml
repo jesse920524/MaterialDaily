@@ -48,5 +48,7 @@
     <string name="save_img">保存图片</string>
     <string name="share">分享</string>
 
+    <string name="feedback_msg">MaterialDaily的使用反馈</string>
+
 
 </resources>

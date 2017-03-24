@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.widget.Toast;
 
+
 import org.greenrobot.greendao.database.Database;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.model.latestNews.DaoMaster;
@@ -21,14 +22,25 @@ public class BaseApplication extends Application {
 
     private static Toast mToast;
 
+//    private static RefWatcher mRefWatcher;
+
+
+
     @Override
     public void onCreate() {
         super.onCreate();
         mContext = getApplicationContext();
 
         initGreenDao();
+//        initLeakCanary();
     }
 
+//    private void initLeakCanary() {
+//        if(LeakCanary.isInAnalyzerProcess(this)){
+//            return;
+//        }
+//        mRefWatcher = LeakCanary.install(this);
+//    }
 
     private void initGreenDao() {
         DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(this, "news-db");
@@ -74,4 +86,8 @@ public class BaseApplication extends Application {
             mToast.cancel();
         }
     }
+
+    /*public static RefWatcher getRefWatcher(Context context){
+        return mRefWatcher;
+    }*/
 }

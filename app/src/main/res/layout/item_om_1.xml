@@ -18,20 +18,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="test title"
-            android:textSize="@dimen/sp_20"
+            android:textSize="@dimen/sp_18"
             android:textColor="@color/colorPrimary"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-
             android:layout_marginTop="@dimen/dp_16"
-
             android:maxLines="2"
             />
 
         <ImageView
             android:id="@+id/iv_item_om1_line"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0.33dp"
             android:background="@color/colorPrimary"
             android:layout_below="@id/tv_item_om1_title"
             android:layout_margin="@dimen/dp_8"

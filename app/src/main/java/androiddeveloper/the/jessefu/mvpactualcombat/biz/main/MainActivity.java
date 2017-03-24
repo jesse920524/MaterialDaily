@@ -1,10 +1,8 @@
 package androiddeveloper.the.jessefu.mvpactualcombat.biz.main;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -38,9 +36,6 @@ import androiddeveloper.the.jessefu.mvpactualcombat.biz.settings.SettingsActivit
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import kr.co.namee.permissiongen.PermissionFail;
-import kr.co.namee.permissiongen.PermissionGen;
-import kr.co.namee.permissiongen.PermissionSuccess;
 
 public class MainActivity extends BaseActivity implements MainContract.IMainView {
 
@@ -82,10 +77,12 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+
         initViews();
         new MainPresenter(this);
         presenter.start();
-        initPermissions();
+
     }
 
     @Override
@@ -287,6 +284,7 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
     }
 
     private void toGankGirlsActivity() {
+
         Intent intent = new Intent(MainActivity.this, GankGirlsActivity.class);
         startActivity(intent);
     }
@@ -295,6 +293,7 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
         Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
         startActivity(intent);
     }
+
 
     @Override
     public void onBackPressed() {
@@ -334,35 +333,6 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
         this.presenter = presenter;
     }
 
-    /**android6.0动态获取权限方法,使用了开源类库permissionGen*/
-    public void initPermissions() {
-        //测试mPermissions权限库
-        PermissionGen.with(MainActivity.this)
-                .addRequestCode(100)
-                .permissions(
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                        /*Manifest.permission.READ_PHONE_STATE,
-                        Manifest.permission.ACCESS_WIFI_STATE,
-                        Manifest.permission.ACCESS_NETWORK_STATE,
-                        Manifest.permission.ACCESS_WIFI_STATE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS*/
-                ).request();
-        //JPushInterface.requestPermission(FirstActivity.this);
-    }
-    /**
-     * 6.0权限请求结果*/
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
-    }
 
-    @PermissionSuccess(requestCode=100)
-    public void successGetPermission(){
-
-    }
-    @PermissionFail(requestCode=200)
-    public void failGetPermission(){
-    }
 }
 

@@ -3,6 +3,8 @@ package androiddeveloper.the.jessefu.mvpactualcombat.biz.about;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.preference.Preference;
@@ -63,16 +65,11 @@ public class AboutFragment extends PreferenceFragmentCompat implements AboutCont
         Preference prefStarMeZhihu = findPreference("star_me_zhihu");
         Preference prefSupportDetail = findPreference("support_detail");
         Preference prefOpenResourceLicense = findPreference("open_resource_license");
-        /*prefStarMeZhihu.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-
-                return true;
-            }
-        });*/
+        Preference prefGithubAddress = findPreference("github_address");
 
         prefOpenResourceLicense.setOnPreferenceClickListener(this);
         prefStarMeZhihu.setOnPreferenceClickListener(this);
+        prefGithubAddress.setOnPreferenceClickListener(this);
     }
 
     @Override
@@ -111,8 +108,17 @@ public class AboutFragment extends PreferenceFragmentCompat implements AboutCont
             case "star_me_zhihu":
                 clipName();
                 break;
+            case "github_address":
+                openInBrowser();
         }
         return true;
+    }
+
+    
+    private void openInBrowser() {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("https://github.com/jesse920524/ZhihuDailyMvp"));
+        getActivity().startActivity(intent);
     }
 
     private void clipName() {

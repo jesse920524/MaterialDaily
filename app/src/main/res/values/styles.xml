@@ -5,11 +5,17 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/bluegrey_500</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/orange_500</item>
         <item name="preferenceTheme">@style/myPreferenceScreen</item>
+        <!--<item name="android:toolbarStyle">@style/ToolbarRemoveContentInsetStart</item>-->
 
         <!--5.0+共享元素-->
-        <item name="android:windowContentTransitions">true</item>
+        <!--<item name="android:windowContentTransitions">true</item>-->
+
+        <!--背景透明，不设滑动关闭时背景就是黑的。-->
+        <item name="android:windowIsTranslucent">true</item>
+        <!--Activity右滑进出的动画，觉得这个不好看随便换成自己的-->
+        <item name="android:windowAnimationStyle">@style/SlideRightAnimation</item>
 
     </style>
 
@@ -42,9 +48,10 @@
 
         <!--toolbar title text size-->
         <item name="android:textSize">14sp</item>
+    </style>
 
-
-
+    <style name="ToolbarRemoveContentInsetStart" parent="Widget.AppCompat.Toolbar">
+        <item name="contentInsetStart">0dp</item>
     </style>
 
 </resources>

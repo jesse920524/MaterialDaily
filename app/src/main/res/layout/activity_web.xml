@@ -43,7 +43,10 @@
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:titleTextAppearance="@style/ToolbarTitleAppearance"
                 app:layout_collapseMode="pin"
-                android:navigationIcon="@mipmap/ic_arrow_back_white_24dp">
+                android:navigationIcon="@mipmap/ic_arrow_back_white_24dp"
+                app:contentInsetStart="0dp"
+                app:contentInsetLeft="0dp"
+                >
 
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.CollapsingToolbarLayout>

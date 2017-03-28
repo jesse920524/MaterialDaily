@@ -10,8 +10,8 @@ android {
         applicationId "androiddeveloper.the.jessefu.mvpactualcombat"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 5
-        versionName "1.0.4"
+        versionCode 6
+        versionName "1.0.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         //multiDexEnabled false
     }
@@ -86,6 +86,8 @@ dependencies {
 
     //约束布局
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
+
+    compile 'com.jude:swipebackhelper:3.1.2'
 
     //leakCanary
 //    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'

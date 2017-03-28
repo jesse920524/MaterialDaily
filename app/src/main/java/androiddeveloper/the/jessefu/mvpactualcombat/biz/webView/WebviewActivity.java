@@ -6,10 +6,10 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
+import android.transition.Fade;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
+import com.jude.swipbackhelper.SwipeBackHelper;
 
 import java.util.List;
 
@@ -80,12 +81,30 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
         setContentView(R.layout.activity_web);
         setUIFlags();//透明状态栏
         ButterKnife.bind(this);
+
+        SwipeBackHelper.onCreate(this);
+        SwipeBackHelper.getCurrentPage(this)
+                .setSwipeEdgePercent(0.2f)
+                .setSwipeSensitivity(0.5f);
+
         intent = getIntent();//获取收到的intent
 
         presenter = new WebviewPresenter(this);
         presenter.start();
 
         initViews();
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        SwipeBackHelper.onPostCreate(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SwipeBackHelper.onDestroy(this);
     }
 
     /**状态栏沉浸*/
@@ -126,8 +145,7 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
             webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);//no network, load local
         }
 
-
-
+        mToolbar.setContentInsetStartWithNavigation(0);
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -291,12 +309,17 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
         return super.onOptionsItemSelected(item);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+
     @Override
     protected void onStop() {
         super.onStop();
-        android.transition.Fade fade = new android.transition.Fade();
-        getWindow().setExitTransition(fade);
+        Fade fade = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            fade = new Fade();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                getWindow().setExitTransition(fade);
+            }
+        }
     }
 
 

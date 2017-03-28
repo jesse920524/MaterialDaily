@@ -51,8 +51,10 @@ public class AboutActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        mToolbar.setContentInsetStartWithNavigation(0);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
     @Override

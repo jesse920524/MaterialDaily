@@ -46,6 +46,7 @@ public class GankGirlsActivity extends AppCompatActivity {
 
         initFragment();
         mToolbar.setTitle("福利");
+        mToolbar.setContentInsetStartWithNavigation(0);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

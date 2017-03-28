@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
@@ -171,7 +172,7 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
         //mBottomNavigation.setInactiveColor(R.color.colorAccent);
 
 
-
+        mBottomNavigation.setAccentColor(ActivityCompat.getColor(this, R.color.colorAccent));
         //manage titles
         mBottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
         //translucent Navigation bar

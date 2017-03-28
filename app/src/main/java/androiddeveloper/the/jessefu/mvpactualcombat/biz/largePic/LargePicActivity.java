@@ -93,9 +93,6 @@ public class LargePicActivity extends AppCompatActivity {
 
     private void initViews() {
 
-        //主要的语句---将当前Activity的View和自己定义的Key绑定起来
-        //ViewCompat.setTransitionName(mPhotoView, MyConstants.IMAGE_URL);
-
         Glide.with(BaseApplication.getContext())
                 .load(imageUrl)
                 .asBitmap()

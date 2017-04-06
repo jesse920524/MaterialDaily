@@ -6,6 +6,7 @@ import android.net.NetworkInfo;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseApplication;
 
+
 /**
  * Created by Jesse Fu on 2017/3/22 0022.
  */

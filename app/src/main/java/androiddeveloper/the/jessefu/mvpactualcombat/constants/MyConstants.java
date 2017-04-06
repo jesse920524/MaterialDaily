@@ -31,6 +31,25 @@ public interface MyConstants {
     // eg:https://moment.douban.com/api/post/100484
     String DOUBAN_ARTICLE_DETAIL = "https://moment.douban.com/api/post/";
 
+    /**
+     * 饭否section
+     *
+     * 饭否url拼接规则:
+     *
+     * 获取每日精选:FANFOU_HEADER + FANFOU_TEST_DATE + FANFOU_DAILY + FANFOU_FOOTER;
+     * example: http://blog.fanfou.com/digest/json/2017-01-01.daily.json;
+     *
+     * 获取每周精选:FANFOU_HEADER + FANFOU_TEST_WEEK + FANFOU_WEEKLY + FANFOU_FOOTER;
+     * exmaple: http://blog.fanfou.com/digest/json/2017-04-03.weekly.json;
+     *
+     * */
+    String FANFOU_HEADER = "http://blog.fanfou.com/digest/json/";
+    String FANFOU_DAILY = ".daily";
+    String FANFOU_WEEKLY = ".weekly";
+    String FANFOU_FOOTER = ".json";
+    String FANFOU_TEST_DATE = "2017-01-01";
+    String FANFOU_TEST_WEEK = "2017-04-03";
+
 
     int DEFAULT_TIME_OUT = 5;//默认超时
     int DEFAULT_DELAY_TIME = 30000;

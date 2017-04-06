@@ -225,6 +225,11 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
 
             //copy
             String content = oneMomentDetailBean.getContent();
+
+            /**
+             * todo :在这里加上网络状态判断和无图模式判断.
+             * */
+
             List<OneMomentDetailBean.PhotosBean> imageList = oneMomentDetailBean.getPhotos();
             for (int i = 0; i < imageList.size(); i++) {
                 String old = "<img id=\"" + imageList.get(i).getTagName() + "\" />";
@@ -232,17 +237,17 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
                         + "src=\"" + imageList.get(i).getMedium().getUrl() + "\"  class=\"thuminfo\" />";
                 content = content.replace(old, newStr);
             }
-            StringBuilder builder = new StringBuilder();
-            builder.append( "<!DOCTYPE html>\n");
-            builder.append("<html lang=\"ZH-CN\" xmlns=\"http://www.w3.org/1999/xhtml\">\n");
-            builder.append("<head>\n<meta charset=\"utf-8\" />\n");
-            builder.append(css);
-            builder.append("\n</head>\n<body>\n");
-            builder.append("<div class=\"container bs-docs-container\">\n");
-            builder.append("<div class=\"post-container\">\n");
-            builder.append(content);
-            builder.append("</div>\n</div>\n</body>\n</html>");
-            mWebView.loadDataWithBaseURL("x-data://base", builder.toString(), "text/html", "UTF-8", null);
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append( "<!DOCTYPE html>\n");
+            stringBuilder.append("<html lang=\"ZH-CN\" xmlns=\"http://www.w3.org/1999/xhtml\">\n");
+            stringBuilder.append("<head>\n<meta charset=\"utf-8\" />\n");
+            stringBuilder.append(css);
+            stringBuilder.append("\n</head>\n<body>\n");
+            stringBuilder.append("<div class=\"container bs-docs-container\">\n");
+            stringBuilder.append("<div class=\"post-container\">\n");
+            stringBuilder.append(content);
+            stringBuilder.append("</div>\n</div>\n</body>\n</html>");
+            mWebView.loadDataWithBaseURL("x-data://base", stringBuilder.toString(), "text/html", "UTF-8", null);
 
         }
 

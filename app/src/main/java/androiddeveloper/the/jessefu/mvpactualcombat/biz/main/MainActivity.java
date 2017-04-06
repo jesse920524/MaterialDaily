@@ -83,7 +83,6 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
         initViews();
         new MainPresenter(this);
         presenter.start();
-
     }
 
     @Override
@@ -110,9 +109,6 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
         initBottomNav();
         initViewPager();
         initPopupMenu();
-
-
-
     }
 
     private void initPopupMenu() {
@@ -164,13 +160,6 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
 
         mNavAdapter = new AHBottomNavigationAdapter(this, R.menu.menu_bottom_navigation);
         mNavAdapter.setupWithBottomNavigation(mBottomNavigation);
-
-        //set background color
-        //mBottomNavigation.setDefaultBackgroundColor(getResources().getColor(R.color.colorPrimary));
-
-        //mBottomNavigation.setAccentColor(R.color.colorAccent);
-        //mBottomNavigation.setInactiveColor(R.color.colorAccent);
-
 
         mBottomNavigation.setAccentColor(ActivityCompat.getColor(this, R.color.colorAccent));
         //manage titles

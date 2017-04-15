@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -111,8 +112,10 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
     private void setUIFlags() {
         if (Build.VERSION.SDK_INT >= 21){
             View decorView = getWindow().getDecorView();
-            int option =  View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            int option =  View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    |View.SYSTEM_UI_FLAG_FULLSCREEN;
             decorView.setSystemUiVisibility(option);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
     }

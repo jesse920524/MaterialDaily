@@ -49,7 +49,7 @@ public class RecyclerGankGirlsAdapter extends BaseQuickAdapter<GankGirlsEntity, 
         Glide.with(BaseApplication.getContext())
                 .load(item.getUrl())
                 .crossFade()
-                //.centerCrop()
+                .placeholder(R.color.grey_300)
                 //.animate(R.anim.alpha_in)
                 .into((ImageView) helper.getView(R.id.iv_item_gankgirls));
     }

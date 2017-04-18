@@ -25,5 +25,8 @@ public interface SettingsContract {
 
         //清除缓存
         void clearCache();
+
+        //隐藏浮动按钮
+        void setHideFab(Preference preference);
     }
 }

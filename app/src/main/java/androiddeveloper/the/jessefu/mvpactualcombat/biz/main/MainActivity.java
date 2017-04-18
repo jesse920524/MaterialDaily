@@ -3,6 +3,7 @@ package androiddeveloper.the.jessefu.mvpactualcombat.biz.main;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -34,6 +35,7 @@ import androiddeveloper.the.jessefu.mvpactualcombat.biz.lastestNews.LatestNewsFr
 import androiddeveloper.the.jessefu.mvpactualcombat.biz.oneMoment.OneMomentFragment;
 import androiddeveloper.the.jessefu.mvpactualcombat.biz.pastNews.PastNewsFragment;
 import androiddeveloper.the.jessefu.mvpactualcombat.biz.settings.SettingsActivity;
+import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -71,7 +73,8 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
     private Fragment currentFragment;
     private AHViewpagerAdapter mViewpagerAdapter;
 
-    private boolean hideFunctionEnabled;
+    private boolean hideFunctionEnabled;//隐藏功能可用状态
+    private boolean hideFab;//浮动按钮可用状态
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,12 +91,21 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
     @Override
     protected void onResume() {
         super.onResume();
-         hideFunctionEnabled = getSharedPreferences("user_settings", MODE_PRIVATE).getBoolean("hide_function", false);
+        hideFunctionEnabled = getSharedPreferences(MyConstants.USER_SETTINGS, MODE_PRIVATE).getBoolean("hide_function", false);
+        hideFab = getSharedPreferences(MyConstants.USER_SETTINGS, MODE_PRIVATE).getBoolean("hide_fab", false);
+
         Log.d(TAG, "隐藏功能开启: " + hideFunctionEnabled);
+        Log.d(TAG, "浮动按钮隐藏: " + hideFab);
         if (hideFunctionEnabled){
             mIvDrive.setVisibility(View.VISIBLE);
         }else{
             mIvDrive.setVisibility(View.GONE);
+        }
+
+        if (hideFab){
+            mFAB.setVisibility(View.GONE);
+        }else{
+            mFAB.setVisibility(View.VISIBLE);
         }
     }
 
@@ -137,7 +149,6 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
 
     private void initToolbar() {
         mTitle.setText(R.string.title_today);
-        //mToolbar.setTitle("今日");
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
@@ -154,9 +165,6 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
     }
 
     private void initBottomNav() {
-
-
-        //mBottomNavigation = (AHBottomNavigation) findViewById(R.id.bn_main);
 
         mNavAdapter = new AHBottomNavigationAdapter(this, R.menu.menu_bottom_navigation);
         mNavAdapter.setupWithBottomNavigation(mBottomNavigation);
@@ -187,21 +195,32 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
                         switch (position){
                             case 0:
                                 mTitle.setText(R.string.title_today);
-                                mFAB.setImageResource(R.mipmap.ic_shuffle_white_24dp);
-                                mFAB.setVisibility(View.VISIBLE);
-                                fabStatus = 0;
+
+
+                                if (!hideFab){
+                                    mFAB.setImageResource(R.mipmap.ic_shuffle_white_24dp);
+                                    mFAB.setVisibility(View.VISIBLE);
+                                    fabStatus = 0;
+                                }
+
                                 break;
                             case 1:
                                 mTitle.setText(R.string.title_one_moment);
-                                mFAB.setImageResource(R.mipmap.ic_settings_white_24dp);
-                                mFAB.setVisibility(View.INVISIBLE);
-                                fabStatus = 1;
+
+
+                                if (!hideFab){
+                                    mFAB.setImageResource(R.mipmap.ic_settings_white_24dp);
+                                    mFAB.setVisibility(View.INVISIBLE);
+                                    fabStatus = 1;
+                                }
                                 break;
                             case 2:
                                 mTitle.setText(R.string.title_past);
-                                mFAB.setImageResource(R.mipmap.ic_search_white_24dp);
-                                mFAB.setVisibility(View.VISIBLE);
-                                fabStatus = 2;
+                                if (!hideFab){
+                                    mFAB.setImageResource(R.mipmap.ic_search_white_24dp);
+                                    mFAB.setVisibility(View.VISIBLE);
+                                    fabStatus = 2;
+                                }
                                 break;
                         }
 
@@ -274,7 +293,6 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
     }
 
     private void toGankGirlsActivity() {
-
         Intent intent = new Intent(MainActivity.this, GankGirlsActivity.class);
         startActivity(intent);
     }
@@ -285,12 +303,20 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
     }
 
 
+    private long firstTime;
     @Override
     public void onBackPressed() {
+        long secondTime = System.currentTimeMillis();
+        if (secondTime - firstTime > 2000){
+            BaseApplication.showToast(getString(R.string.double_click_quit));
+            firstTime = secondTime;
+        }else{
+            System.exit(0);
+        }
+
         /**
          * 判断滑动位置? 滚回顶部 : 退出程序*/
-        //super.onBackPressed();
-        if (currentFragment instanceof LatestNewsFragment){
+        /*if (currentFragment instanceof LatestNewsFragment){
 
             if (((LatestNewsFragment) currentFragment).getRecyclerViewPosition(((LatestNewsFragment) currentFragment).linearLayoutManager) != 0){
                 ((LatestNewsFragment) currentFragment).recyclerViewSmoothScroll();
@@ -315,7 +341,7 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
             }
         }else{
             finish();
-        }
+        }*/
     }
 
     @Override

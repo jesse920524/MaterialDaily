@@ -1,6 +1,7 @@
 package androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.services;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.model.pastNews.PastNewsBean;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews.ZHPastNewsBean;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import rx.Observable;
@@ -13,4 +14,7 @@ import rx.Observable;
 public interface PastNewsService {
     @GET("api/4/news/before/{date}")
     Observable<PastNewsBean> getPastNews(@Path("date") String date);
+
+    @GET("api/4/news/before/{date}")
+    Observable<ZHPastNewsBean> getPastNews1(@Path("date") String date);
 }

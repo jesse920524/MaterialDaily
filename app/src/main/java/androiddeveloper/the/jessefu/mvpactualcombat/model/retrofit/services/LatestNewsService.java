@@ -1,6 +1,7 @@
 package androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.services;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.model.latestNews.LatestNewsBean;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews.ZHLatestNewsBean;
 import retrofit2.http.GET;
 import rx.Observable;
 
@@ -12,4 +13,8 @@ import rx.Observable;
 public interface LatestNewsService {
     @GET("api/4/news/latest")
     Observable<LatestNewsBean> getLatestNews();
+
+    @GET("api/4/news/latest")
+    Observable<ZHLatestNewsBean> getLatestNews1();
+
 }

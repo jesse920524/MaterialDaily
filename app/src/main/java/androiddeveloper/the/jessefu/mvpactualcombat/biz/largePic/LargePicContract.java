@@ -12,13 +12,13 @@ import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseView;
 
 public interface LargePicContract {
     interface ILargePicView extends BaseView<ILargePicPrensenter>{
-        void dismissToolbar();
+        void dismissWidgets();
 
-        void showToolbar();
+        void showWidgets();
 
         void setupPhotoAttacher();
 
-        String getArgs();
+        String getIntentArgs();
     }
     interface ILargePicPrensenter extends BasePresenter{
         void saveImg2Gallary(final String type);
@@ -27,10 +27,10 @@ public interface LargePicContract {
 
         void shareImg(Context context, Uri imgUri);
 
-        void showToolbarImmediately();
+        void showWidgetsImmediately();
 
-        void showToolbar();
+        void showWidgets();
 
-        void dismissToolbar();
+        void dismissWidgets();
     }
 }

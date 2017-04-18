@@ -1,4 +1,4 @@
-package androiddeveloper.the.jessefu.mvpactualcombat.model.latestNews;
+package androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -9,7 +9,7 @@ import java.util.List;
  * JavaBean--知乎日报最新消息
  */
 
-public class LatestNewsBean {
+public class ZHLatestNewsBean {
 
     /**
      * date : 20170222

@@ -26,12 +26,12 @@ public class LargePicPresenter implements LargePicContract.ILargePicPrensenter {
 
     @Override
     public void start() {
-        dismissToolbar();
+        dismissWidgets();
     }
 
     @Override
     public void saveImg2Gallary(final String type) {
-        Subscription s = RxSaveImg.saveImgGetPathObservable((Context) view, view.getArgs())
+        Subscription s = RxSaveImg.saveImgGetPathObservable((Context) view, view.getIntentArgs())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Uri>() {
                     @Override
@@ -61,31 +61,31 @@ public class LargePicPresenter implements LargePicContract.ILargePicPrensenter {
     }
 
     @Override
-    public void showToolbarImmediately() {
+    public void showWidgetsImmediately() {
         new Handler().post(new Runnable() {
             @Override
             public void run() {
-                view.showToolbar();
+                view.showWidgets();
             }
         });
     }
 
     @Override
-    public void showToolbar() {
+    public void showWidgets() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                view.showToolbar();
+                view.showWidgets();
             }
         }, 1500);
     }
 
     @Override
-    public void dismissToolbar() {
+    public void dismissWidgets() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                view.dismissToolbar();
+                view.dismissWidgets();
             }
         }, 1500);
     }

@@ -52,7 +52,8 @@
         <activity android:name=".biz.largePic.LargePicActivity"
             android:label="@string/activity_large_pic"
             android:screenOrientation="portrait"
-            android:theme="@style/LargePicActivityTheme"></activity>
+            ></activity>
+        <!--android:theme="@style/LargePicActivityTheme"-->
 
     </application>
 

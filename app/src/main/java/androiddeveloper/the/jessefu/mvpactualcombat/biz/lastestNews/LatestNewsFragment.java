@@ -25,10 +25,12 @@ import java.util.Random;
 import androiddeveloper.the.jessefu.mvpactualcombat.R;
 import androiddeveloper.the.jessefu.mvpactualcombat.R2;
 import androiddeveloper.the.jessefu.mvpactualcombat.adapter.RecyclerLatestAdatper;
+import androiddeveloper.the.jessefu.mvpactualcombat.adapter.RecyclerZHStoryAdapter;
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseFragment;
 import androiddeveloper.the.jessefu.mvpactualcombat.biz.webView.WebviewActivity;
 import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.latestNews.LatestNewsStoryEntity;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews.ZHNewsStoryEntity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -47,7 +49,8 @@ public class LatestNewsFragment extends BaseFragment implements LatestNewsContra
     @BindView(R2.id.layout_ln_swipe)
     SwipeRefreshLayout mSwiper;
 
-    private RecyclerLatestAdatper mRecyclerAdapter;
+    //private RecyclerLatestAdatper mRecyclerAdapter;
+    private RecyclerZHStoryAdapter mRecyclerAdapter;
     public LinearLayoutManager linearLayoutManager;
 
 
@@ -81,22 +84,24 @@ public class LatestNewsFragment extends BaseFragment implements LatestNewsContra
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(getActivity(), WebviewActivity.class);
-                LatestNewsStoryEntity entity = (LatestNewsStoryEntity) adapter.getData().get(position);
+                ZHNewsStoryEntity entity = (ZHNewsStoryEntity) adapter.getData().get(position);
                 Log.d(TAG, String.valueOf(entity));
-               /* intent.putExtra(MyConstants.ARTICLE_ID, String.valueOf(entity.getId()));
-                intent.putExtra(MyConstants.ARTICLE_TITLE, entity.getTitle());*/
                 intent.putExtra(MyConstants.SERIALIZABLE_ITEM, entity);
                 intent.putExtra(MyConstants.ARTICLE_TYPE, MyConstants.ARTICLE_TYPE_ZHIHU_LATEST);//传递文章类型
                 startActivity(intent);
             }
         });
-        mRecyclerAdapter = new RecyclerLatestAdatper(R.layout.item_news, null);
+        mRecyclerAdapter = new RecyclerZHStoryAdapter(R.layout.item_news, null);
+        mRecyclerAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                presenter.getDataMore();
+            }
+        });
         mRecyclerAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         mRecyclerView.setAdapter(mRecyclerAdapter);
 
         //init SwipeRefreshLayout
-
-
         mSwiper.setColorSchemeColors(ActivityCompat.getColor(getActivity(), R.color.colorAccent));
         mSwiper.setOnRefreshListener(this);
         mSwiper.setProgressViewOffset(false, 0, 200);
@@ -129,9 +134,8 @@ public class LatestNewsFragment extends BaseFragment implements LatestNewsContra
 
     /**将presenter获取的数据显示到recyclerView上*/
     @Override
-    public void getData(List<LatestNewsStoryEntity> latestNewsStoryEntityList) {
-
-        mRecyclerAdapter.setNewData(latestNewsStoryEntityList);
+    public void getData(List<ZHNewsStoryEntity> entities) {
+        mRecyclerAdapter.setNewData(entities);
 
         mSwiper.setEnabled(false);
         new Handler().postDelayed(new Runnable() {
@@ -143,9 +147,38 @@ public class LatestNewsFragment extends BaseFragment implements LatestNewsContra
     }
 
     @Override
+    public void getDataMore(final List<ZHNewsStoryEntity> entities) {
+        mRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerAdapter.addData(entities);
+                mRecyclerAdapter.loadMoreComplete();
+            }
+        });
+    }
+
+    @Override
     public void getDataError(String errMsg) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_empty, null);
         mRecyclerAdapter.setEmptyView(view);
+    }
+
+    @Override
+    public void getDataMoreError(String errMsg) {
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_empty, null);
+        mRecyclerAdapter.setEmptyView(view);
+    }
+
+    @Override
+    public void disableLoadMore() {
+        mRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                Log.d(TAG, "加载完成.");
+                mRecyclerAdapter.loadMoreEnd();
+            }
+        });
+
     }
 
     @Override
@@ -175,12 +208,9 @@ public class LatestNewsFragment extends BaseFragment implements LatestNewsContra
             /**generate random item*/
             int dataSize = mRecyclerAdapter.getData().size();
             int random = new Random().nextInt(dataSize);
-            LatestNewsStoryEntity entity = mRecyclerAdapter.getData().get(random);
+            ZHNewsStoryEntity entity = mRecyclerAdapter.getData().get(random);
 
             Intent intent = new Intent(getActivity(), WebviewActivity.class);
-            /*intent.putExtra(MyConstants.ARTICLE_ID, String.valueOf(entity.getId()));
-            intent.putExtra(MyConstants.ARTICLE_TITLE, entity.getTitle());*/
-
             intent.putExtra(MyConstants.SERIALIZABLE_ITEM, entity);
             intent.putExtra(MyConstants.ARTICLE_TYPE, MyConstants.ARTICLE_TYPE_ZHIHU_LATEST);//传递文章类型
             startActivity(intent);

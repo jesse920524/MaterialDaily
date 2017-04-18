@@ -4,6 +4,13 @@
 
     <PreferenceCategory
         android:title="@string/setting_basic">
+
+        <SwitchPreference
+            android:title="@string/setting_hide_function"
+            android:key="hide_function"
+            android:defaultValue="false"
+            android:summaryOff="@string/setting_hide_function_off"
+            android:summaryOn="@string/setting_hide_function_on"></SwitchPreference>
         <SwitchPreference
             android:title="@string/setting_no_pic"
             android:key="no_pic_mode"
@@ -11,11 +18,10 @@
             android:summaryOn="@string/setting_no_pic_summary_on"
             android:summaryOff="@string/setting_no_pic_summary_off"></SwitchPreference>
         <SwitchPreference
-            android:title="@string/setting_hide_function"
-            android:key="hide_function"
+            android:title="@string/setting_hide_fab"
+            android:key="hide_fab"
             android:defaultValue="false"
-            android:summaryOff="@string/setting_hide_function_off"
-            android:summaryOn="@string/setting_hide_function_on"></SwitchPreference>
+            ></SwitchPreference>
     </PreferenceCategory>
 
     <PreferenceCategory

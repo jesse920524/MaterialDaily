@@ -53,4 +53,12 @@ public class SettingPresenter implements SettingsContract.ISettingsPresenter {
 
 
     }
+
+    @Override
+    public void setHideFab(Preference preference) {
+        editor.putBoolean("hide_fab", preference.getSharedPreferences().getBoolean("hide_fab", false));
+        editor.apply();
+    }
+
+
 }

@@ -2,6 +2,7 @@ package androiddeveloper.the.jessefu.mvpactualcombat.biz.webView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
@@ -34,6 +36,7 @@ import androiddeveloper.the.jessefu.mvpactualcombat.model.latestNews.LatestNewsS
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMoment.OneMomentEntity;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMomentDetail.OneMomentDetailBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.pastNews.PastNewsStoryEntity;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews.ZHNewsStoryEntity;
 import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilConnection;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -104,7 +107,9 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
 
     @Override
     protected void onDestroy() {
+
         super.onDestroy();
+        mWebView.getScrollY();
         SwipeBackHelper.onDestroy(this);
     }
 
@@ -112,8 +117,8 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
     private void setUIFlags() {
         if (Build.VERSION.SDK_INT >= 21){
             View decorView = getWindow().getDecorView();
-            int option =  View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    |View.SYSTEM_UI_FLAG_FULLSCREEN;
+            int option =  View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+//                    |View.SYSTEM_UI_FLAG_FULLSCREEN;
             decorView.setSystemUiVisibility(option);
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
@@ -147,6 +152,8 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
         }else{
             webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);//no network, load local
         }
+
+        mWebView.setWebViewClient(new MyWebviewClient());
 
         mToolbar.setContentInsetStartWithNavigation(0);
         mToolbar.setTitle("");
@@ -267,7 +274,7 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
         if (intent != null){
 
             if (intent.getStringExtra(MyConstants.ARTICLE_TYPE).equals(MyConstants.ARTICLE_TYPE_ZHIHU_LATEST)){
-                LatestNewsStoryEntity entity = (LatestNewsStoryEntity) intent.getSerializableExtra(MyConstants.SERIALIZABLE_ITEM);
+                ZHNewsStoryEntity entity = (ZHNewsStoryEntity) intent.getSerializableExtra(MyConstants.SERIALIZABLE_ITEM);
                 receivedId = String.valueOf(entity.getId());
                 receivedTitle = entity.getTitle();
             }else if (intent.getStringExtra(MyConstants.ARTICLE_TYPE).equals(MyConstants.ARTICLE_TYPE_ZHIHU_PAST)){
@@ -340,5 +347,19 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
     @Override
     public void showErrorSnack() {
         Snackbar.make(mWebView, "无法连接到网络", Snackbar.LENGTH_LONG).show();
+    }
+
+    class MyWebviewClient extends WebViewClient{
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            view.scrollTo(0, 1000);
+            Log.d(TAG, "onPageFinished exec");
+        }
     }
 }

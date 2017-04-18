@@ -13,6 +13,8 @@ import androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.services.Them
 import androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.services.ThemeNewsService;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.themesNews.themes.ThemeBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.themesNews.themeNews.ThemeNewsBean;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews.ZHLatestNewsBean;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews.ZHPastNewsBean;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -66,6 +68,7 @@ public class HttpMethodsZhihu {
         return SingltonHolder.INSTANCE;
     }
 
+
     /**
      * 用于获取知乎日报最新文章*/
     public void getLatestNews(Subscriber<LatestNewsBean> subscriber){
@@ -76,9 +79,26 @@ public class HttpMethodsZhihu {
                 .subscribe(subscriber);
     }
 
+    /**new */
+    public void getLatestNews1(Subscriber<ZHLatestNewsBean> subscriber){
+        latestNewsService.getLatestNews1()
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
     /**用于获取知乎日报往期文章*/
     public void getPastNews(Subscriber<PastNewsBean> subscriber, String date){
         pastNewsService.getPastNews(date)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+    public void getPastNews1(Subscriber<ZHPastNewsBean> subscriber, String date){
+        pastNewsService.getPastNews1(date)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

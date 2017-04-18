@@ -23,7 +23,8 @@
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
-            app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Title">
+            app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
+            >
             <!--app:layout_scrollFlags="scroll|exitUntilCollapsed"-->
             <ImageView
                 android:id="@+id/iv_web"

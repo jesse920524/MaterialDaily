@@ -39,17 +39,18 @@
     </style>
 
     <!--toolbar titleTextAppearance-->
-    <style name="ToolbarTitleAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <!--toolbar title font-->
-        <!--<item name="android:fontFamily">sans-serif-light</item>
+  <!--  <style name="ToolbarTitleAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        &lt;!&ndash;toolbar title font&ndash;&gt;
+        &lt;!&ndash;<item name="android:fontFamily">sans-serif-light</item>
 
         &lt;!&ndash;toolbar text color&ndash;&gt;
-        <item name="android:textColor">@color/bluegrey_100</item>-->
+        <item name="android:textColor">@color/bluegrey_100</item>&ndash;&gt;
 
-        <!--toolbar title text size-->
+        &lt;!&ndash;toolbar title text size&ndash;&gt;
         <item name="android:textSize">14sp</item>
-    </style>
+    </style>-->
 
+    <!--解决Toobar标题距离navigationIcon有16dp的间距的问题-->
     <style name="ToolbarRemoveContentInsetStart" parent="Widget.AppCompat.Toolbar">
         <item name="contentInsetStart">0dp</item>
     </style>

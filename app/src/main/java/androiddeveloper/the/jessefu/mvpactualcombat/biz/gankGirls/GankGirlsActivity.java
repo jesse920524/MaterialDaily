@@ -14,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.jude.swipbackhelper.SwipeBackHelper;
+
 import androiddeveloper.the.jessefu.mvpactualcombat.R;
 import androiddeveloper.the.jessefu.mvpactualcombat.R2;
 import butterknife.BindView;
@@ -38,6 +40,12 @@ public class GankGirlsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gank_girls);
         ButterKnife.bind(this);
+
+        SwipeBackHelper.onCreate(this);
+        SwipeBackHelper.getCurrentPage(this)
+                .setSwipeEdgePercent(0.2f)
+                .setSwipeSensitivity(0.5f);
+
         initViews();
         checkPermission();
     }
@@ -126,5 +134,17 @@ public class GankGirlsActivity extends AppCompatActivity {
     }
     @PermissionFail(requestCode=200)
     public void failGetPermission(){
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        SwipeBackHelper.onPostCreate(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SwipeBackHelper.onDestroy(this);
     }
 }

@@ -1,4 +1,4 @@
-package androiddeveloper.the.jessefu.mvpactualcombat.model.pastNews;
+package androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -9,7 +9,7 @@ import java.util.List;
  * 知乎日报--往期文章Bean
  */
 
-public class PastNewsBean {
+public class ZHPastNewsBean {
 
     /**
      * date : 20131118

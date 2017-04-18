@@ -7,6 +7,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.jude.swipbackhelper.SwipeBackHelper;
+
 import org.greenrobot.eventbus.EventBus;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.R;
@@ -33,9 +35,27 @@ public class AboutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about);
         ButterKnife.bind(this);
 
+        SwipeBackHelper.onCreate(this);
+        SwipeBackHelper.getCurrentPage(this)
+                .setSwipeEdgePercent(0.2f)
+                .setSwipeSensitivity(0.5f);
+
         initViews();
         initFragment();
     }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        SwipeBackHelper.onPostCreate(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SwipeBackHelper.onDestroy(this);
+    }
+
 
     private void initFragment() {
         if (aboutFragment == null){

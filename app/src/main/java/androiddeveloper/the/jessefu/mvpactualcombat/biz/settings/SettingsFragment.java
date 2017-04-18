@@ -57,9 +57,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.fragment_settings);
 
-        findPreference("no_pic_mode").setOnPreferenceClickListener(this);
         findPreference("hide_function").setOnPreferenceClickListener(this);
+        findPreference("no_pic_mode").setOnPreferenceClickListener(this);
         findPreference("clear_pic_cache").setOnPreferenceClickListener(this);
+        findPreference("hide_fab").setOnPreferenceClickListener(this);
+
 
         mToolbar = (Toolbar) getActivity().findViewById(R.id.tb_settings);
 
@@ -87,6 +89,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
                 break;
             case "clear_pic_cache":
                 presenter.clearCache();
+                break;
+            case "hide_fab":
+                presenter.setHideFab(preference);
+                preference.getSharedPreferences().getBoolean("hide_fab", false);
                 break;
         }
         return true;

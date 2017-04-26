@@ -1,5 +1,6 @@
 package androiddeveloper.the.jessefu.mvpactualcombat.biz.settings;
 
+import android.content.Context;
 import android.support.v7.preference.Preference;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BasePresenter;
@@ -28,5 +29,10 @@ public interface SettingsContract {
 
         //隐藏浮动按钮
         void setHideFab(Preference preference);
+
+        //设置缓存过期
+        void setCacheLife(Preference preference, String value);
+
+        String getCacheLife(Context context);
     }
 }

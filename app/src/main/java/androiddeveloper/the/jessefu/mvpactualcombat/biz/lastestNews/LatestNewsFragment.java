@@ -87,7 +87,7 @@ public class LatestNewsFragment extends BaseFragment implements LatestNewsContra
                 ZHNewsStoryEntity entity = (ZHNewsStoryEntity) adapter.getData().get(position);
                 Log.d(TAG, String.valueOf(entity));
                 intent.putExtra(MyConstants.SERIALIZABLE_ITEM, entity);
-                intent.putExtra(MyConstants.ARTICLE_TYPE, MyConstants.ARTICLE_TYPE_ZHIHU_LATEST);//传递文章类型
+                intent.putExtra(MyConstants.ARTICLE_TYPE, MyConstants.ARTICLE_TYPE_ZHIHU);//传递文章类型
                 startActivity(intent);
             }
         });

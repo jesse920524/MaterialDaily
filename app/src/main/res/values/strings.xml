@@ -25,6 +25,7 @@
     <string name="setting_clear_pic_cache">清除图片缓存</string>
     <string name="setting_hide_fab">隐藏浮动按钮</string>
     <string name="setting_hide_fab_on"></string>
+    <string name="setting_choose_cache_storage_life">设置缓存时效</string>
 
     <string name="feedback">反馈</string>
     <string name="bottom_nav_0">news</string>

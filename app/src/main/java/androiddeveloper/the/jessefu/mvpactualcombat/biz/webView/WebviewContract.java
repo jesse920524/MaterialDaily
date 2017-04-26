@@ -2,10 +2,13 @@ package androiddeveloper.the.jessefu.mvpactualcombat.biz.webView;
 
 import android.content.Intent;
 
+import java.io.Serializable;
+
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BasePresenter;
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseView;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.articleDetail.ArticleDetailBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMomentDetail.OneMomentDetailBean;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreArticle.RestoreArticleBean;
 
 /**
  * Created by Jesse Fu on 2017/3/3 0003.
@@ -40,5 +43,11 @@ public interface WebviewContract {
 
         //检查文章类型合法性
         boolean checkArticleType(String type);
+
+        //持久化文章,根据type区分不同类型
+        <T extends Serializable> void saveArticle(T t, String type);
+
+        //取出已持久化的文章
+        RestoreArticleBean getArticleFromDb(Long id);
     }
 }

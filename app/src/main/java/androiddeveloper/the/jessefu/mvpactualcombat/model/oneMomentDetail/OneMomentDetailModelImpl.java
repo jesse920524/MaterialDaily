@@ -2,6 +2,7 @@ package androiddeveloper.the.jessefu.mvpactualcombat.model.oneMomentDetail;
 
 import android.util.Log;
 
+import androiddeveloper.the.jessefu.mvpactualcombat.model.listener.OnDataLoadedListener;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.httpMethods.HttpMethodOneMoment;
 import rx.Subscriber;
 
@@ -16,7 +17,7 @@ public class OneMomentDetailModelImpl implements IOneMomentDetailModel {
     private Subscriber<OneMomentDetailBean> subscriber;
 
     @Override
-    public void getOneMomentDetailBean(final onDataLoadedListener loadedListener, String id) {
+    public void getOneMomentDetailBean(final OnDataLoadedListener listener, String id) {
         subscriber = new Subscriber<OneMomentDetailBean>() {
             @Override
             public void onCompleted() {
@@ -27,24 +28,17 @@ public class OneMomentDetailModelImpl implements IOneMomentDetailModel {
             public void onError(Throwable e) {
                 e.printStackTrace();
                 Log.d(TAG, "获取一刻文章详情: onError()" + e.getMessage());
-                loadedListener.onError(e.getMessage());
+                listener.onError(e.getMessage());
             }
 
             @Override
             public void onNext(OneMomentDetailBean bean) {
                 Log.d(TAG, "获取一刻文章详情: onNext() " + bean);
-                loadedListener.onSuccess(bean);
+                listener.onSuccess(bean);
             }
         };
         HttpMethodOneMoment.getInstance().getOneMomentDetail(subscriber, id);
 
     }
 
-
-
-    public interface onDataLoadedListener{
-        void onSuccess(OneMomentDetailBean bean);
-
-        void onError(String errMsg);
-    }
 }

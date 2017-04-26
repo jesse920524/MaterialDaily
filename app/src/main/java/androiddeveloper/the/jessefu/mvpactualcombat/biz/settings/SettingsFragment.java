@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.Snackbar;
+import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceScreen;
@@ -22,12 +23,13 @@ import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseApplication;
  * Created by Jesse Fu on 2017/3/10 0010.
  */
 
-public class SettingsFragment extends PreferenceFragmentCompat implements SettingsContract.ISettingsView, Preference.OnPreferenceClickListener {
+public class SettingsFragment extends PreferenceFragmentCompat implements SettingsContract.ISettingsView, Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
     private static final String TAG = SettingsFragment.class.getSimpleName();
 
     private SettingsContract.ISettingsPresenter presenter;
 
     private Toolbar mToolbar;
+    private ListPreference mListPreference;
 
     private static final int CLEAR_CACHE_DONE = 1;
     private Handler mHandler = new Handler(){
@@ -62,11 +64,14 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
         findPreference("clear_pic_cache").setOnPreferenceClickListener(this);
         findPreference("hide_fab").setOnPreferenceClickListener(this);
 
+        mListPreference = (ListPreference) findPreference("choose_cache_storage_life");
+        mListPreference.setOnPreferenceChangeListener(this);
 
         mToolbar = (Toolbar) getActivity().findViewById(R.id.tb_settings);
 
         presenter = new SettingPresenter(this);
         presenter.start();
+        mListPreference.setSummary(presenter.getCacheLife(getActivity()));
     }
 
     /**
@@ -95,6 +100,17 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
                 preference.getSharedPreferences().getBoolean("hide_fab", false);
                 break;
         }
+        return true;
+    }
+
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+        /*CharSequence[] charSequences = ((ListPreference)preference).getEntries();
+        int index = ((ListPreference) preference).findIndexOfValue(String.valueOf(newValue));
+        preference.setSummary(charSequences[index]);*/
+        preference.setSummary(newValue.toString());
+        presenter.setCacheLife(preference, String.valueOf(newValue));
         return true;
     }
 
@@ -134,4 +150,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
     public void onDestroy() {
         super.onDestroy();
     }
+
+
 }

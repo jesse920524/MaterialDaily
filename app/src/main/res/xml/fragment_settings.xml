@@ -22,10 +22,17 @@
             android:key="hide_fab"
             android:defaultValue="false"
             ></SwitchPreference>
+
     </PreferenceCategory>
 
     <PreferenceCategory
         android:title="@string/setting_other">
+        <ListPreference
+            android:title="@string/setting_choose_cache_storage_life"
+            android:key="choose_cache_storage_life"
+            android:defaultValue="@string/list_preference_15"
+            android:entries="@array/array_choose_cache_storage_life"
+            android:entryValues="@array/array_choose_cache_storage_life_value"></ListPreference>
         <Preference
             android:title="@string/setting_clear_pic_cache"
             android:key="clear_pic_cache"></Preference>

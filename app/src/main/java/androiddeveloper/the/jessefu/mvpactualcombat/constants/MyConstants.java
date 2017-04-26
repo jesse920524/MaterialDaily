@@ -63,6 +63,7 @@ public interface MyConstants {
 
     //文章类型
     String ARTICLE_TYPE = "article_type";
+    String ARTICLE_TYPE_ZHIHU  = "article_type_zhihu";
     String ARTICLE_TYPE_ZHIHU_LATEST = "article_type_zhihu_latest";
     String ARTICLE_TYPE_ZHIHU_PAST = "article_type_zhihu_past";
     String ARTICLE_TYPE_ONEMOMENT = "article_type_onemoment";

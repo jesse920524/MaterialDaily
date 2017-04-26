@@ -2,6 +2,8 @@ package androiddeveloper.the.jessefu.mvpactualcombat.model.articleDetail;
 
 import android.util.Log;
 
+import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.listener.OnDataLoadedListener;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.httpMethods.HttpMethodsZhihu;
 import rx.Subscriber;
 
@@ -16,7 +18,7 @@ public class ArticleDetailModelImpl implements IArticleDetailModel {
     private Subscriber<ArticleDetailBean> subscriber;
 
     @Override
-    public void getArticleDetail(final onLoadedListener loadedListener, String id) {
+    public void getArticleDetail(final OnDataLoadedListener  listener, String id) {
         subscriber = new Subscriber<ArticleDetailBean>() {
             @Override
             public void onCompleted() {
@@ -27,20 +29,16 @@ public class ArticleDetailModelImpl implements IArticleDetailModel {
             public void onError(Throwable e) {
 
                 Log.d(TAG, "获取文章详情 onError: " + e.getMessage());
-                loadedListener.onError();
+                listener.onError(e.getMessage());
             }
 
             @Override
             public void onNext(ArticleDetailBean articleDetailBean) {
                 Log.d(TAG, "获取文章详情 onNext: " + articleDetailBean);
-                loadedListener.onSuccess(articleDetailBean);
+                listener.onSuccess(articleDetailBean);
             }
         };
         HttpMethodsZhihu.getInstance().getArticleDetail(subscriber, id);
     }
 
-    public interface onLoadedListener{
-        void onSuccess(ArticleDetailBean articleDetailBean);
-        void onError();
-    }
 }

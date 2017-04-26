@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.Toolbar;
 import android.transition.Fade;
 import android.util.Log;
 import android.view.Menu;
@@ -49,8 +50,8 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
 
     private static final String TAG = WebviewActivity.class.getSimpleName();
 
-    @BindView(R2.id.tb_web)
-    android.support.v7.widget.Toolbar mToolbar;
+    @BindView(R2.id.tb_web0)
+    Toolbar mToolbar;
 
     @BindView(R2.id.iv_web)
     ImageView mBackdrop;
@@ -92,11 +93,11 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
                 .setSwipeSensitivity(0.5f);
 
         intent = getIntent();//获取收到的intent
-
+        initViews();
         presenter = new WebviewPresenter(this);
         presenter.start();
 
-        initViews();
+
     }
 
     @Override
@@ -109,8 +110,11 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
     protected void onDestroy() {
 
         super.onDestroy();
-        mWebView.getScrollY();
         SwipeBackHelper.onDestroy(this);
+
+        receivedId = null;
+        receivedTitle = null;
+        articleUrl = null;
     }
 
     /**状态栏沉浸*/
@@ -138,7 +142,7 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
     public void initViews() {
         webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);//能够和js交互
-        webSettings.setBlockNetworkImage(presenter.checkNoPicMode());
+
         //缩放,设置为不能缩放可以防止页面上出现放大和缩小的图标
         webSettings.setBuiltInZoomControls(false);
         webSettings.setDomStorageEnabled(true);//开启DOM api
@@ -162,7 +166,11 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
         //mCollapsingToolbarLayout.setTitle("");
     }
 
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        webSettings.setBlockNetworkImage(presenter.checkNoPicMode());
+    }
 
     @Override
     public void setPresenter(WebviewContract.IWebviewPresenter presenter) {
@@ -182,7 +190,8 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
     //loadData
     @Override
     public void getZhihuArticleDetail(ArticleDetailBean bean) {
-        getSupportActionBar().setTitle(receivedTitle);
+        Log.d(TAG, "activity接收到bean: " + bean.getTitle());
+        getSupportActionBar().setTitle(bean.getTitle());
 
         articleUrl = bean.getShareUrl();//获取shareUrl
 
@@ -273,7 +282,7 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
 
         if (intent != null){
 
-            if (intent.getStringExtra(MyConstants.ARTICLE_TYPE).equals(MyConstants.ARTICLE_TYPE_ZHIHU_LATEST)){
+            if (intent.getStringExtra(MyConstants.ARTICLE_TYPE).equals(MyConstants.ARTICLE_TYPE_ZHIHU)){
                 ZHNewsStoryEntity entity = (ZHNewsStoryEntity) intent.getSerializableExtra(MyConstants.SERIALIZABLE_ITEM);
                 receivedId = String.valueOf(entity.getId());
                 receivedTitle = entity.getTitle();
@@ -286,7 +295,7 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
                 receivedId = String.valueOf(entity.getId());
                 receivedTitle = entity.getTitle();
             }
-            Log.d(TAG, "received title: " + receivedTitle);
+            //Log.d(TAG, "received title: " + receivedTitle);
 
         }
         return receivedId;

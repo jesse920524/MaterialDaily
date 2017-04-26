@@ -35,6 +35,24 @@ public class UtilTime {
         return null;
     }
 
+    /**得到指定日期前n天的日期
+     * @param d 指定日期
+     * @param offset 落差(几天前)*/
+    public static Date getSpecifiedBefore(Date d, int offset){
+        Calendar calendar = Calendar.getInstance();
+        Date targetDate = null;
+        try{
+            targetDate = new SimpleDateFormat("yyyy-MM-dd").parse(String.valueOf(d));
+            calendar.setTime(targetDate);
+            int i = calendar.get(Calendar.DATE);
+            calendar.set(Calendar.DATE, i - offset);
+            return calendar.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static Date convertStringToDate(String s){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date d;

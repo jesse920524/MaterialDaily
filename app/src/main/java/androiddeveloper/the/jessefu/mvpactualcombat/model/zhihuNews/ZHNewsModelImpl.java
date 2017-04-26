@@ -44,7 +44,7 @@ public class ZHNewsModelImpl implements IZHNewsModel {
 
                 Log.d(TAG, "获取今日新闻列表 onCompleted() exec");
                 //得到前一天date(input -> date out -> date)
-                currDate = UtilTime.getSpecifiedBefore(currDate);
+                //currDate = UtilTime.getSpecifiedBefore(currDate);
 
                 Log.d(TAG, "更新后的currDate: " + currDate);
             }

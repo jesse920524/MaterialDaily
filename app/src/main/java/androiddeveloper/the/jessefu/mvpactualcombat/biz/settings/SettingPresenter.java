@@ -1,5 +1,6 @@
 package androiddeveloper.the.jessefu.mvpactualcombat.biz.settings;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.preference.Preference;
 import android.util.Log;
@@ -48,10 +49,7 @@ public class SettingPresenter implements SettingsContract.ISettingsPresenter {
 
     @Override
     public void clearCache() {
-
         view.showClearCacheResult();
-
-
     }
 
     @Override
@@ -60,5 +58,15 @@ public class SettingPresenter implements SettingsContract.ISettingsPresenter {
         editor.apply();
     }
 
+    @Override
+    public void setCacheLife(Preference preference, String value) {
+        //editor.putString("cache_life", preference.getSharedPreferences().getString("choose_cache_storage_life", null));
+        editor.putString("cache_life", value);
+        editor.apply();
+    }
 
+    @Override
+    public String getCacheLife(Context context){
+        return sp.getString("cache_life", "15天");
+    }
 }

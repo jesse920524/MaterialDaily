@@ -49,7 +49,6 @@ public class RestoreArticleModelImpl implements IRestoreArticleModel {
     @Override
     public void saveArticle(RestoreArticleBean restoreArticleBean) {
         Log.d(TAG, "saveArticle exec " + restoreArticleBean.getArticleId());
-        //restoreArticleBeanDao.save(restoreArticleBean);
 
         try{
             if (queryArticleById(restoreArticleBean.getArticleId()) == null){

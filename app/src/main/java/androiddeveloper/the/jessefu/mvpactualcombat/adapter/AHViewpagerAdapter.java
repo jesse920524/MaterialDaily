@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import androiddeveloper.the.jessefu.mvpactualcombat.biz.guokrNews.GuokrNewsFragment;
 import androiddeveloper.the.jessefu.mvpactualcombat.biz.lastestNews.LatestNewsFragment;
 import androiddeveloper.the.jessefu.mvpactualcombat.biz.oneMoment.OneMomentFragment;
 import androiddeveloper.the.jessefu.mvpactualcombat.biz.pastNews.PastNewsFragment;
@@ -30,7 +31,8 @@ public class AHViewpagerAdapter extends FragmentPagerAdapter {
         fragmentList.add(LatestNewsFragment.newInstance("0"));
         //fragmentList.add(ThemeFragment.newInstance("1"));
         fragmentList.add(OneMomentFragment.newInstance("1"));
-        fragmentList.add(PastNewsFragment.newInstance("2"));
+        //fragmentList.add(PastNewsFragment.newInstance("2"));
+        fragmentList.add(GuokrNewsFragment.newInstance("2"));
 
 
         currentFragment = fragmentList.get(0);

@@ -26,6 +26,8 @@ public interface LatestNewsContract {
 
         void getDataMoreError(String errMsg);
 
+        void getPersistentData(List<ZHNewsStoryEntity> persistentData);
+
         void disableLoadMore();
 
         void showLoading();

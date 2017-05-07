@@ -33,6 +33,8 @@ import androiddeveloper.the.jessefu.mvpactualcombat.R2;
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseActivity;
 import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.articleDetail.ArticleDetailBean;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNews.GuokrNewsEntity;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNewsDetail.GuokrNewsDetailBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.latestNews.LatestNewsStoryEntity;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMoment.OneMomentEntity;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMomentDetail.OneMomentDetailBean;
@@ -76,7 +78,7 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
     private String receivedId;
     private String receivedTitle;
     private String articleUrl;
-    private Intent intent;
+    //private Intent intent;
 
     private WebSettings webSettings;
 
@@ -92,7 +94,7 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
                 .setSwipeEdgePercent(0.2f)
                 .setSwipeSensitivity(0.5f);
 
-        intent = getIntent();//获取收到的intent
+        //intent = getIntent();//获取收到的intent
         initViews();
         presenter = new WebviewPresenter(this);
         presenter.start();
@@ -155,6 +157,12 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
             webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
         }else{
             webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);//no network, load local
+        }
+
+        /**
+         * 设置混合模式*/
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
 
         mWebView.setWebViewClient(new MyWebviewClient());
@@ -274,6 +282,57 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
 
     }
 
+    @Override
+    public void getGuokrNewsDetail(String bean) {
+        Log.d(TAG, "读取持久化果壳文章详情: " + bean);
+        GuokrNewsEntity entity = (GuokrNewsEntity) getIntent().getSerializableExtra(MyConstants.SERIALIZABLE_ITEM);
+        getSupportActionBar().setTitle(entity.getTitle());
+
+        articleUrl = entity.getLink();
+
+        /**根据sharedpreference取出的值 no_pic_mode,
+         * 决定是否加载图片*/
+        if (!presenter.checkNoPicMode()){
+            Glide.with(this)
+                    .load(entity.getHeadline_img())
+                    .asBitmap()
+                    .animate(R.anim.alpha_in)
+                    .centerCrop()
+                    .into(mBackdrop);
+        }else{
+            //无图模式则什么也不加载
+        }
+        // 简单粗暴的去掉下载的div部分
+        bean = bean.replace("<div class=\"down\" id=\"down-footer\">\n" +
+                "        <img src=\"http://static.guokr.com/apps/handpick/images/c324536d.jingxuan-logo.png\" class=\"jingxuan-img\">\n" +
+                "        <p class=\"jingxuan-txt\">\n" +
+                "            <span class=\"jingxuan-title\">果壳精选</span>\n" +
+                "            <span class=\"jingxuan-label\">早晚给你好看</span>\n" +
+                "        </p>\n" +
+                "        <a href=\"\" class=\"app-down\" id=\"app-down-footer\">下载</a>\n" +
+                "    </div>\n" +
+                "\n" +
+                "    <div class=\"down-pc\" id=\"down-pc\">\n" +
+                "        <img src=\"http://static.guokr.com/apps/handpick/images/c324536d.jingxuan-logo.png\" class=\"jingxuan-img\">\n" +
+                "        <p class=\"jingxuan-txt\">\n" +
+                "            <span class=\"jingxuan-title\">果壳精选</span>\n" +
+                "            <span class=\"jingxuan-label\">早晚给你好看</span>\n" +
+                "        </p>\n" +
+                "        <a href=\"http://www.guokr.com/mobile/\" class=\"app-down\">下载</a>\n" +
+                "    </div>", "");
+
+        // 替换css文件为本地文件
+        bean = bean.replace("<link rel=\"stylesheet\" href=\"http://static.guokr.com/apps/handpick/styles/d48b771f.article.css\" />",
+                "<link rel=\"stylesheet\" href=\"file:///android_asset/css/guokr.article.css\" />");
+
+        // 替换js文件为本地文件
+        bean = bean.replace("<script src=\"http://static.guokr.com/apps/handpick/scripts/9c661fc7.base.js\"></script>",
+                "<script src=\"file:///android_asset/js/guokr.base.js\"></script>");
+        mWebView.loadDataWithBaseURL("x-data://base", bean, "text/html", "UTF-8", null);
+
+
+    }
+
 
     /**
      *接收Context传递来的文章id*/
@@ -286,8 +345,8 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
                 ZHNewsStoryEntity entity = (ZHNewsStoryEntity) intent.getSerializableExtra(MyConstants.SERIALIZABLE_ITEM);
                 receivedId = String.valueOf(entity.getId());
                 receivedTitle = entity.getTitle();
-            }else if (intent.getStringExtra(MyConstants.ARTICLE_TYPE).equals(MyConstants.ARTICLE_TYPE_ZHIHU_PAST)){
-                PastNewsStoryEntity entity = (PastNewsStoryEntity) intent.getSerializableExtra(MyConstants.SERIALIZABLE_ITEM);
+            }else if (intent.getStringExtra(MyConstants.ARTICLE_TYPE).equals(MyConstants.ARTICLE_TYPE_GUOKR)){
+                GuokrNewsEntity entity = (GuokrNewsEntity) intent.getSerializableExtra(MyConstants.SERIALIZABLE_ITEM);
                 receivedId = String.valueOf(entity.getId());
                 receivedTitle = entity.getTitle();
             }else if (intent.getStringExtra(MyConstants.ARTICLE_TYPE).equals(MyConstants.ARTICLE_TYPE_ONEMOMENT)){
@@ -309,7 +368,7 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
     /**intent传递给presenter*/
     @Override
     public Intent getActivityIntent() {
-        return intent;
+        return getIntent();
     }
 
 
@@ -327,7 +386,7 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
                 finish();
                 break;
             case R.id.menu_web_share:
-                presenter.share(getArticleType(intent), articleUrl, receivedTitle);
+                presenter.share(getArticleType(getIntent()), articleUrl, receivedTitle);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -357,6 +416,7 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
     public void showErrorSnack() {
         Snackbar.make(mWebView, "无法连接到网络", Snackbar.LENGTH_LONG).show();
     }
+
 
     class MyWebviewClient extends WebViewClient{
         @Override

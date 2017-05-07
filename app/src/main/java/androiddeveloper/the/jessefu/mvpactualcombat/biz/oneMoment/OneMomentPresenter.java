@@ -5,6 +5,7 @@ import java.util.List;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMoment.IOneMomentModel;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMoment.OneMomentEntity;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMoment.OneMomentModelImpl;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreListItem.IRestoreListItemModel;
 
 /**
  * Created by Jesse Fu on 2017/3/14 0014.
@@ -14,6 +15,7 @@ public class OneMomentPresenter implements OneMomentContract.IOneMomentPresenter
     private static final String TAG = OneMomentPresenter.class.getSimpleName();
     private OneMomentContract.IOneMomentView view;
     private IOneMomentModel model;
+    private IRestoreListItemModel modelRestoreListItem;
 
     public OneMomentPresenter(OneMomentContract.IOneMomentView view) {
         this.view = view;
@@ -40,6 +42,13 @@ public class OneMomentPresenter implements OneMomentContract.IOneMomentPresenter
     @Override
     public void getDataMore() {
         model.getNewsMore(this);
+    }
+
+    @Override
+    public void persistentItems(List<OneMomentEntity> entities) {
+        for (OneMomentEntity entity  : entities){
+
+        }
     }
 
     @Override

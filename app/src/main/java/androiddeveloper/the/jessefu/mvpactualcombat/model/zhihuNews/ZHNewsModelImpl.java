@@ -3,13 +3,19 @@ package androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews;
 import android.os.Handler;
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseApplication;
 import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreListItem.RestoreListItemBean;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreListItem.RestoreListItemBeanDao;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.httpMethods.HttpMethodsZhihu;
+import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilConnection;
 import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilTime;
 import rx.Subscriber;
 
@@ -19,18 +25,18 @@ import rx.Subscriber;
 
 public class ZHNewsModelImpl implements IZHNewsModel {
     private static final String TAG = ZHNewsModelImpl.class.getSimpleName();
-
+    private RestoreListItemBeanDao restoreListItemBeanDao;
     private Subscriber<ZHLatestNewsBean> subscriberLatest;
     private Subscriber<ZHPastNewsBean> subscriberPast;
 
     private static String currDate;//当天时间,加载更多时递减
 
     public ZHNewsModelImpl(){
+        restoreListItemBeanDao = BaseApplication.getDaoSession().getRestoreListItemBeanDao();
         //初始化date
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         currDate = formatter.format(new Date());
-
 
         Log.d(TAG, "初始化currDate: " + currDate);
     }
@@ -51,18 +57,31 @@ public class ZHNewsModelImpl implements IZHNewsModel {
 
             @Override
             public void onError(Throwable e) {
+                if (!UtilConnection.getNetworkState()){
+                    loadedListener.onNetworkError();
+                }
                 loadedListener.onError();
             }
 
             @Override
             public void onNext(ZHLatestNewsBean bean) {
                 final List<ZHNewsStoryEntity> entities = convertBean2Entity(bean);
+
+                /**呈现*/
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         loadedListener.onSuccess(entities);
                     }
                 }, 1000);
+
+                /**持久化*/
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadedListener.persistentItems(entities);
+                    }
+                });
 
             }
         };
@@ -77,7 +96,7 @@ public class ZHNewsModelImpl implements IZHNewsModel {
             ZHNewsStoryEntity entity = new ZHNewsStoryEntity();
 
             entity.setGaPrefix(storiesBean.getGaPrefix());
-            entity.setId(storiesBean.getId());
+            entity.setId(Long.valueOf(storiesBean.getId()));
             entity.setImages(storiesBean.getImages().get(0));
             entity.setMultipic(storiesBean.isMultipic());
             entity.setType(storiesBean.getType());
@@ -108,13 +127,21 @@ public class ZHNewsModelImpl implements IZHNewsModel {
 
             @Override
             public void onNext(final ZHPastNewsBean bean) {
-
+                final List<ZHNewsStoryEntity> entityList = convertBean2Entity(bean);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         loadedListener.onSuccessMore(convertBean2Entity(bean));
                     }
                 }, 1000);
+
+                //持久化
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadedListener.persistentItems(entityList);
+                    }
+                });
 
             }
         };
@@ -128,7 +155,7 @@ public class ZHNewsModelImpl implements IZHNewsModel {
             ZHNewsStoryEntity entity = new ZHNewsStoryEntity();
 
             entity.setGaPrefix(storiesBean.getGaPrefix());
-            entity.setId(storiesBean.getId());
+            entity.setId(Long.valueOf(storiesBean.getId()));
             entity.setImages(storiesBean.getImages().get(0));
             entity.setMultipic(storiesBean.isMultipic());
             entity.setType(storiesBean.getType());
@@ -139,6 +166,7 @@ public class ZHNewsModelImpl implements IZHNewsModel {
         entityList.remove(entityList.get(entityList.size()-1));
         return entityList;
     }
+
 
     @Override
     public void onDestroy() {

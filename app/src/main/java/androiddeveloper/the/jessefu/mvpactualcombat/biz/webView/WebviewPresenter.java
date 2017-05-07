@@ -16,6 +16,10 @@ import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.articleDetail.ArticleDetailBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.articleDetail.ArticleDetailModelImpl;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.articleDetail.IArticleDetailModel;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNewsDetail.GuokrNewsDetailBean;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNewsDetail.GuokrNewsDetailModelImpl;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNewsDetail.IGuokrDetailModel;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNewsDetail.OnGuokrNewsDetailLoadedListener;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.listener.OnDataLoadedListener;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMomentDetail.IOneMomentDetailModel;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMomentDetail.OneMomentDetailBean;
@@ -34,7 +38,7 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class WebviewPresenter implements WebviewContract.IWebviewPresenter,
-        OnDataLoadedListener {
+        OnDataLoadedListener, OnGuokrNewsDetailLoadedListener {
 
     private static final String TAG = WebviewPresenter.class.getSimpleName();
 
@@ -43,6 +47,8 @@ public class WebviewPresenter implements WebviewContract.IWebviewPresenter,
     private WebviewContract.IWebviewView view;
     private IArticleDetailModel modelZhihuArticle;
     private IOneMomentDetailModel modelOneMomentDetail;
+    private IGuokrDetailModel modelGuokrDetail;
+
     private IRestoreArticleModel modelRestoreArticle;
 
     public WebviewPresenter(WebviewContract.IWebviewView view) {
@@ -53,6 +59,7 @@ public class WebviewPresenter implements WebviewContract.IWebviewPresenter,
         modelZhihuArticle = new ArticleDetailModelImpl();
         modelOneMomentDetail = new OneMomentDetailModelImpl();
         modelRestoreArticle  = new RestoreArticleModelImpl();
+        modelGuokrDetail = new GuokrNewsDetailModelImpl();
         view.setPresenter(this);
 
     }
@@ -80,7 +87,8 @@ public class WebviewPresenter implements WebviewContract.IWebviewPresenter,
                     case MyConstants.ARTICLE_TYPE_ZHIHU:
                         modelZhihuArticle.getArticleDetail(this, receivedId);
                         break;
-                    case MyConstants.ARTICLE_TYPE_ZHIHU_PAST:
+                    case MyConstants.ARTICLE_TYPE_GUOKR:
+                        modelGuokrDetail.getGuokrNewsDetail(this, receivedId);
                         break;
                     case MyConstants.ARTICLE_TYPE_ONEMOMENT:
                         modelOneMomentDetail.getOneMomentDetailBean(this, receivedId);
@@ -95,7 +103,8 @@ public class WebviewPresenter implements WebviewContract.IWebviewPresenter,
                     case MyConstants.ARTICLE_TYPE_ONEMOMENT:
                         onSuccess(new Gson().fromJson(bean.getArtticleDetail(), OneMomentDetailBean.class));
                         break;
-                    case MyConstants.ARTICLE_TYPE_ZHIHU_PAST:
+                    case MyConstants.ARTICLE_TYPE_GUOKR:
+                        onSuccess(bean.getArtticleDetail());
                         break;
                 }
             }
@@ -121,7 +130,7 @@ public class WebviewPresenter implements WebviewContract.IWebviewPresenter,
 
             switch (type){
                 case MyConstants.ARTICLE_TYPE_ZHIHU:
-                case MyConstants.ARTICLE_TYPE_ZHIHU_PAST:
+                case MyConstants.ARTICLE_TYPE_GUOKR:
                     sb.append(url);
                     break;
                 case MyConstants.ARTICLE_TYPE_ONEMOMENT:
@@ -141,8 +150,8 @@ public class WebviewPresenter implements WebviewContract.IWebviewPresenter,
     @Override
     public boolean checkArticleType(String type) {
         if (type.equals(MyConstants.ARTICLE_TYPE_ONEMOMENT)
-                ||type.equals(MyConstants.ARTICLE_TYPE_ZHIHU_LATEST)
-                ||type.equals(MyConstants.ARTICLE_TYPE_ZHIHU_PAST))
+                ||type.equals(MyConstants.ARTICLE_TYPE_ZHIHU)
+                ||type.equals(MyConstants.ARTICLE_TYPE_GUOKR))
             return true;
         return false;
     }
@@ -151,12 +160,18 @@ public class WebviewPresenter implements WebviewContract.IWebviewPresenter,
      * 持久化文章详情*/
     @Override
     public <T extends Serializable> void saveArticle(T t, String type) {
-        String articleDetail = new Gson().toJson(t);
+        String articleDetail;
+        if (type != MyConstants.ARTICLE_TYPE_GUOKR){
+            articleDetail = new Gson().toJson(t);
+        }else{
+            articleDetail = (String) t;
+        }
+
         Long articleId = Long.valueOf(view.getArticleId(view.getActivityIntent()));
         String articleType = type;
         Long date = Long.valueOf(UtilTime.dateToStr(new Date()).replace("-", ""));
         RestoreArticleBean  restoreArticleBean = new RestoreArticleBean(date, articleId, articleType, articleDetail);
-        Log.d(TAG, "restoreArticleBean :" + restoreArticleBean.toString());
+//        Log.d(TAG, "restoreArticleBean :" + restoreArticleBean.toString());
         modelRestoreArticle.saveArticle(restoreArticleBean);
     }
 
@@ -179,6 +194,13 @@ public class WebviewPresenter implements WebviewContract.IWebviewPresenter,
         view.dismissLoading();
         view.getOneMomentDetail(bean);
         saveArticle(bean, MyConstants.ARTICLE_TYPE_ONEMOMENT);
+    }
+
+    @Override
+    public void onSuccess(String detailBean) {
+        view.dismissLoading();
+        view.getGuokrNewsDetail(detailBean);
+        saveArticle(detailBean, MyConstants.ARTICLE_TYPE_GUOKR);
     }
 
     @Override

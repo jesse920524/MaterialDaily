@@ -25,12 +25,10 @@ public class ZHNewsStoryEntity implements Serializable{
      * multipic : true
      */
 
-    @Id(autoincrement = true)
-    private Long _id;
-
     private int type;
 
-    private int id;
+    @Id(autoincrement = false)
+    private Long id;
 
     private String gaPrefix;
 
@@ -40,10 +38,14 @@ public class ZHNewsStoryEntity implements Serializable{
 
     private String images;
 
-    @Keep
-    public ZHNewsStoryEntity(Long _id, int type, int id, String gaPrefix,
-                             String title, boolean multipic, String images) {
-        this._id = _id;
+
+    public ZHNewsStoryEntity() {
+    }
+
+
+    @Generated(hash = 382254105)
+    public ZHNewsStoryEntity(int type, Long id, String gaPrefix, String title,
+            boolean multipic, String images) {
         this.type = type;
         this.id = id;
         this.gaPrefix = gaPrefix;
@@ -52,16 +54,6 @@ public class ZHNewsStoryEntity implements Serializable{
         this.images = images;
     }
 
-    public ZHNewsStoryEntity() {
-    }
-
-    public Long get_id() {
-        return _id;
-    }
-
-    public void set_id(Long _id) {
-        this._id = _id;
-    }
 
     public int getType() {
         return type;
@@ -71,11 +63,11 @@ public class ZHNewsStoryEntity implements Serializable{
         this.type = type;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -118,7 +110,6 @@ public class ZHNewsStoryEntity implements Serializable{
     @Override
     public String toString() {
         return "ZHNewsStoryEntity{" +
-                "_id=" + _id +
                 ", type=" + type +
                 ", id=" + id +
                 ", gaPrefix='" + gaPrefix + '\'' +

@@ -20,6 +20,7 @@ public class RestoreArticleBean implements Serializable{
     @Transient
     private static final long serialVersionUID = 1000;
 
+    /**date为存储时间*/
     private Long date;
 
     @Id(autoincrement = false)

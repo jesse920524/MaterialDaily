@@ -31,6 +31,19 @@ public interface MyConstants {
     // eg:https://moment.douban.com/api/post/100484
     String DOUBAN_ARTICLE_DETAIL = "https://moment.douban.com/api/post/";
 
+    //果壳api
+    /**
+     *
+     获取果壳精选的文章列表,通过组合相应的参数成为完整的url
+     Guokr handpick articles. make complete url by combining params
+     public static final String GUOKR_ARTICLES = "http://apis.guokr.com/handpick/article.json?retrieve_type=by_since&category=all&limit=25&ad=1";
+     */
+    String  GUOKR_URI = "http://apis.guokr.com/";
+
+    /**
+     * 果壳文章详情url*/
+    String GUOKR_DETAIL = "http://jingxuan.guokr.com/";
+
     /**
      * 饭否section
      *
@@ -51,7 +64,7 @@ public interface MyConstants {
     String FANFOU_TEST_WEEK = "2017-04-03";
 
 
-    int DEFAULT_TIME_OUT = 5;//默认超时
+    int DEFAULT_TIME_OUT = 5000;//默认超时
     int DEFAULT_DELAY_TIME = 30000;
 
     String THEME_ID = "theme_id";//作为key
@@ -67,6 +80,7 @@ public interface MyConstants {
     String ARTICLE_TYPE_ZHIHU_LATEST = "article_type_zhihu_latest";
     String ARTICLE_TYPE_ZHIHU_PAST = "article_type_zhihu_past";
     String ARTICLE_TYPE_ONEMOMENT = "article_type_onemoment";
+    String ARTICLE_TYPE_GUOKR = "article_type_guokr";
 
     String USER_SETTINGS = "user_settings";//设置sharedpreference
 

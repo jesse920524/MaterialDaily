@@ -5,4 +5,8 @@ package androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNewsDetail;
  */
 
 public interface OnGuokrNewsDetailLoadedListener {
+
+    void onSuccess(String detailBean);
+
+    void onError(String errMsg);
 }

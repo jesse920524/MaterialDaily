@@ -17,6 +17,7 @@ import java.util.Date;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.R;
 import androiddeveloper.the.jessefu.mvpactualcombat.R2;
+import androiddeveloper.the.jessefu.mvpactualcombat.event.EventOnDatePicked;
 import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilTime;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -77,14 +78,12 @@ public class DatePickDialogFragment extends DialogFragment {
     }
 
     /**
-     * 点击确认按钮,将选择的时间发送给PastNewsFragment(订阅者)
-     * 判断:若选择的时间大于当天日期,不会加载新数据,给用户提示
-     * 若选择的时间小于20130520,不会加载新数据,给用户提示*/
+     * 参考: EventOnDatePicked*/
     @OnClick(R2.id.btn_dialog_datepicker_confirm)
     void onClickBtnConfirm(){
 
         int selecDate = Integer.parseInt(selectedDate);
-        EventBus.getDefault().post(String.valueOf(selecDate));//发送事件给订阅者
+        EventBus.getDefault().post(new EventOnDatePicked(selecDate));//发送事件给订阅者
         this.dismiss();
 
     }

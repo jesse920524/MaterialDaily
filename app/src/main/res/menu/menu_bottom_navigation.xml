@@ -8,5 +8,5 @@
         android:icon="@mipmap/ic_audiotrack_grey600_24dp"></item>
     <item
         android:title="@string/bottom_nav_2"
-        android:icon="@mipmap/ic_today_grey600_24dp"></item>
+        android:icon="@mipmap/ic_bubble_chart_white_24dp"></item>
 </menu>

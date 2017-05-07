@@ -148,12 +148,14 @@ public class UtilTime {
 
 
 
-
+    /**
+     * 将date转为8位格式1
+     * 20170506*/
     public static String get8StringDate(Date date){
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String dateString = format.format(date);
         String d = dateString.replace("-", "");
-        Log.d(TAG, "日期转换yyyymmdd" + d);
+
         return d;
     }
 

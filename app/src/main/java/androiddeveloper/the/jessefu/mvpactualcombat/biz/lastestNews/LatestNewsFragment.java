@@ -26,9 +26,11 @@ import androiddeveloper.the.jessefu.mvpactualcombat.R;
 import androiddeveloper.the.jessefu.mvpactualcombat.R2;
 import androiddeveloper.the.jessefu.mvpactualcombat.adapter.RecyclerLatestAdatper;
 import androiddeveloper.the.jessefu.mvpactualcombat.adapter.RecyclerZHStoryAdapter;
+import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseApplication;
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseFragment;
 import androiddeveloper.the.jessefu.mvpactualcombat.biz.webView.WebviewActivity;
 import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
+import androiddeveloper.the.jessefu.mvpactualcombat.event.EventOnDatePicked;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.latestNews.LatestNewsStoryEntity;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews.ZHNewsStoryEntity;
 import butterknife.BindView;
@@ -170,6 +172,17 @@ public class LatestNewsFragment extends BaseFragment implements LatestNewsContra
     }
 
     @Override
+    public void getPersistentData(final List<ZHNewsStoryEntity> persistentData) {
+        mRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerAdapter.setNewData(persistentData);
+                mRecyclerAdapter.loadMoreEnd();
+            }
+        });
+    }
+
+    @Override
     public void disableLoadMore() {
         mRecyclerView.post(new Runnable() {
             @Override
@@ -203,18 +216,9 @@ public class LatestNewsFragment extends BaseFragment implements LatestNewsContra
     }
 
     @Subscribe
-    public void onEvent(String data){
-        if (data.equals("fab0")){
-            /**generate random item*/
-            int dataSize = mRecyclerAdapter.getData().size();
-            int random = new Random().nextInt(dataSize);
-            ZHNewsStoryEntity entity = mRecyclerAdapter.getData().get(random);
-
-            Intent intent = new Intent(getActivity(), WebviewActivity.class);
-            intent.putExtra(MyConstants.SERIALIZABLE_ITEM, entity);
-            intent.putExtra(MyConstants.ARTICLE_TYPE, MyConstants.ARTICLE_TYPE_ZHIHU_LATEST);//传递文章类型
-            startActivity(intent);
-        }
+    public void onEvent(EventOnDatePicked event){
+        //
+        BaseApplication.showToast(String.valueOf(event.getSelectedDate()));
     }
 
     @Override

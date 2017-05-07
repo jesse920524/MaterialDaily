@@ -30,15 +30,17 @@
     <string name="feedback">反馈</string>
     <string name="bottom_nav_0">news</string>
     <string name="bottom_nav_1">article</string>
-    <string name="bottom_nav_2">former</string>
+    <string name="bottom_nav_2">selected</string>
     <string name="toolbar_name">文章列表</string>
     <string name="confirm">确定</string>
     <string name="back_to_today">回今天</string>
     <string name="cancel">取消</string>
     <string name="menu_settings">设置</string>
-    <string name="title_today">今日日报</string>
+    <string name="title_today">daily news</string>
     <string name="title_theme">主题日报</string>
     <string name="title_past">往期日报</string>
+    <string name="title_one_moment">one moment articles</string>
+    <string name="title_guokr">selected</string>
     <string name="about">关于</string>
     <string name="activity_large_pic">查看大图</string>
     <string name="gank_girls">福利列表</string>
@@ -47,7 +49,7 @@
     <string name="activity_theme_news">主题新闻列表</string>
     <string name="activity_main">主页</string>
     <string name="clear_cache_done">清除成功</string>
-    <string name="title_one_moment">一刻</string>
+
     <string name="save_img">保存图片</string>
     <string name="share">分享</string>
 

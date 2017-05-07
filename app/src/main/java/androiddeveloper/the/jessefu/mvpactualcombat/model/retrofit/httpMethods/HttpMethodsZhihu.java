@@ -42,7 +42,7 @@ public class HttpMethodsZhihu {
     private HttpMethodsZhihu(){
         //手动创建一个okhttpClient并设置超时时间
         OkHttpClient.Builder okhttpBuilder = new OkHttpClient.Builder();
-        okhttpBuilder.connectTimeout(MyConstants.DEFAULT_TIME_OUT, TimeUnit.SECONDS);
+        okhttpBuilder.connectTimeout(MyConstants.DEFAULT_TIME_OUT, TimeUnit.MILLISECONDS);
 
         retrofit = new Retrofit.Builder()
                 .client(okhttpBuilder.build())

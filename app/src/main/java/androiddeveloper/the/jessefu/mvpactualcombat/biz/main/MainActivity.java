@@ -93,7 +93,6 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
         super.onResume();
         hideFunctionEnabled = getSharedPreferences(MyConstants.USER_SETTINGS, MODE_PRIVATE).getBoolean("hide_function", false);
         hideFab = getSharedPreferences(MyConstants.USER_SETTINGS, MODE_PRIVATE).getBoolean("hide_fab", false);
-
         Log.d(TAG, "隐藏功能开启: " + hideFunctionEnabled);
         Log.d(TAG, "浮动按钮隐藏: " + hideFab);
         if (hideFunctionEnabled){
@@ -198,7 +197,7 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
 
 
                                 if (!hideFab){
-                                    mFAB.setImageResource(R.mipmap.ic_shuffle_white_24dp);
+                                    mFAB.setImageResource(R.mipmap.ic_search_white_24dp);
                                     mFAB.setVisibility(View.VISIBLE);
                                     fabStatus = 0;
                                 }
@@ -210,12 +209,12 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
 
                                 if (!hideFab){
                                     mFAB.setImageResource(R.mipmap.ic_settings_white_24dp);
-                                    mFAB.setVisibility(View.INVISIBLE);
+                                    mFAB.setVisibility(View.VISIBLE);
                                     fabStatus = 1;
                                 }
                                 break;
                             case 2:
-                                mTitle.setText(R.string.title_past);
+                                mTitle.setText(R.string.title_guokr);
                                 if (!hideFab){
                                     mFAB.setImageResource(R.mipmap.ic_search_white_24dp);
                                     mFAB.setVisibility(View.VISIBLE);
@@ -233,14 +232,12 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
             public void onClick(View view) {
                 switch (fabStatus){
                     case 0:
-                        /**随机文章
-                         * LatestNewsFragment会收到事件*/
-                        EventBus.getDefault().post("fab0");
+                        showDatePickDialog();
                         break;
                     case 1:
                         break;
                     case 2:
-                        showDatePickDialog();
+
                         break;
                     default:
                         BaseApplication.showToast("curr status: error!!!");

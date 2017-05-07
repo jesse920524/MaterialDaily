@@ -15,6 +15,10 @@ public interface OnDataLoadedListener {
         void onSuccessMore(List<ZHNewsStoryEntity> entities);
 
         void onError();
+
+        void onNetworkError();
+
+        void persistentItems(List<ZHNewsStoryEntity> entities);
     }
 
 }

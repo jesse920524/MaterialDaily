@@ -30,6 +30,8 @@ public interface OneMomentContract {
         void getData();
         void getDataMore();
 
+        void persistentItems(List<OneMomentEntity> entities);
+
         void onDestroy();
     }
 }

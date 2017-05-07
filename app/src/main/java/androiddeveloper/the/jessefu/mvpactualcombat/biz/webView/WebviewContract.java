@@ -7,6 +7,8 @@ import java.io.Serializable;
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BasePresenter;
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseView;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.articleDetail.ArticleDetailBean;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNews.GuokrNewsEntity;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNewsDetail.GuokrNewsDetailBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMomentDetail.OneMomentDetailBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreArticle.RestoreArticleBean;
 
@@ -23,6 +25,9 @@ public interface WebviewContract {
 
         //加载一刻文章详情
         void getOneMomentDetail(OneMomentDetailBean oneMomentDetailBean);
+
+        //加载果壳文章详情
+        void getGuokrNewsDetail(String bean);
 
         String getArticleId(Intent intent);
         String getArticleType(Intent intent);

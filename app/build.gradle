@@ -10,8 +10,8 @@ android {
         applicationId "androiddeveloper.the.jessefu.mvpactualcombat"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 8
-        versionName "1.0.7"
+        versionCode 9
+        versionName "1.0.9"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         //multiDexEnabled false
     }

@@ -8,17 +8,17 @@ import java.util.List;
 
 public interface OnDataLoadedListener {
 
-    /**知乎日报今日,往期新闻的回调*/
+    /**知乎日报今日,往期,指定日期新闻的回调*/
     interface onZHNewsStoryEntityLoadedListener{
         void onSuccess(List<ZHNewsStoryEntity> entities);
 
         void onSuccessMore(List<ZHNewsStoryEntity> entities);
 
+        void onSuccessSpecificDate(List<ZHNewsStoryEntity> entities);
+
         void onError();
 
         void onNetworkError();
-
-        void persistentItems(List<ZHNewsStoryEntity> entities);
     }
 
 }

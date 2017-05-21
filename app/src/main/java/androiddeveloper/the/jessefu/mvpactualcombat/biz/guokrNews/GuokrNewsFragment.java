@@ -16,6 +16,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.List;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.R;
@@ -25,6 +28,7 @@ import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseApplication;
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseFragment;
 import androiddeveloper.the.jessefu.mvpactualcombat.biz.webView.WebviewActivity;
 import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
+import androiddeveloper.the.jessefu.mvpactualcombat.event.EventRandomGuokrArticle;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNews.GuokrNewsEntity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,6 +51,12 @@ public class GuokrNewsFragment extends BaseFragment implements GuokrNewsContract
 
     private GuokrNewsContract.GuokrNewsPresenter presenter;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,6 +68,28 @@ public class GuokrNewsFragment extends BaseFragment implements GuokrNewsContract
         return mRoot;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    /**
+     * 随机文章*/
+    @Subscribe
+    public void onEventRandomArticle(EventRandomGuokrArticle event){
+        try{
+            GuokrNewsEntity entity = mRecyclerViewAdapter.getData().get((int) (Math.random()*mRecyclerViewAdapter.getData().size()));
+            Intent intent = new Intent(getActivity(), WebviewActivity.class);
+            intent.putExtra(MyConstants.SERIALIZABLE_ITEM, entity);
+            intent.putExtra(MyConstants.ARTICLE_TYPE, MyConstants.ARTICLE_TYPE_GUOKR);
+            startActivity(intent);
+        }catch (Exception e){
+            BaseApplication.showToast("noting to show");
+        }
+
+                ;
+    }
     private void initViews(View view) {
         mSwiper.setColorSchemeColors(ActivityCompat.getColor(getActivity(), R.color.colorAccent));
         mSwiper.setOnRefreshListener(this);
@@ -111,8 +143,14 @@ public class GuokrNewsFragment extends BaseFragment implements GuokrNewsContract
 
     @Override
     public void showData(List<GuokrNewsEntity> entities) {
-        mRecyclerViewAdapter.setNewData(entities);
-        mRecyclerViewAdapter.loadMoreComplete();
+        if (entities.size() > 0){
+            mRecyclerViewAdapter.setNewData(entities);
+            mRecyclerViewAdapter.loadMoreComplete();
+        }else{
+            View view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_empty, null);
+            mRecyclerViewAdapter.setEmptyView(view);
+        }
+
     }
 
     @Override

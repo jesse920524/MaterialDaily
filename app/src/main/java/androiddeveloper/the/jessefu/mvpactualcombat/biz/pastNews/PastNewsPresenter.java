@@ -5,7 +5,7 @@ import java.util.List;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.model.pastNews.IPastNewsModel;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.pastNews.PastNewsModelImpl;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.pastNews.PastNewsStoryEntity;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews.ZHNewsStoryEntity;
 import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilTime;
 
 /**
@@ -37,8 +37,8 @@ public class PastNewsPresenter implements PastNewsContract.IPastNewsPresenter, P
     }
 
     @Override
-    public void onSuccess(List<PastNewsStoryEntity> entities) {
-        view.getData(entities);
+    public void onSuccess(List<ZHNewsStoryEntity> entities) {
+//        view.getData(entities);
         view.dismissLoading();
     }
 

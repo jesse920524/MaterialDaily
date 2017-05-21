@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.httpMethods.HttpMethodGuokr;
+import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilConnection;
 import rx.Subscriber;
 
 /**
@@ -28,7 +29,11 @@ public class GuokrNewsModelImpl implements IGuokrNewsModel {
             @Override
             public void onError(Throwable e) {
                 Log.d(TAG, "onError exec");
-                listener.onError(e.getMessage());
+                if (!UtilConnection.getNetworkState()){
+                    listener.onNetworkError();
+                }else{
+                    listener.onError(e.getMessage());
+                }
             }
 
             @Override

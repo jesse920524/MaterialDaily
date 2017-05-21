@@ -17,7 +17,6 @@ public interface LatestNewsContract {
 
     interface ILNView extends BaseView<ILNPresenter>{
 
-        //void getData(List<LatestNewsStoryEntity> latestNewsStoryEntityList);
         void getData(List<ZHNewsStoryEntity> entities);
 
         void getDataMore(List<ZHNewsStoryEntity> entities);
@@ -44,6 +43,8 @@ public interface LatestNewsContract {
         void getData();
 
         void getDataMore();
+
+        void getSpecificDateData(String date);
 
         void getDataMoreError(String errMsg);
 

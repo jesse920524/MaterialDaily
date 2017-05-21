@@ -20,6 +20,7 @@ public interface OneMomentContract {
 
         void getDataError(String errMsg);
         void getDataMoreError(String errMsg);
+        void getPersistentData(List<OneMomentEntity> entities);
 
         void recyclerViewSmoothScroll();
 
@@ -29,8 +30,6 @@ public interface OneMomentContract {
     interface IOneMomentPresenter extends BasePresenter{
         void getData();
         void getDataMore();
-
-        void persistentItems(List<OneMomentEntity> entities);
 
         void onDestroy();
     }

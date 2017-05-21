@@ -30,7 +30,7 @@
         <ListPreference
             android:title="@string/setting_choose_cache_storage_life"
             android:key="choose_cache_storage_life"
-            android:defaultValue="@string/list_preference_15"
+            android:defaultValue="@string/list_preference_0"
             android:entries="@array/array_choose_cache_storage_life"
             android:entryValues="@array/array_choose_cache_storage_life_value"></ListPreference>
         <Preference

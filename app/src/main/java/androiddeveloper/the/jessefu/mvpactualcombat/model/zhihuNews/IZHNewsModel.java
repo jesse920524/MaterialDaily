@@ -2,6 +2,8 @@ package androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews;
 
 import java.util.List;
 
+import androiddeveloper.the.jessefu.mvpactualcombat.model.pastNews.PastNewsModelImpl;
+
 /**
  * Created by Jesse Fu on 2017-04-16.
  * 为了实现今日新闻列表页上拉加载更多,
@@ -22,6 +24,8 @@ public interface IZHNewsModel {
      * 获取知乎日报往期新闻*/
     void getPastNews(OnDataLoadedListener.onZHNewsStoryEntityLoadedListener loadedListener);
 
+    /**获取知乎日报指定日期新闻*/
+    void getSpecificDateNews(OnDataLoadedListener.onZHNewsStoryEntityLoadedListener listener, String date);
     /**
      * 将往期新闻Bean转为entity*/
     List<ZHNewsStoryEntity> convertBean2Entity(ZHPastNewsBean bean);

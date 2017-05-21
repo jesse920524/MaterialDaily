@@ -1,6 +1,7 @@
 package androiddeveloper.the.jessefu.mvpactualcombat.model.restoreListItem;
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Transient;
 
 import java.io.Serializable;
@@ -16,6 +17,7 @@ public class RestoreListItemBean implements Serializable {
     private static final long serialVersionUID = 1000;
 
     //id
+    @Id(autoincrement = false)
     Long articleId;
 
     //type

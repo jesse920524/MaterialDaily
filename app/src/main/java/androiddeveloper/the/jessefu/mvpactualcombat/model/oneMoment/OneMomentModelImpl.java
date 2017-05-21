@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.httpMethods.HttpMethodOneMoment;
+import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilConnection;
 import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilTime;
 import rx.Subscriber;
 
@@ -98,7 +99,12 @@ public class OneMomentModelImpl implements IOneMomentModel {
             @Override
             public void onError(Throwable e) {
                 Log.d(TAG, "onError() exec " + e.getMessage());
-                loadListener.onError(e.getMessage());
+                if (!UtilConnection.getNetworkState()){
+                    loadListener.onNetworkError();
+                }else{
+                    loadListener.onError(e.getMessage());
+                }
+
             }
 
             @Override
@@ -133,7 +139,12 @@ public class OneMomentModelImpl implements IOneMomentModel {
             @Override
             public void onError(Throwable e) {
                 Log.d(TAG, "onError() exec " + e.getMessage());
-                loadListener.onError(e.getMessage());
+                if (!UtilConnection.getNetworkState()){
+                    loadListener.onNetworkError();
+                }else{
+                    loadListener.onError(e.getMessage());
+                }
+
             }
 
             @Override
@@ -182,5 +193,7 @@ public class OneMomentModelImpl implements IOneMomentModel {
         void onError(String errMsg);
 
         void onErrorMore(String errMsg);
+
+        void onNetworkError();
     }
 }

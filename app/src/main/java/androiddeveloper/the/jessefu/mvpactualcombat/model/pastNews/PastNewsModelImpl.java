@@ -9,6 +9,7 @@ import java.util.List;
 import androiddeveloper.the.jessefu.mvpactualcombat.anotations.HttpRequest;
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseApplication;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.httpMethods.HttpMethodsZhihu;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews.ZHNewsStoryEntity;
 import rx.Subscriber;
 
 /**
@@ -55,7 +56,7 @@ public class PastNewsModelImpl implements IPastNewsModel {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        loadedListener.onSuccess(finalStoryEntities);
+//                        loadedListener.onSuccess(finalStoryEntities);
                     }
                 }, 1000);
             }
@@ -100,7 +101,7 @@ public class PastNewsModelImpl implements IPastNewsModel {
 
     /***/
     public interface onDataLoadedListener{
-        void onSuccess(List<PastNewsStoryEntity> entities);
+        void onSuccess(List<ZHNewsStoryEntity> entities);
 
         void onError();
     }

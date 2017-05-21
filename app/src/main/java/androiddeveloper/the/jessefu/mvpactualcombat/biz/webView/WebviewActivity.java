@@ -171,7 +171,6 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //mCollapsingToolbarLayout.setTitle("");
     }
 
     @Override

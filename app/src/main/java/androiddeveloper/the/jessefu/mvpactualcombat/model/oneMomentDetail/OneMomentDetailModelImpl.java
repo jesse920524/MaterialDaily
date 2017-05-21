@@ -34,7 +34,7 @@ public class OneMomentDetailModelImpl implements IOneMomentDetailModel {
             @Override
             public void onNext(OneMomentDetailBean bean) {
                 Log.d(TAG, "获取一刻文章详情: onNext() " + bean);
-                listener.onSuccess(bean);
+                listener.onSuccessOM(bean);
             }
         };
         HttpMethodOneMoment.getInstance().getOneMomentDetail(subscriber, id);

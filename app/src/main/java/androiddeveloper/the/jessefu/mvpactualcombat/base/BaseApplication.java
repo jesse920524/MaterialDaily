@@ -2,6 +2,7 @@ package androiddeveloper.the.jessefu.mvpactualcombat.base;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 
@@ -41,11 +42,15 @@ public class BaseApplication extends Application {
 //        }
 //        mRefWatcher = LeakCanary.install(this);
 //    }
-
     private void initGreenDao() {
-        DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(this, "news-db");
-        Database db = devOpenHelper.getWritableDb();
-        daoSession = new DaoMaster(db).newSession();
+        try {
+            DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(this, "news-db");
+            Database db = devOpenHelper.getWritableDb();
+            daoSession = new DaoMaster(db).newSession();
+        }catch (Exception e){
+
+        }
+
     }
 
     public static DaoSession getDaoSession(){

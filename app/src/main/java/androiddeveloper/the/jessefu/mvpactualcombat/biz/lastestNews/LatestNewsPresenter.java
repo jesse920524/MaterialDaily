@@ -2,6 +2,9 @@ package androiddeveloper.the.jessefu.mvpactualcombat.biz.lastestNews;
 
 import android.util.Log;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.awt.font.TextAttribute;
 import java.util.List;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
@@ -19,6 +22,8 @@ import androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews.ZHNewsStoryE
 
 public class LatestNewsPresenter implements LatestNewsContract.ILNPresenter,
         OnDataLoadedListener.onZHNewsStoryEntityLoadedListener{
+
+    private static final String TAG = LatestNewsPresenter.class.getSimpleName();
 
     private LatestNewsContract.ILNView view;
     private IZHNewsModel modelZHNews;
@@ -55,6 +60,12 @@ public class LatestNewsPresenter implements LatestNewsContract.ILNPresenter,
     @Override
     public void getDataMore() {
         modelZHNews.getPastNews(this);
+
+    }
+
+    @Override
+    public void getSpecificDateData(String date) {
+        modelZHNews.getSpecificDateNews(this, date);
     }
 
     @Override
@@ -69,20 +80,31 @@ public class LatestNewsPresenter implements LatestNewsContract.ILNPresenter,
 
     @Override
     public void onSuccess(List<ZHNewsStoryEntity> entities) {
+        view.recyclerViewSmoothScroll();
         view.getData(entities);
         view.dismissLoading();
-        //dayCount++;
+        modelListItem.persistentZHListEntities(entities);
     }
 
     @Override
     public void onSuccessMore(List<ZHNewsStoryEntity> entities) {
         view.getDataMore(entities);
         view.dismissLoading();
+        modelListItem.persistentZHListEntities(entities);
         dayCount++;
         Log.d("log daycount", String.valueOf(dayCount));
         if (dayCount >= 6){
             disableLoadMore();
         }
+    }
+
+    @Override
+    public void onSuccessSpecificDate(List<ZHNewsStoryEntity> entities) {
+        view.recyclerViewSmoothScroll();
+        view.getData(entities);
+        view.dismissLoading();
+        disableLoadMore();
+        modelListItem.persistentZHListEntities(entities);
     }
 
     @Override
@@ -93,14 +115,13 @@ public class LatestNewsPresenter implements LatestNewsContract.ILNPresenter,
 
     @Override
     public void onNetworkError() {
+        view.dismissLoading();
         List<RestoreListItemBean> queryResult = modelListItem.queryList(MyConstants.ARTICLE_TYPE_ZHIHU);
         List<ZHNewsStoryEntity> list = modelListItem.convertBean2ZHEntity(queryResult);
         view.getPersistentData(list);
 
+
     }
 
-    @Override
-    public void persistentItems(List<ZHNewsStoryEntity> entities) {
-        modelListItem.persistentZHListEntities(entities);
-    }
+
 }

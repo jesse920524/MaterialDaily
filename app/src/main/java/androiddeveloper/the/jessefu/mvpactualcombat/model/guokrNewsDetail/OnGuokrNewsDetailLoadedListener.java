@@ -6,7 +6,7 @@ package androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNewsDetail;
 
 public interface OnGuokrNewsDetailLoadedListener {
 
-    void onSuccess(String detailBean);
+    void onSuccessGK(String detailBean, String articleId);
 
     void onError(String errMsg);
 }

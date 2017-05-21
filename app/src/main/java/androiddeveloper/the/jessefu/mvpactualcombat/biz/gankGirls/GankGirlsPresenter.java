@@ -46,7 +46,7 @@ public class GankGirlsPresenter implements GankGirlsContract.IGankGirlsPresenter
 
     @Override
     public void onSuccess(List<GankGirlsEntity> entityList) {
-        Log.d(TAG, "onSuccess() exec. " + entityList);
+        Log.d(TAG, "onSuccessOM() exec. " + entityList);
         view.getData(entityList);
         view.dismissLoading();
     }

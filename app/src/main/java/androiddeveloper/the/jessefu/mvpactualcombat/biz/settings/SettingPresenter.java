@@ -60,13 +60,12 @@ public class SettingPresenter implements SettingsContract.ISettingsPresenter {
 
     @Override
     public void setCacheLife(Preference preference, String value) {
-        //editor.putString("cache_life", preference.getSharedPreferences().getString("choose_cache_storage_life", null));
         editor.putString("cache_life", value);
         editor.apply();
     }
 
     @Override
     public String getCacheLife(Context context){
-        return sp.getString("cache_life", "15天");
+        return sp.getString("cache_life", "");
     }
 }

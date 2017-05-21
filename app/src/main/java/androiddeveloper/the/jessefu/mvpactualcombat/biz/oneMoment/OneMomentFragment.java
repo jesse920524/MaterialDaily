@@ -15,14 +15,19 @@ import android.view.ViewGroup;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.List;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.R;
 import androiddeveloper.the.jessefu.mvpactualcombat.R2;
 import androiddeveloper.the.jessefu.mvpactualcombat.adapter.RecyclerOneMomentAdapter;
+import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseApplication;
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseFragment;
 import androiddeveloper.the.jessefu.mvpactualcombat.biz.webView.WebviewActivity;
 import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
+import androiddeveloper.the.jessefu.mvpactualcombat.event.EventRandomOneMomentArticle;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMoment.OneMomentEntity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,6 +49,12 @@ public class OneMomentFragment extends BaseFragment implements OneMomentContract
     private RecyclerOneMomentAdapter mRecyclerViewAdapter;
     public LinearLayoutManager linearLayoutManager;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -54,6 +65,23 @@ public class OneMomentFragment extends BaseFragment implements OneMomentContract
         presenter.start();
         return mRoot;
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onEventRandomArticle(EventRandomOneMomentArticle event){
+        try{
+            OneMomentEntity oneMomentEntity = mRecyclerViewAdapter.getData().get((int) (Math.random()*(mRecyclerViewAdapter.getData().size())));
+            toWebActivity(oneMomentEntity);
+        }catch(Exception e){
+            BaseApplication.showToast("noting to show");
+        }
+    }
+
 
     private void initViews() {
         //init recycerView
@@ -169,6 +197,23 @@ public class OneMomentFragment extends BaseFragment implements OneMomentContract
             @Override
             public void run() {
                 mRecyclerViewAdapter.loadMoreFail();
+            }
+        });
+    }
+
+    @Override
+    public void getPersistentData(final List<OneMomentEntity> entities) {
+        mRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                if (entities.size() > 0){
+                    mRecyclerViewAdapter.setNewData(entities);
+                    mRecyclerViewAdapter.loadMoreEnd();
+                }else{
+                    View view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_empty, null);
+                    mRecyclerViewAdapter.setEmptyView(view);
+                }
+
             }
         });
     }

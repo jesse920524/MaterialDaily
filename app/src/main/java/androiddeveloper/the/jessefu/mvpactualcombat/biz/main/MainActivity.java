@@ -3,11 +3,12 @@ package androiddeveloper.the.jessefu.mvpactualcombat.biz.main;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.TimeUtils;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -23,19 +24,23 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.concurrent.TimeUnit;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.R;
 import androiddeveloper.the.jessefu.mvpactualcombat.R2;
+import androiddeveloper.the.jessefu.mvpactualcombat.Service.PersistentService;
 import androiddeveloper.the.jessefu.mvpactualcombat.adapter.AHViewpagerAdapter;
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseActivity;
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseApplication;
 import androiddeveloper.the.jessefu.mvpactualcombat.biz.about.AboutActivity;
 import androiddeveloper.the.jessefu.mvpactualcombat.biz.gankGirls.GankGirlsActivity;
-import androiddeveloper.the.jessefu.mvpactualcombat.biz.lastestNews.LatestNewsFragment;
-import androiddeveloper.the.jessefu.mvpactualcombat.biz.oneMoment.OneMomentFragment;
-import androiddeveloper.the.jessefu.mvpactualcombat.biz.pastNews.PastNewsFragment;
 import androiddeveloper.the.jessefu.mvpactualcombat.biz.settings.SettingsActivity;
 import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
+import androiddeveloper.the.jessefu.mvpactualcombat.event.EventRandomGuokrArticle;
+import androiddeveloper.the.jessefu.mvpactualcombat.event.EventRandomOneMomentArticle;
+import androiddeveloper.the.jessefu.mvpactualcombat.event.EventShowSnackbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -81,7 +86,7 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
+        EventBus.getDefault().register(this);
 
         initViews();
         new MainPresenter(this);
@@ -208,7 +213,7 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
 
 
                                 if (!hideFab){
-                                    mFAB.setImageResource(R.mipmap.ic_settings_white_24dp);
+                                    mFAB.setImageResource(R.mipmap.ic_shuffle_white_24dp);
                                     mFAB.setVisibility(View.VISIBLE);
                                     fabStatus = 1;
                                 }
@@ -216,7 +221,7 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
                             case 2:
                                 mTitle.setText(R.string.title_guokr);
                                 if (!hideFab){
-                                    mFAB.setImageResource(R.mipmap.ic_search_white_24dp);
+                                    mFAB.setImageResource(R.mipmap.ic_shuffle_white_24dp);
                                     mFAB.setVisibility(View.VISIBLE);
                                     fabStatus = 2;
                                 }
@@ -235,9 +240,10 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
                         showDatePickDialog();
                         break;
                     case 1:
+                        EventBus.getDefault().post(new EventRandomOneMomentArticle(null));
                         break;
                     case 2:
-
+                        EventBus.getDefault().post(new EventRandomGuokrArticle());
                         break;
                     default:
                         BaseApplication.showToast("curr status: error!!!");
@@ -258,6 +264,11 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
         toGankGirlsActivity();
     }
 
+    @Subscribe
+    public void onEventShowSnackbar(EventShowSnackbar event){
+        Snackbar.make(mBottomNavigation, event.getMsg(), MyConstants.DEFAULT_TIME_OUT)
+                .show();
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -308,7 +319,7 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
             BaseApplication.showToast(getString(R.string.double_click_quit));
             firstTime = secondTime;
         }else{
-            System.exit(0);
+            finish();
         }
 
         /**
@@ -346,6 +357,16 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
         this.presenter = presenter;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+        startPersistentService();
+    }
 
+    private void startPersistentService(){
+        Intent intent = new Intent(this, PersistentService.class);
+        startService(intent);
+    }
 }
 

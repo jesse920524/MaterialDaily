@@ -2,6 +2,7 @@ package androiddeveloper.the.jessefu.mvpactualcombat.util;
 
 import android.util.Log;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
@@ -40,9 +41,11 @@ public class UtilTime {
      * @param offset 落差(几天前)*/
     public static Date getSpecifiedBefore(Date d, int offset){
         Calendar calendar = Calendar.getInstance();
+
         Date targetDate = null;
         try{
-            targetDate = new SimpleDateFormat("yyyy-MM-dd").parse(String.valueOf(d));
+            String sd = new SimpleDateFormat("yyyy-MM-dd").format(d);
+            targetDate = new SimpleDateFormat("yyyy-MM-dd").parse(sd);
             calendar.setTime(targetDate);
             int i = calendar.get(Calendar.DATE);
             calendar.set(Calendar.DATE, i - offset);
@@ -51,6 +54,30 @@ public class UtilTime {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * 得到指定日期 后n天的日期*/
+    public static Date getSpecifiedAfter(Date d, int offset){
+        Calendar calendar = Calendar.getInstance();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date targetDate = null;
+        try{
+            String dateStr = dateFormat.format(d);
+            targetDate = dateFormat.parse(dateStr);
+            calendar.setTime(targetDate);
+            int i = calendar.get(Calendar.DATE);
+            calendar.set(Calendar.DATE, i + offset);
+            return calendar.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void main(String[] args){
+        Date date = getSpecifiedBefore(new Date(), 0);
+        System.out.print(date);
     }
 
     public static Date convertStringToDate(String s){
@@ -290,7 +317,6 @@ public class UtilTime {
      * 将短时间格式时间转换为字符串 yyyy-MM-dd
      *
      * @param dateDate
-     * @param k
      * @return
      */
     public static String dateToStr(java.util.Date dateDate) {

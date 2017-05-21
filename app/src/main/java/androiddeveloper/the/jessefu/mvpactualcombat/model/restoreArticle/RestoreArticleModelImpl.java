@@ -63,11 +63,11 @@ public class RestoreArticleModelImpl implements IRestoreArticleModel {
     public void deleteExpireArticles(int expireTime) {
         Long expireDate;
         Date d = UtilTime.getSpecifiedBefore(new Date(), expireTime);
-        expireDate = Long.parseLong(UtilTime.dateToStr(d));
+        expireDate = Long.parseLong(UtilTime.get8StringDate(d));
         Log.d(TAG, "过期时间: " + expireDate);
 
         List<RestoreArticleBean> queryResults =  restoreArticleBeanDao.queryBuilder()
-                .where(RestoreArticleBeanDao.Properties.Date.lt(expireDate))
+                .where(RestoreArticleBeanDao.Properties.Date.le(expireDate))
                 .list();
         restoreArticleBeanDao.deleteInTx(queryResults);
     }

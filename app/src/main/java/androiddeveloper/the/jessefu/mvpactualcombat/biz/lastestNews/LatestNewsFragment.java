@@ -31,6 +31,7 @@ import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseFragment;
 import androiddeveloper.the.jessefu.mvpactualcombat.biz.webView.WebviewActivity;
 import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
 import androiddeveloper.the.jessefu.mvpactualcombat.event.EventOnDatePicked;
+import androiddeveloper.the.jessefu.mvpactualcombat.event.EventShowSnackbar;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.latestNews.LatestNewsStoryEntity;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews.ZHNewsStoryEntity;
 import butterknife.BindView;
@@ -71,7 +72,6 @@ public class LatestNewsFragment extends BaseFragment implements LatestNewsContra
         initViews();
         new LatestNewsPresenter(this);
         presenter.start();
-        Log.d(TAG, "onCreateview");
         return mRoot;
     }
 
@@ -176,8 +176,15 @@ public class LatestNewsFragment extends BaseFragment implements LatestNewsContra
         mRecyclerView.post(new Runnable() {
             @Override
             public void run() {
-                mRecyclerAdapter.setNewData(persistentData);
-                mRecyclerAdapter.loadMoreEnd();
+                if (persistentData.size() > 0){
+                    EventBus.getDefault().post(new EventShowSnackbar("Network unavailable. Local data loaded."));
+                    mRecyclerAdapter.setNewData(persistentData);
+                    mRecyclerAdapter.loadMoreEnd();
+                }else{
+                    View view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_empty, null);
+                    mRecyclerAdapter.setEmptyView(view);
+                }
+
             }
         });
     }
@@ -216,9 +223,9 @@ public class LatestNewsFragment extends BaseFragment implements LatestNewsContra
     }
 
     @Subscribe
-    public void onEvent(EventOnDatePicked event){
+    public void onEventReceivePickedData(EventOnDatePicked event){
         //
-        BaseApplication.showToast(String.valueOf(event.getSelectedDate()));
+        presenter.getSpecificDateData(String.valueOf(event.getSelectedDate()));
     }
 
     @Override

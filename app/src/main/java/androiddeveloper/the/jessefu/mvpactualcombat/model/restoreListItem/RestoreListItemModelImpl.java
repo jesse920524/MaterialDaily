@@ -23,7 +23,7 @@ import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilTime;
  */
 
 public class RestoreListItemModelImpl implements IRestoreListItemModel {
-    private static final String TAG = RestoreArticleModelImpl.class.getSimpleName();
+    private static final String TAG = RestoreListItemModelImpl.class.getSimpleName();
 
     private RestoreListItemBeanDao restoreListItemBeanDao = BaseApplication.getDaoSession().getRestoreListItemBeanDao();
 
@@ -36,7 +36,7 @@ public class RestoreListItemModelImpl implements IRestoreListItemModel {
     public RestoreListItemBean queryItemById(Long id) {
         try {
             RestoreListItemBean queryResult = restoreListItemBeanDao.queryBuilder()
-                    .where(RestoreArticleBeanDao.Properties.ArticleId.eq(id))
+                    .where(RestoreListItemBeanDao.Properties.ArticleId.eq(id))
                     .unique();
             return queryResult;
         }catch(Exception e){
@@ -44,6 +44,8 @@ public class RestoreListItemModelImpl implements IRestoreListItemModel {
         }
         return null;
     }
+
+
 
     @Override
     public List<RestoreListItemBean> queryList() {
@@ -71,7 +73,7 @@ public class RestoreListItemModelImpl implements IRestoreListItemModel {
 
     @Override
     public void saveItem(RestoreListItemBean bean) {
-        Log.d(TAG, "save ListItem exec " + bean.getArticleId());
+        //Log.d(TAG, "save ListItem exec " + bean.getArticleId());
         try {
             if (queryItemById(bean.getArticleId()) == null){
                 restoreListItemBeanDao.insert(bean);
@@ -85,10 +87,12 @@ public class RestoreListItemModelImpl implements IRestoreListItemModel {
     public void deleteExpireItems(int expireTime) {
         try {
             //获取long类型的过期时间
+            Long expireLong;
             Date expireDate = UtilTime.getSpecifiedBefore(new Date(), expireTime);
-            long expireLong = Long.parseLong(UtilTime.get8StringDate(expireDate));
+            expireLong = Long.parseLong(UtilTime.get8StringDate(expireDate));
+            Log.d(TAG, "过期时间: " + expireLong);
             List<RestoreListItemBean> beanList = restoreListItemBeanDao.queryBuilder()
-                    .where(RestoreListItemBeanDao.Properties.RestoreDate.lt(expireLong))
+                    .where(RestoreListItemBeanDao.Properties.RestoreDate.le(expireLong))
                     .list();
 
             restoreListItemBeanDao.deleteInTx(beanList);
@@ -108,6 +112,26 @@ public class RestoreListItemModelImpl implements IRestoreListItemModel {
     }
 
     @Override
+    public List<GuokrNewsEntity> convertBean2GKEntity(List<RestoreListItemBean> list) {
+        List<GuokrNewsEntity> resultList = new ArrayList<>();
+        for (RestoreListItemBean restoreListItemBean : list){
+            GuokrNewsEntity entity = new Gson().fromJson(restoreListItemBean.getArticleInfo(), GuokrNewsEntity.class);
+            resultList.add(entity);
+        }
+        return resultList;
+    }
+
+    @Override
+    public List<OneMomentEntity> convertBean2OMEntity(List<RestoreListItemBean> list) {
+        List<OneMomentEntity> resultList = new ArrayList<>();
+        for (RestoreListItemBean restoreListItemBean : list){
+            OneMomentEntity entity = new Gson().fromJson(restoreListItemBean.getArticleInfo(), OneMomentEntity.class);
+            resultList.add(entity);
+        }
+        return resultList;
+    }
+
+    @Override
     public void persistentZHListEntities(List<ZHNewsStoryEntity> entities) {
         Gson gson = new Gson();
         for (ZHNewsStoryEntity entity : entities){
@@ -116,7 +140,7 @@ public class RestoreListItemModelImpl implements IRestoreListItemModel {
             restoreListItemBean.setArticleId(entity.getId());
             restoreListItemBean.setRestoreDate(Long.parseLong(UtilTime.get8StringDate(new Date())));
             restoreListItemBean.setArticleInfo(gson.toJson(entity));
-            Log.d(TAG, "将知乎列表item转为持久化列表item: " + restoreListItemBean);
+//            Log.d(TAG, "将知乎列表item转为持久化列表item: " + restoreListItemBean);
             this.saveItem(restoreListItemBean);
         }
     }
@@ -130,7 +154,7 @@ public class RestoreListItemModelImpl implements IRestoreListItemModel {
             restoreListItemBean.setArticleId(entity.getId());
             restoreListItemBean.setRestoreDate(Long.parseLong(UtilTime.get8StringDate(new Date())));
             restoreListItemBean.setArticleInfo(gson.toJson(entity));
-            Log.d(TAG, "将一刻列表item转为持久化列表item: " + restoreListItemBean);
+//            Log.d(TAG, "将一刻列表item转为持久化列表item: " + restoreListItemBean);
             this.saveItem(restoreListItemBean);
         }
     }
@@ -144,7 +168,7 @@ public class RestoreListItemModelImpl implements IRestoreListItemModel {
             restoreListItemBean.setArticleId(entity.getId());
             restoreListItemBean.setRestoreDate(Long.parseLong(UtilTime.get8StringDate(new Date())));
             restoreListItemBean.setArticleInfo(gson.toJson(entity));
-            Log.d(TAG, "将guokr列表item转为持久化列表item: " + restoreListItemBean);
+            //Log.d(TAG, "将guokr列表item转为持久化列表item: " + restoreListItemBean);
             this.saveItem(restoreListItemBean);
         }
     }

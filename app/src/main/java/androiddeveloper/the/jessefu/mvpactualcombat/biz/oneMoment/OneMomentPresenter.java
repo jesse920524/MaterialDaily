@@ -2,10 +2,13 @@ package androiddeveloper.the.jessefu.mvpactualcombat.biz.oneMoment;
 
 import java.util.List;
 
+import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMoment.IOneMomentModel;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMoment.OneMomentEntity;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMoment.OneMomentModelImpl;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreListItem.IRestoreListItemModel;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreListItem.RestoreListItemBean;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreListItem.RestoreListItemModelImpl;
 
 /**
  * Created by Jesse Fu on 2017/3/14 0014.
@@ -18,8 +21,9 @@ public class OneMomentPresenter implements OneMomentContract.IOneMomentPresenter
     private IRestoreListItemModel modelRestoreListItem;
 
     public OneMomentPresenter(OneMomentContract.IOneMomentView view) {
-        this.view = view;
         this.model = new OneMomentModelImpl();
+        this.modelRestoreListItem = new RestoreListItemModelImpl();
+        this.view = view;
         view.setPresenter(this);
     }
 
@@ -45,13 +49,6 @@ public class OneMomentPresenter implements OneMomentContract.IOneMomentPresenter
     }
 
     @Override
-    public void persistentItems(List<OneMomentEntity> entities) {
-        for (OneMomentEntity entity  : entities){
-
-        }
-    }
-
-    @Override
     public void onDestroy() {
         model.onDestroy();
     }
@@ -60,11 +57,14 @@ public class OneMomentPresenter implements OneMomentContract.IOneMomentPresenter
     public void onSuccess(List<OneMomentEntity> oneMomentEntities) {
         view.getData(oneMomentEntities);
         view.dismissLoading();
+        modelRestoreListItem.persistentOMListEntities(oneMomentEntities);
     }
 
     @Override
     public void onSuccessMore(List<OneMomentEntity> oneMomentEntities) {
         view.getDataMore(oneMomentEntities);
+        view.dismissLoading();
+        modelRestoreListItem.persistentOMListEntities(oneMomentEntities);
     }
 
     @Override
@@ -77,5 +77,13 @@ public class OneMomentPresenter implements OneMomentContract.IOneMomentPresenter
     @Override
     public void onErrorMore(String errMsg) {
         view.getDataMoreError(errMsg);
+    }
+
+    @Override
+    public void onNetworkError() {
+        List<RestoreListItemBean> queryResult = modelRestoreListItem.queryList(MyConstants.ARTICLE_TYPE_ONEMOMENT);
+        List<OneMomentEntity> entities = modelRestoreListItem.convertBean2OMEntity(queryResult);
+        view.getPersistentData(entities);
+        view.dismissLoading();
     }
 }

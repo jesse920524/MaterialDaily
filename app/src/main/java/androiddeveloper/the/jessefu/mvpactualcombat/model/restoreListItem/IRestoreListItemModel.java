@@ -29,6 +29,8 @@ public interface IRestoreListItemModel {
 
     //将持久化的RestoreListItemBean转为知乎日报列表页实体
     List<ZHNewsStoryEntity> convertBean2ZHEntity(List<RestoreListItemBean> list);
+    List<GuokrNewsEntity> convertBean2GKEntity(List<RestoreListItemBean> list);
+    List<OneMomentEntity> convertBean2OMEntity(List<RestoreListItemBean> list);
 
     //将知乎列表页entity持久化为restoreListItemBean
     void persistentZHListEntities(List<ZHNewsStoryEntity> entities);

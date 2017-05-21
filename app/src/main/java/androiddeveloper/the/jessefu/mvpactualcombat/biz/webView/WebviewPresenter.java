@@ -16,7 +16,6 @@ import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.articleDetail.ArticleDetailBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.articleDetail.ArticleDetailModelImpl;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.articleDetail.IArticleDetailModel;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNewsDetail.GuokrNewsDetailBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNewsDetail.GuokrNewsDetailModelImpl;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNewsDetail.IGuokrDetailModel;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNewsDetail.OnGuokrNewsDetailLoadedListener;
@@ -26,7 +25,6 @@ import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMomentDetail.OneMom
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMomentDetail.OneMomentDetailModelImpl;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreArticle.IRestoreArticleModel;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreArticle.RestoreArticleBean;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreArticle.RestoreArticleBeanDao;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreArticle.RestoreArticleModelImpl;
 import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilConnection;
 import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilTime;
@@ -98,13 +96,13 @@ public class WebviewPresenter implements WebviewContract.IWebviewPresenter,
                 Log.d(TAG, "读取本地持久化数据: " + bean.toString());
                 switch (bean.getArticleType()){
                     case MyConstants.ARTICLE_TYPE_ZHIHU:
-                        onSuccess(new Gson().fromJson(bean.getArtticleDetail(), ArticleDetailBean.class));
+                        onSuccessZH(new Gson().fromJson(bean.getArtticleDetail(), ArticleDetailBean.class));
                         break;
                     case MyConstants.ARTICLE_TYPE_ONEMOMENT:
-                        onSuccess(new Gson().fromJson(bean.getArtticleDetail(), OneMomentDetailBean.class));
+                        onSuccessOM(new Gson().fromJson(bean.getArtticleDetail(), OneMomentDetailBean.class));
                         break;
                     case MyConstants.ARTICLE_TYPE_GUOKR:
-                        onSuccess(bean.getArtticleDetail());
+                        onSuccessGK(bean.getArtticleDetail(), receivedId);
                         break;
                 }
             }
@@ -160,11 +158,16 @@ public class WebviewPresenter implements WebviewContract.IWebviewPresenter,
      * 持久化文章详情*/
     @Override
     public <T extends Serializable> void saveArticle(T t, String type) {
-        String articleDetail;
-        if (type != MyConstants.ARTICLE_TYPE_GUOKR){
-            articleDetail = new Gson().toJson(t);
-        }else{
-            articleDetail = (String) t;
+        String articleDetail = null;
+        switch (type){
+            case MyConstants.ARTICLE_TYPE_ZHIHU:
+            case MyConstants.ARTICLE_TYPE_ONEMOMENT:
+                articleDetail = new Gson().toJson(t);
+                Log.d(TAG +  "persistent: ", articleDetail);
+                break;
+            case MyConstants.ARTICLE_TYPE_GUOKR:
+                articleDetail = (String) t;
+                break;
         }
 
         Long articleId = Long.valueOf(view.getArticleId(view.getActivityIntent()));
@@ -183,21 +186,21 @@ public class WebviewPresenter implements WebviewContract.IWebviewPresenter,
     }
 
     @Override
-    public void onSuccess(ArticleDetailBean articleDetailBean) {
+    public void onSuccessZH(ArticleDetailBean articleDetailBean) {
         view.dismissLoading();
         view.getZhihuArticleDetail(articleDetailBean);
         saveArticle(articleDetailBean, MyConstants.ARTICLE_TYPE_ZHIHU);
     }
 
     @Override
-    public void onSuccess(OneMomentDetailBean bean) {
+    public void onSuccessOM(OneMomentDetailBean bean) {
         view.dismissLoading();
         view.getOneMomentDetail(bean);
         saveArticle(bean, MyConstants.ARTICLE_TYPE_ONEMOMENT);
     }
 
     @Override
-    public void onSuccess(String detailBean) {
+    public void onSuccessGK(String detailBean, String articleId) {
         view.dismissLoading();
         view.getGuokrNewsDetail(detailBean);
         saveArticle(detailBean, MyConstants.ARTICLE_TYPE_GUOKR);

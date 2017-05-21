@@ -31,5 +31,6 @@ public interface GuokrNewsContract {
     interface GuokrNewsPresenter extends BasePresenter{
 
         void getGuokrNews(String retrieve_type, String category, int limit, int ad);
+
     }
 }

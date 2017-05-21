@@ -12,6 +12,7 @@ import java.util.List;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseApplication;
 import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.pastNews.PastNewsModelImpl;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreListItem.RestoreListItemBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreListItem.RestoreListItemBeanDao;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.httpMethods.HttpMethodsZhihu;
@@ -59,8 +60,10 @@ public class ZHNewsModelImpl implements IZHNewsModel {
             public void onError(Throwable e) {
                 if (!UtilConnection.getNetworkState()){
                     loadedListener.onNetworkError();
+                }else{
+                    loadedListener.onError();
                 }
-                loadedListener.onError();
+
             }
 
             @Override
@@ -74,14 +77,6 @@ public class ZHNewsModelImpl implements IZHNewsModel {
                         loadedListener.onSuccess(entities);
                     }
                 }, 1000);
-
-                /**持久化*/
-                new Handler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        loadedListener.persistentItems(entities);
-                    }
-                });
 
             }
         };
@@ -127,7 +122,7 @@ public class ZHNewsModelImpl implements IZHNewsModel {
 
             @Override
             public void onNext(final ZHPastNewsBean bean) {
-                final List<ZHNewsStoryEntity> entityList = convertBean2Entity(bean);
+//                final List<ZHNewsStoryEntity> entityList = convertBean2Entity(bean);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -135,17 +130,37 @@ public class ZHNewsModelImpl implements IZHNewsModel {
                     }
                 }, 1000);
 
-                //持久化
-                new Handler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        loadedListener.persistentItems(entityList);
-                    }
-                });
-
             }
         };
         HttpMethodsZhihu.getInstance().getPastNews1(subscriberPast, currDate.replace("-", ""));
+    }
+
+    @Override
+    public void getSpecificDateNews(final OnDataLoadedListener.onZHNewsStoryEntityLoadedListener listener, String date) {
+        subscriberPast = new Subscriber<ZHPastNewsBean>() {
+            @Override
+            public void onCompleted() {
+                Log.d(TAG, "onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.d(TAG, "onError " + e.getMessage());
+                listener.onError();
+            }
+
+            @Override
+            public void onNext(final ZHPastNewsBean bean) {
+                Log.d(TAG, "onNext " + bean);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        listener.onSuccessSpecificDate(convertBean2Entity(bean));
+                    }
+                }, 1000);
+            }
+        };
+        HttpMethodsZhihu.getInstance().getPastNews1(subscriberPast, date);
     }
 
     @Override

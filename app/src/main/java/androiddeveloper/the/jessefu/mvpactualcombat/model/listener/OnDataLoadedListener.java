@@ -9,9 +9,9 @@ import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMomentDetail.OneMom
 
 public interface OnDataLoadedListener {
 
-    void onSuccess(ArticleDetailBean articleDetailBean);
+    void onSuccessZH(ArticleDetailBean articleDetailBean);
 
-    void onSuccess(OneMomentDetailBean oneMomentDetailBean);
+    void onSuccessOM(OneMomentDetailBean oneMomentDetailBean);
 
     void onError(String errMsg);
 }

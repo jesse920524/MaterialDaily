@@ -2,7 +2,7 @@ package androiddeveloper.the.jessefu.mvpactualcombat.biz.main;
 
 import android.support.v4.app.FragmentManager;
 
-import androiddeveloper.the.jessefu.mvpactualcombat.biz.pastNews.datePick.DatePickDialogFragment;
+import androiddeveloper.the.jessefu.mvpactualcombat.biz.datePick.DatePickDialogFragment;
 
 /**
  * Created by Jesse Fu on 2017/2/19.

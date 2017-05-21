@@ -65,6 +65,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
         findPreference("hide_fab").setOnPreferenceClickListener(this);
 
         mListPreference = (ListPreference) findPreference("choose_cache_storage_life");
+        mListPreference.setValueIndex(1);
+
         mListPreference.setOnPreferenceChangeListener(this);
 
         mToolbar = (Toolbar) getActivity().findViewById(R.id.tb_settings);

@@ -11,4 +11,6 @@ public interface OnGuokrNewsLoadedListener {
     void onSuccess(List<GuokrNewsEntity> entities);
 
     void onError(String errMsg);
+
+    void onNetworkError();
 }

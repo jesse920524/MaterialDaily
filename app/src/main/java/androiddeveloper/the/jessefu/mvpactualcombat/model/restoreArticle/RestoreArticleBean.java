@@ -62,7 +62,7 @@ public class RestoreArticleBean implements Serializable{
         return artticleDetail;
     }
 
-    public void setArtticleDetail(String artticleDetail) {
+    public void setArticleDetail(String artticleDetail) {
         this.artticleDetail = artticleDetail;
     }
 
@@ -82,5 +82,9 @@ public class RestoreArticleBean implements Serializable{
                 ", articleType='" + articleType + '\'' +
                 ", artticleDetail='" + artticleDetail + '\'' +
                 '}';
+    }
+
+    public void setArtticleDetail(String artticleDetail) {
+        this.artticleDetail = artticleDetail;
     }
 }

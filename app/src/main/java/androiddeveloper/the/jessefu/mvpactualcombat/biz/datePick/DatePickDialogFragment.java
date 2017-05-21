@@ -1,4 +1,4 @@
-package androiddeveloper.the.jessefu.mvpactualcombat.biz.pastNews.datePick;
+package androiddeveloper.the.jessefu.mvpactualcombat.biz.datePick;
 
 import android.app.Dialog;
 import android.os.Bundle;

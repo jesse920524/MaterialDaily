@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="array_choose_cache_storage_life">
+        <item>@string/list_preference_0</item>
+        <item>@string/list_preference_3</item>
         <item>@string/list_preference_7</item>
-        <item>@string/list_preference_15</item>
-        <item>@string/list_preference_30</item>
-        <item>@string/list_preference_forever</item>
     </string-array>
 
     <string-array name="array_choose_cache_storage_life_value">
+        <item>@string/list_preference_0</item>
+        <item>@string/list_preference_3</item>
         <item>@string/list_preference_7</item>
-        <item>@string/list_preference_15</item>
-        <item>@string/list_preference_30</item>
-        <item>@string/list_preference_forever</item>
     </string-array>
 
+    <string name="list_preference_0">从不缓存数据</string>
+    <string name="list_preference_3">3天</string>
     <string name="list_preference_7">7天</string>
-    <string name="list_preference_15">15天</string>
-    <string name="list_preference_30">30天</string>
-    <string name="list_preference_forever">直到宇宙毁灭</string>
 </resources>

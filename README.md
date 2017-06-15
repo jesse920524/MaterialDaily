@@ -1,3 +1,9 @@
+# Material Daily
+
+<div align="center">
+	<img src="./art/ic_app_launcher.png" width="128">
+</div>
+
 ## Introduction
 
 MaterialDaily提供了知乎日报,豆瓣一刻,果壳精选的每日文章聚合阅读.

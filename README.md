@@ -1,4 +1,4 @@
-#### Introduction
+## Introduction
 
 MaterialDaily提供了知乎日报,豆瓣一刻,果壳精选的每日文章聚合阅读.
 
@@ -6,7 +6,8 @@ MaterialDaily提供了知乎日报,豆瓣一刻,果壳精选的每日文章聚�
 
 本项目采用的架构基于 [Google Android Architecture Blueprints [beta]](https://github.com/googlesamples/android-architecture)'s todo-mvp.
 
-#### 特性
+## Features
+
 Mvp架构
 
 无图模式
@@ -20,10 +21,10 @@ Material Design
 无多余权限
 
 
-#### Latest Version
+## Latest Version
 
->1.1.0
+> 1.1.0
 
-#### ScreenShots
+## ScreenShots
 
-![screenshot](./art/screenshot.png)
+![screenshot](./art/intro_img.jpg)

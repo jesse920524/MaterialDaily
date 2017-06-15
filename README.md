@@ -10,6 +10,8 @@ MaterialDaily提供了知乎日报,豆瓣一刻,果壳精选的每日文章聚�
 
 知乎日报api来自于: [ZhihuDailyPurify](https://github.com/izzyleung/ZhihuDailyPurify)'s [wiki](https://github.com/izzyleung/ZhihuDailyPurify/wiki/%E7%9F%A5%E4%B9%8E%E6%97%A5%E6%8A%A5-API-%E5%88%86%E6%9E%90).
 
+干货集中营妹子图api: [gank.io/api](http://gank.io/api).
+
 本项目采用的架构: [Google Android Architecture Blueprints [beta]](https://github.com/googlesamples/android-architecture)'s todo-mvp.
 
 ## Features

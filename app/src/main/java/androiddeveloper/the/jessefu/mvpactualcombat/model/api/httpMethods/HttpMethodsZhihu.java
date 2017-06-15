@@ -1,4 +1,4 @@
-package androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.httpMethods;
+package androiddeveloper.the.jessefu.mvpactualcombat.model.api.httpMethods;
 
 import java.util.concurrent.TimeUnit;
 
@@ -6,11 +6,11 @@ import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.articleDetail.ArticleDetailBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.latestNews.LatestNewsBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.pastNews.PastNewsBean;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.services.ArticleDetailService;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.services.LatestNewsService;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.services.PastNewsService;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.services.ThemeNewsListService;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.services.ThemeNewsService;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.api.services.ArticleDetailService;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.api.services.LatestNewsService;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.api.services.PastNewsService;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.api.services.ThemeNewsListService;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.api.services.ThemeNewsService;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.themesNews.themes.ThemeBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.themesNews.themeNews.ThemeNewsBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews.ZHLatestNewsBean;

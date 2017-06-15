@@ -66,6 +66,6 @@ public class SettingPresenter implements SettingsContract.ISettingsPresenter {
 
     @Override
     public String getCacheLife(Context context){
-        return sp.getString("cache_life", "");
+        return sp.getString("cache_life", "3天");
     }
 }

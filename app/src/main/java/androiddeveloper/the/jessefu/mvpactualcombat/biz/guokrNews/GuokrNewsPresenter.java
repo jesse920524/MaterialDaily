@@ -6,7 +6,6 @@ import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNews.GuokrNewsEntity;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNews.GuokrNewsModelImpl;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNews.IGuokrNewsModel;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNews.OnGuokrNewsLoadedListener;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreListItem.IRestoreListItemModel;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreListItem.RestoreListItemBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreListItem.RestoreListItemModelImpl;
@@ -15,7 +14,7 @@ import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreListItem.Restor
  * Created by Jesse Fu on 2017-04-30.
  */
 
-public class GuokrNewsPresenter implements GuokrNewsContract.GuokrNewsPresenter, OnGuokrNewsLoadedListener {
+public class GuokrNewsPresenter implements GuokrNewsContract.GuokrNewsPresenter, IGuokrNewsModel.OnGuokrNewsLoadedListener {
     private static final String TAG = GuokrNewsPresenter.class.getSimpleName();
 
     private GuokrNewsContract.GuokrNewsView view;

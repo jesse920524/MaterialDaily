@@ -6,7 +6,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.httpMethods.HttpMethodsGank;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.api.httpMethods.HttpMethodsGank;
 import rx.Subscriber;
 
 /**
@@ -27,7 +27,7 @@ public class GankGirlsModelImpl implements IGankGirlsModel{
 
 
     @Override
-    public  synchronized void getGankGirls(final GankGirlsModelImpl.onDataLoadedListener listener, int count, int p) {
+    public  synchronized void getGankGirls(final IGankGirlsModel.onDataLoadedListener listener, int count, int p) {
         subscriber = new Subscriber<GankGirlsBean>() {
             @Override
             public void onCompleted() {
@@ -100,11 +100,4 @@ public class GankGirlsModelImpl implements IGankGirlsModel{
         page = 1;
     }
 
-    public interface onDataLoadedListener{
-        void onSuccess(List<GankGirlsEntity> entityList);
-
-        void onSuccessMore(List<GankGirlsEntity> entityList);
-
-        void onError(String errMsg);
-    }
 }

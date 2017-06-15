@@ -9,7 +9,7 @@ import java.util.List;
 import androiddeveloper.the.jessefu.mvpactualcombat.anotations.DB;
 import androiddeveloper.the.jessefu.mvpactualcombat.anotations.HttpRequest;
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseApplication;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.httpMethods.HttpMethodsZhihu;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.api.httpMethods.HttpMethodsZhihu;
 import rx.Subscriber;
 
 /**
@@ -136,10 +136,5 @@ public class LatestNewsModelImpl implements ILatestNewsModel {
     }
 
 
-    /***/
-    public interface onDataLoadedListener{
-        void onSuccess(List<LatestNewsStoryEntity> latestNewsStoryEntityList);
 
-        void onError();
-    }
 }

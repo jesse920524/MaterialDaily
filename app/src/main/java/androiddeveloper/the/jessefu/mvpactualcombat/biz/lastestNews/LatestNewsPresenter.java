@@ -2,9 +2,6 @@ package androiddeveloper.the.jessefu.mvpactualcombat.biz.lastestNews;
 
 import android.util.Log;
 
-import org.greenrobot.eventbus.EventBus;
-
-import java.awt.font.TextAttribute;
 import java.util.List;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
@@ -12,7 +9,6 @@ import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreListItem.IResto
 import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreListItem.RestoreListItemBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreListItem.RestoreListItemModelImpl;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews.IZHNewsModel;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews.OnDataLoadedListener;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews.ZHNewsModelImpl;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews.ZHNewsStoryEntity;
 
@@ -21,7 +17,7 @@ import androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews.ZHNewsStoryE
  */
 
 public class LatestNewsPresenter implements LatestNewsContract.ILNPresenter,
-        OnDataLoadedListener.onZHNewsStoryEntityLoadedListener{
+        IZHNewsModel.onZHNewsStoryEntityLoadedListener{
 
     private static final String TAG = LatestNewsPresenter.class.getSimpleName();
 

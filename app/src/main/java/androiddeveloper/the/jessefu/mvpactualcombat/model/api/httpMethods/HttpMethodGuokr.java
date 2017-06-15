@@ -1,23 +1,19 @@
-package androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.httpMethods;
+package androiddeveloper.the.jessefu.mvpactualcombat.model.api.httpMethods;
 
 import java.util.concurrent.TimeUnit;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNews.GuokrNewsBean;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNewsDetail.GuokrNewsDetailBean;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.services.GuokrNewsDetailService;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.services.GuokrNewsService;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.api.services.GuokrNewsDetailService;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.api.services.GuokrNewsService;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
-import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-
-import static android.R.attr.category;
 
 /**
  * Created by Jesse Fu on 2017-04-30.

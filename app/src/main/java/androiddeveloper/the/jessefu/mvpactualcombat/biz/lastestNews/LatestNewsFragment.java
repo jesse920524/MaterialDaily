@@ -52,7 +52,6 @@ public class LatestNewsFragment extends BaseFragment implements LatestNewsContra
     @BindView(R2.id.layout_ln_swipe)
     SwipeRefreshLayout mSwiper;
 
-    //private RecyclerLatestAdatper mRecyclerAdapter;
     private RecyclerZHStoryAdapter mRecyclerAdapter;
     public LinearLayoutManager linearLayoutManager;
 
@@ -91,6 +90,7 @@ public class LatestNewsFragment extends BaseFragment implements LatestNewsContra
                 intent.putExtra(MyConstants.SERIALIZABLE_ITEM, entity);
                 intent.putExtra(MyConstants.ARTICLE_TYPE, MyConstants.ARTICLE_TYPE_ZHIHU);//传递文章类型
                 startActivity(intent);
+                //getActivity().overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             }
         });
         mRecyclerAdapter = new RecyclerZHStoryAdapter(R.layout.item_news, null);

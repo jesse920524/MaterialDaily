@@ -1,12 +1,12 @@
-package androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.httpMethods;
+package androiddeveloper.the.jessefu.mvpactualcombat.model.api.httpMethods;
 
 import java.util.concurrent.TimeUnit;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMoment.OneMomentBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMomentDetail.OneMomentDetailBean;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.services.OneMomentDetailsService;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.services.OneMomentService;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.api.services.OneMomentDetailsService;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.api.services.OneMomentService;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;

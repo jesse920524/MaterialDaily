@@ -10,7 +10,7 @@ public interface ILatestNewsModel {
 
 
     //获取最新文章列表
-    void getLatestNews(LatestNewsModelImpl.onDataLoadedListener loadedListener);
+    void getLatestNews(onDataLoadedListener loadedListener);
 
     //将最新文章列表LatestNewsBean的StoriesBean映射为StoryEntity集合
     List<LatestNewsStoryEntity> convertLatestNewsToStoryEntity(LatestNewsBean latestNewsBean);
@@ -23,7 +23,12 @@ public interface ILatestNewsModel {
 
     void deleteStoryEntity();
 
+    /***/
+    interface onDataLoadedListener{
+        void onSuccess(List<LatestNewsStoryEntity> latestNewsStoryEntityList);
 
+        void onError();
+    }
 
 
 

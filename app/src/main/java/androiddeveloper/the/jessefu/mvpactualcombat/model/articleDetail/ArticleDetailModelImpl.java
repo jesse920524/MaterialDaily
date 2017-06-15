@@ -3,7 +3,7 @@ package androiddeveloper.the.jessefu.mvpactualcombat.model.articleDetail;
 import android.util.Log;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.model.listener.OnDataLoadedListener;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.httpMethods.HttpMethodsZhihu;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.api.httpMethods.HttpMethodsZhihu;
 import rx.Subscriber;
 
 /**

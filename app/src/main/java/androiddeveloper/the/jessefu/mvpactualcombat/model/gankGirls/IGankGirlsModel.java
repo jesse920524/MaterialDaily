@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IGankGirlsModel {
     //获取文章列表
-    void getGankGirls(GankGirlsModelImpl.onDataLoadedListener listener, int count, int page);
+    void getGankGirls(onDataLoadedListener listener, int count, int page);
 
     //将Bean转为entity
     List<GankGirlsEntity> convertBean2Entity(GankGirlsBean gankGirlsBean);
@@ -22,4 +22,12 @@ public interface IGankGirlsModel {
     void deleteLocalEntities();
 
     void onDestroy();
+
+    public interface onDataLoadedListener{
+        void onSuccess(List<GankGirlsEntity> entityList);
+
+        void onSuccessMore(List<GankGirlsEntity> entityList);
+
+        void onError(String errMsg);
+    }
 }

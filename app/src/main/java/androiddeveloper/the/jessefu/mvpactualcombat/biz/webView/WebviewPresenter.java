@@ -18,7 +18,6 @@ import androiddeveloper.the.jessefu.mvpactualcombat.model.articleDetail.ArticleD
 import androiddeveloper.the.jessefu.mvpactualcombat.model.articleDetail.IArticleDetailModel;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNewsDetail.GuokrNewsDetailModelImpl;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNewsDetail.IGuokrDetailModel;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNewsDetail.OnGuokrNewsDetailLoadedListener;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.listener.OnDataLoadedListener;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMomentDetail.IOneMomentDetailModel;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMomentDetail.OneMomentDetailBean;
@@ -36,7 +35,7 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class WebviewPresenter implements WebviewContract.IWebviewPresenter,
-        OnDataLoadedListener, OnGuokrNewsDetailLoadedListener {
+        OnDataLoadedListener, IGuokrDetailModel.OnGuokrNewsDetailLoadedListener {
 
     private static final String TAG = WebviewPresenter.class.getSimpleName();
 

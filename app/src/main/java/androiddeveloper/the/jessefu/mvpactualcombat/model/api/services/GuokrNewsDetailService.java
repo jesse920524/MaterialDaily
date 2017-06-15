@@ -1,6 +1,5 @@
-package androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.services;
+package androiddeveloper.the.jessefu.mvpactualcombat.model.api.services;
 
-import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNewsDetail.GuokrNewsDetailBean;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import rx.Observable;

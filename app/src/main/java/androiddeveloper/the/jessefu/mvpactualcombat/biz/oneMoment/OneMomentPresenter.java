@@ -14,7 +14,7 @@ import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreListItem.Restor
  * Created by Jesse Fu on 2017/3/14 0014.
  */
 
-public class OneMomentPresenter implements OneMomentContract.IOneMomentPresenter, OneMomentModelImpl.onDataLoadListener {
+public class OneMomentPresenter implements OneMomentContract.IOneMomentPresenter, IOneMomentModel.onDataLoadListener {
     private static final String TAG = OneMomentPresenter.class.getSimpleName();
     private OneMomentContract.IOneMomentView view;
     private IOneMomentModel model;

@@ -2,7 +2,7 @@ package androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNewsDetail;
 
 import android.util.Log;
 
-import androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.httpMethods.HttpMethodGuokr;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.api.httpMethods.HttpMethodGuokr;
 import rx.Subscriber;
 
 /**
@@ -15,7 +15,7 @@ public class GuokrNewsDetailModelImpl implements IGuokrDetailModel {
     private Subscriber<String> subscriber;
 
     @Override
-    public void getGuokrNewsDetail(final OnGuokrNewsDetailLoadedListener listener, final String articleId) {
+    public void getGuokrNewsDetail(final IGuokrDetailModel.OnGuokrNewsDetailLoadedListener listener, final String articleId) {
         subscriber = new Subscriber<String>() {
             @Override
             public void onCompleted() {

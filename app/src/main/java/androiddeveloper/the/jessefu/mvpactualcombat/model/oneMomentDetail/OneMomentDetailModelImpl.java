@@ -3,7 +3,7 @@ package androiddeveloper.the.jessefu.mvpactualcombat.model.oneMomentDetail;
 import android.util.Log;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.model.listener.OnDataLoadedListener;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.httpMethods.HttpMethodOneMoment;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.api.httpMethods.HttpMethodOneMoment;
 import rx.Subscriber;
 
 /**

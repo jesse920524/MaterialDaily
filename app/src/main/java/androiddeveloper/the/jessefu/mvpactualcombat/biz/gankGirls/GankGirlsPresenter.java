@@ -13,7 +13,7 @@ import androiddeveloper.the.jessefu.mvpactualcombat.model.gankGirls.IGankGirlsMo
  * Created by Jesse Fu on 2017/3/9 0009.
  */
 
-public class GankGirlsPresenter implements GankGirlsContract.IGankGirlsPresenter, GankGirlsModelImpl.onDataLoadedListener {
+public class GankGirlsPresenter implements GankGirlsContract.IGankGirlsPresenter, IGankGirlsModel.onDataLoadedListener {
     private static final String TAG = GankGirlsPresenter.class.getSimpleName();
 
     private GankGirlsContract.IGankGirlsView view;

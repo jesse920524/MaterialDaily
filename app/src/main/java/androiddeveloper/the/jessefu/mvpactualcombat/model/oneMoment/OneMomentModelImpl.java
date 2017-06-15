@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.httpMethods.HttpMethodOneMoment;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.api.httpMethods.HttpMethodOneMoment;
 import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilConnection;
 import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilTime;
 import rx.Subscriber;
@@ -184,16 +184,5 @@ public class OneMomentModelImpl implements IOneMomentModel {
         currDate = formatter.format(new Date());
     }
 
-    public interface onDataLoadListener{
 
-        void onSuccess(List<OneMomentEntity> oneMomentEntities);
-
-        void onSuccessMore(List<OneMomentEntity> oneMomentEntities);
-
-        void onError(String errMsg);
-
-        void onErrorMore(String errMsg);
-
-        void onNetworkError();
-    }
 }

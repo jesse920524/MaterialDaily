@@ -14,7 +14,7 @@ public interface IZHNewsModel {
 
     /**
      * 获取知乎日报今日新闻*/
-    void getLatestNews(OnDataLoadedListener.onZHNewsStoryEntityLoadedListener loadedListener);
+    void getLatestNews(onZHNewsStoryEntityLoadedListener loadedListener);
 
     /**
      * 将今日新闻Bean转为enentiy*/
@@ -22,15 +22,27 @@ public interface IZHNewsModel {
 
     /**
      * 获取知乎日报往期新闻*/
-    void getPastNews(OnDataLoadedListener.onZHNewsStoryEntityLoadedListener loadedListener);
+    void getPastNews(onZHNewsStoryEntityLoadedListener loadedListener);
 
     /**获取知乎日报指定日期新闻*/
-    void getSpecificDateNews(OnDataLoadedListener.onZHNewsStoryEntityLoadedListener listener, String date);
+    void getSpecificDateNews(onZHNewsStoryEntityLoadedListener listener, String date);
     /**
      * 将往期新闻Bean转为entity*/
     List<ZHNewsStoryEntity> convertBean2Entity(ZHPastNewsBean bean);
 
     void onDestroy();
 
+    /**知乎日报今日,往期,指定日期新闻的回调*/
+    interface onZHNewsStoryEntityLoadedListener{
+        void onSuccess(List<ZHNewsStoryEntity> entities);
+
+        void onSuccessMore(List<ZHNewsStoryEntity> entities);
+
+        void onSuccessSpecificDate(List<ZHNewsStoryEntity> entities);
+
+        void onError();
+
+        void onNetworkError();
+    }
 
 }

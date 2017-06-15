@@ -216,7 +216,9 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
         }
 
         String css = "<link rel=\"stylesheet\" href=\"file:///android_asset/css/zhihu.css\" type=\"text/css\">";
-        String html = "<html><head>" + css + "</head><body>" + bean.getBody() + "</body></html>";
+//        String html = "<html><head>" + css + "</head><body>" + bean.getBody() + "</body></html>";
+        String html = "<html><head>" + css + "</head><body>" + bean.getBody()
+                + "</div>\n</div>\n<script>var list = document.getElementsByTagName('A');for(var i =0; i < list.length;i++){list[i].href='javascript:void(0)';}</script></body>\n</html>";
         html = html.replace("<div class=\"img-place-holder\">", "");
         mWebView.loadDataWithBaseURL("x-data://base", html, "text/html", "UTF-8", null);
     }
@@ -272,7 +274,8 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
             stringBuilder.append("<div class=\"container bs-docs-container\">\n");
             stringBuilder.append("<div class=\"post-container\">\n");
             stringBuilder.append(content);
-            stringBuilder.append("</div>\n</div>\n</body>\n</html>");
+            stringBuilder.append("</div>\n</div>\n<script>var list = document.getElementsByTagName('A');for(var i =0; i < list.length;i++){list[i].href='javascript:void(0)';}</script></body>\n</html>");
+//            stringBuilder.append("</div>\n</div>\n</body>\n</html>");
             mWebView.loadDataWithBaseURL("x-data://base", stringBuilder.toString(), "text/html", "UTF-8", null);
 
         }
@@ -395,15 +398,20 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
     @Override
     protected void onStop() {
         super.onStop();
-        Fade fade = null;
+        /*Fade fade = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             fade = new Fade();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 getWindow().setExitTransition(fade);
             }
-        }
+        }*/
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        //overridePendingTransition(android.R.anim.accelerate_decelerate_interpolator, android.R.anim.slide_out_right);
+    }
 
     @Override
     public void setImageLoadMode(boolean loadMode) {
@@ -426,8 +434,6 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            view.scrollTo(0, 1000);
-            Log.d(TAG, "onPageFinished exec");
         }
     }
 }

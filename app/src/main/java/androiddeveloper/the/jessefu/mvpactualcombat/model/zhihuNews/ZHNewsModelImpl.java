@@ -3,19 +3,14 @@ package androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews;
 import android.os.Handler;
 import android.util.Log;
 
-import com.google.gson.Gson;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseApplication;
-import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.pastNews.PastNewsModelImpl;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreListItem.RestoreListItemBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreListItem.RestoreListItemBeanDao;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.httpMethods.HttpMethodsZhihu;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.api.httpMethods.HttpMethodsZhihu;
 import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilConnection;
 import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilTime;
 import rx.Subscriber;
@@ -43,7 +38,7 @@ public class ZHNewsModelImpl implements IZHNewsModel {
     }
 
     @Override
-    public void getLatestNews(final OnDataLoadedListener.onZHNewsStoryEntityLoadedListener loadedListener) {
+    public void getLatestNews(final onZHNewsStoryEntityLoadedListener loadedListener) {
         onDestroy();//这里是为了刷新当天日期
         subscriberLatest = new Subscriber<ZHLatestNewsBean>() {
             @Override
@@ -104,7 +99,7 @@ public class ZHNewsModelImpl implements IZHNewsModel {
     }
 
     @Override
-    public void getPastNews(final OnDataLoadedListener.onZHNewsStoryEntityLoadedListener loadedListener) {
+    public void getPastNews(final onZHNewsStoryEntityLoadedListener loadedListener) {
         subscriberPast = new Subscriber<ZHPastNewsBean>() {
             @Override
             public void onCompleted() {
@@ -136,7 +131,7 @@ public class ZHNewsModelImpl implements IZHNewsModel {
     }
 
     @Override
-    public void getSpecificDateNews(final OnDataLoadedListener.onZHNewsStoryEntityLoadedListener listener, String date) {
+    public void getSpecificDateNews(final onZHNewsStoryEntityLoadedListener listener, String date) {
         subscriberPast = new Subscriber<ZHPastNewsBean>() {
             @Override
             public void onCompleted() {

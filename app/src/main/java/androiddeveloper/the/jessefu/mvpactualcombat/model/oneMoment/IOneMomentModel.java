@@ -11,9 +11,9 @@ public interface IOneMomentModel {
     List<OneMomentEntity> convertBean2Entity(OneMomentBean bean);
 
     //发送http请求获取数据
-    void getNews(OneMomentModelImpl.onDataLoadListener loadListener);
+    void getNews(onDataLoadListener loadListener);
 
-    void getNewsMore(OneMomentModelImpl.onDataLoadListener loadListener);
+    void getNewsMore(onDataLoadListener loadListener);
 
     //持久化数据
     void saveEntities(List<OneMomentEntity> entities);
@@ -25,4 +25,17 @@ public interface IOneMomentModel {
     void deleteEntities();
 
     void onDestroy();
+
+    interface onDataLoadListener{
+
+        void onSuccess(List<OneMomentEntity> oneMomentEntities);
+
+        void onSuccessMore(List<OneMomentEntity> oneMomentEntities);
+
+        void onError(String errMsg);
+
+        void onErrorMore(String errMsg);
+
+        void onNetworkError();
+    }
 }

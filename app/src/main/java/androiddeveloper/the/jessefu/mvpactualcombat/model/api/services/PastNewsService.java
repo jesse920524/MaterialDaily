@@ -1,4 +1,4 @@
-package androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.services;
+package androiddeveloper.the.jessefu.mvpactualcombat.model.api.services;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.model.pastNews.PastNewsBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews.ZHPastNewsBean;

@@ -8,7 +8,6 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
-import java.security.spec.ECField;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +19,6 @@ import androiddeveloper.the.jessefu.mvpactualcombat.model.articleDetail.IArticle
 import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNewsDetail.GuokrNewsDetailBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNewsDetail.GuokrNewsDetailModelImpl;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNewsDetail.IGuokrDetailModel;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNewsDetail.OnGuokrNewsDetailLoadedListener;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.listener.OnDataLoadedListener;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMomentDetail.IOneMomentDetailModel;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMomentDetail.OneMomentDetailBean;
@@ -38,7 +36,7 @@ import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilTime;
  * Created by Jesse Fu on 2017-05-13.
  */
 
-public class PersistentHelperImpl implements IPersistentHelper, OnDataLoadedListener, OnGuokrNewsDetailLoadedListener {
+public class PersistentHelperImpl implements IPersistentHelper, OnDataLoadedListener, IGuokrDetailModel.OnGuokrNewsDetailLoadedListener {
     private static final String TAG = PersistentHelperImpl.class.getSimpleName();
     private static final int CLEAR_EXPIRE_DATA = 0;
 
@@ -108,10 +106,10 @@ public class PersistentHelperImpl implements IPersistentHelper, OnDataLoadedList
         Message message = Message.obtain();
         message.what = CLEAR_EXPIRE_DATA;
         switch (cacheLife){
-            case "":
             case "从不缓存数据":
                 message.arg1 = 0;
                 break;
+            case "":
             case "3天":
                 message.arg1 = 3;
                 break;

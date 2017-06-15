@@ -1,10 +1,10 @@
-package androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.httpMethods;
+package androiddeveloper.the.jessefu.mvpactualcombat.model.api.httpMethods;
 
 import java.util.concurrent.TimeUnit;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.gankGirls.GankGirlsBean;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.retrofit.services.GankGirlsService;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.api.services.GankGirlsService;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;

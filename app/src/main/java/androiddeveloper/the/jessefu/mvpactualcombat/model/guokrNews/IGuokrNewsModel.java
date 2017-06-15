@@ -12,4 +12,13 @@ public interface IGuokrNewsModel {
 
     //将bean转为entity集合
     List<GuokrNewsEntity> convertBean2Entities(GuokrNewsBean bean);
+
+    interface OnGuokrNewsLoadedListener {
+
+        void onSuccess(List<GuokrNewsEntity> entities);
+
+        void onError(String errMsg);
+
+        void onNetworkError();
+    }
 }

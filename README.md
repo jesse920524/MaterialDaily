@@ -14,6 +14,10 @@ MaterialDaily提供了知乎日报,豆瓣一刻,果壳精选的每日文章聚�
 
 本项目采用的架构: [Google Android Architecture Blueprints [beta]](https://github.com/googlesamples/android-architecture)'s todo-mvp.
 
+## ScreenShots
+
+![screenshot](./art/intro_img.jpg)
+
 ## Features
 
 Mvp架构
@@ -33,6 +37,4 @@ Material Design
 
 > 1.1.0
 
-## ScreenShots
 
-![screenshot](./art/intro_img.jpg)

@@ -10,7 +10,9 @@ import androiddeveloper.the.jessefu.mvpactualcombat.anotations.DB;
 import androiddeveloper.the.jessefu.mvpactualcombat.anotations.HttpRequest;
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseApplication;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.api.httpMethods.HttpMethodsZhihu;
-import rx.Subscriber;
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by Jesse Fu on 2017/2/24 0024.
@@ -19,8 +21,8 @@ import rx.Subscriber;
 public class LatestNewsModelImpl implements ILatestNewsModel {
     private static final String TAG = LatestNewsModelImpl.class.getSimpleName();
     private LatestNewsStoryEntityDao storyEntityDao;
-    private Subscriber<LatestNewsBean> subscriber;
-
+//    private Subscriber<LatestNewsBean> subscriber;
+    private Observer<LatestNewsBean> observer;
     public LatestNewsModelImpl() {
         //构造器中实例化StoryEntityDao
         storyEntityDao = BaseApplication.getDaoSession().getLatestNewsStoryEntityDao();
@@ -31,7 +33,7 @@ public class LatestNewsModelImpl implements ILatestNewsModel {
     @Override
     public void getLatestNews(final onDataLoadedListener onDataLoadedListener) {
 
-        subscriber = new Subscriber<LatestNewsBean>() {
+        /*subscriber = new Subscriber<LatestNewsBean>() {
             @Override
             public void onCompleted() {
 
@@ -42,12 +44,38 @@ public class LatestNewsModelImpl implements ILatestNewsModel {
                 Log.d(TAG, e.getMessage().toString());
                 onDataLoadedListener.onError();
             }
-            /**
+            *//**
              * onNext()中:
              * 1.将请求结果显示到界面上
-             * 2.将请求结果转化为Entity并存储到db中*/
+             * 2.将请求结果转化为Entity并存储到db中*//*
             @Override
             public void onNext(LatestNewsBean latestNewsBean) {
+                Log.d(TAG, latestNewsBean.toString());
+
+                *//**将JavaBean转化为Entity*//*
+                List<LatestNewsStoryEntity> storyEntities = convertLatestNewsToStoryEntity(latestNewsBean);
+                final List<LatestNewsStoryEntity> finalStoryEntities = storyEntities;
+                *//**将Entity存储到数据库*//*
+                //存储到db
+                saveStoryEntity(storyEntities);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        onDataLoadedListener.onSuccess(finalStoryEntities);
+                    }
+                }, 1000);
+            }
+        };*/
+
+        observer = new Observer<LatestNewsBean>() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(@NonNull LatestNewsBean latestNewsBean) {
                 Log.d(TAG, latestNewsBean.toString());
 
                 /**将JavaBean转化为Entity*/
@@ -64,8 +92,19 @@ public class LatestNewsModelImpl implements ILatestNewsModel {
                     }
                 }, 1000);
             }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                Log.d(TAG, e.getMessage().toString());
+                onDataLoadedListener.onError();
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d(TAG, "onComplete: ");
+            }
         };
-        HttpMethodsZhihu.getInstance().getLatestNews(subscriber);
+        HttpMethodsZhihu.getInstance().getLatestNews(observer);
     }
 
 

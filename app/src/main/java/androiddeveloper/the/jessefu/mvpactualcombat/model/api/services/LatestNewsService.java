@@ -2,8 +2,9 @@ package androiddeveloper.the.jessefu.mvpactualcombat.model.api.services;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.model.latestNews.LatestNewsBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews.ZHLatestNewsBean;
+import io.reactivex.Observable;
 import retrofit2.http.GET;
-import rx.Observable;
+
 
 /**
  * Created by Jesse Fu on 2017/2/22.
@@ -11,6 +12,7 @@ import rx.Observable;
  */
 
 public interface LatestNewsService {
+    @Deprecated
     @GET("api/4/news/latest")
     Observable<LatestNewsBean> getLatestNews();
 

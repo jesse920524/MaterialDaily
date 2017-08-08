@@ -11,7 +11,10 @@ import java.util.List;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.api.httpMethods.HttpMethodOneMoment;
 import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilConnection;
 import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilTime;
-import rx.Subscriber;
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+
 
 /**
  * Created by Jesse Fu on 2017/3/14 0014.
@@ -22,8 +25,8 @@ public class OneMomentModelImpl implements IOneMomentModel {
 
 
     private HttpMethodOneMoment httpMethodOneMoment;
-    private Subscriber<OneMomentBean> subscriber;
-
+//    private Subscriber<OneMomentBean> subscriber;
+    private Observer<OneMomentBean> observer;
     private static String currDate;//当天时间,加载更多时递减
     public OneMomentModelImpl() {
 
@@ -85,7 +88,8 @@ public class OneMomentModelImpl implements IOneMomentModel {
     @Override
     public void getNews(final onDataLoadListener loadListener) {
         onDestroy();//这里是为了刷新当天日期
-        subscriber = new Subscriber<OneMomentBean>() {
+
+        /*subscriber = new Subscriber<OneMomentBean>() {
 
             @Override
             public void onCompleted() {
@@ -119,13 +123,51 @@ public class OneMomentModelImpl implements IOneMomentModel {
                     }
                 }, 1000);
             }
+        };*/
+        observer = new Observer<OneMomentBean>() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(@NonNull OneMomentBean oneMomentBean) {
+                Log.d(TAG, "onNext() exec " + oneMomentBean);
+                final List<OneMomentEntity> oneMomentEntityList = convertBean2Entity(oneMomentBean);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadListener.onSuccess(oneMomentEntityList);
+                    }
+                }, 1000);
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                Log.d(TAG, "onError() exec " + e.getMessage());
+                if (!UtilConnection.getNetworkState()){
+                    loadListener.onNetworkError();
+                }else{
+                    loadListener.onError(e.getMessage());
+                }
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d(TAG, "on completed() exec");
+                //得到前一天date(input -> date out -> date)
+                currDate = UtilTime.getSpecifiedBefore(currDate);
+
+                Log.d(TAG, "更新后的currDate: " + currDate);
+            }
         };
-        httpMethodOneMoment.getOneMomentList(subscriber, currDate);
+        httpMethodOneMoment.getOneMomentList(observer, currDate);
     }
 
     @Override
     public void getNewsMore(final onDataLoadListener loadListener) {
-        subscriber = new Subscriber<OneMomentBean>() {
+        /*subscriber = new Subscriber<OneMomentBean>() {
 
             @Override
             public void onCompleted() {
@@ -159,8 +201,47 @@ public class OneMomentModelImpl implements IOneMomentModel {
                     }
                 }, 1000);
             }
+        };*/
+        observer = new Observer<OneMomentBean>() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(@NonNull OneMomentBean oneMomentBean) {
+                Log.d(TAG, "onNext() exec " + oneMomentBean);
+                final List<OneMomentEntity> oneMomentEntityList = convertBean2Entity(oneMomentBean);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadListener.onSuccessMore(oneMomentEntityList);
+                    }
+                }, 1000);
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                Log.d(TAG, "onError() exec " + e.getMessage());
+                if (!UtilConnection.getNetworkState()){
+                    loadListener.onNetworkError();
+                }else{
+                    loadListener.onError(e.getMessage());
+                }
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d(TAG, "on completed() exec");
+                //得到前一天date(input -> date out -> date)
+                currDate = UtilTime.getSpecifiedBefore(currDate);
+
+                Log.d(TAG, "更新后的currDate: " + currDate);
+            }
         };
-        httpMethodOneMoment.getOneMomentList(subscriber, currDate);
+
+        httpMethodOneMoment.getOneMomentList(observer, currDate);
     }
 
     @Override

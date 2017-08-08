@@ -2,7 +2,7 @@ package androiddeveloper.the.jessefu.mvpactualcombat.model.api.services;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import rx.Observable;
+
 
 /**
  * Created by Jesse Fu on 2017-05-01.
@@ -12,5 +12,5 @@ import rx.Observable;
 public interface GuokrNewsDetailService {
 
     @GET("pick/{id}")
-    Observable<String> getGuokrNewsDetail(@Path("id")String id);
+    io.reactivex.Observable<String> getGuokrNewsDetail(@Path("id")String id);
 }

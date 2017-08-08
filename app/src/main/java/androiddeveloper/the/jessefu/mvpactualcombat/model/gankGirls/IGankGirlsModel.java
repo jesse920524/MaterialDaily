@@ -23,7 +23,7 @@ public interface IGankGirlsModel {
 
     void onDestroy();
 
-    public interface onDataLoadedListener{
+     interface onDataLoadedListener{
         void onSuccess(List<GankGirlsEntity> entityList);
 
         void onSuccessMore(List<GankGirlsEntity> entityList);

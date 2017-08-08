@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.model.api.httpMethods.HttpMethodsZhihu;
-import rx.Subscriber;
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+
 
 /**
  * Created by Jesse Fu on 2017/3/1 0001.
@@ -17,11 +20,12 @@ public class ThemeNewsModelImpl implements IThemeNewsModel {
 
     private static final String TAG = ThemeNewsModelImpl.class.getSimpleName();
 
-    private Subscriber<ThemeNewsBean> subscriber;
+
+    private Observer<ThemeNewsBean> observer;
 
     @Override
     public void getThemeNews(final ThemeNewsModelImpl.onDataLoadedListener listener, int themeId) {
-        subscriber = new Subscriber<ThemeNewsBean>() {
+        /*subscriber = new Subscriber<ThemeNewsBean>() {
             @Override
             public void onCompleted() {
                 Log.d(TAG, "获取主题日报新闻 onCompleted !!");
@@ -35,6 +39,31 @@ public class ThemeNewsModelImpl implements IThemeNewsModel {
 
             @Override
             public void onNext(ThemeNewsBean themeNewsBean) {
+                Log.d(TAG, "获取主题日报新闻 onNext " + themeNewsBean.toString());
+                *//**将JavaBean转化为Entity*//*
+                final List<ThemeNewsEntity> entities = convertBeanToEntity(themeNewsBean);
+                final List<ThemeNewsEntity>  themeEntities = entities;
+                *//**将Entity存储到数据库*//*
+                //存储到db
+                saveEntity(themeEntities);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        listener.onSuccess(entities);
+                    }
+                }, 1000);
+            }
+        };*/
+
+        observer = new Observer<ThemeNewsBean>() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+                Log.d(TAG, "onSubscribe: ");
+            }
+
+            @Override
+            public void onNext(@NonNull ThemeNewsBean themeNewsBean) {
                 Log.d(TAG, "获取主题日报新闻 onNext " + themeNewsBean.toString());
                 /**将JavaBean转化为Entity*/
                 final List<ThemeNewsEntity> entities = convertBeanToEntity(themeNewsBean);
@@ -50,8 +79,19 @@ public class ThemeNewsModelImpl implements IThemeNewsModel {
                     }
                 }, 1000);
             }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                Log.d(TAG, "获取主题日报新闻 onError " + e.getMessage());
+                listener.onError();
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d(TAG, "获取主题日报新闻 onCompleted !!");
+            }
         };
-        HttpMethodsZhihu.getInstance().getThemeNewsList(subscriber, themeId);
+        HttpMethodsZhihu.getInstance().getThemeNewsList(observer, themeId);
     }
 
 

@@ -7,9 +7,10 @@ import android.os.Handler;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.R;
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseApplication;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.functions.Consumer;
+
 
 /**
  * Created by Jesse Fu on 2017-04-09.
@@ -31,17 +32,30 @@ public class LargePicPresenter implements LargePicContract.ILargePicPrensenter {
 
     @Override
     public void saveImg2Gallary(final String type) {
-        Subscription s = RxSaveImg.saveImgGetPathObservable((Context) view, view.getIntentArgs())
+        /*Subscription s = RxSaveImg.saveImgGetPathObservable((Context) view, view.getIntentArgs())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Uri>() {
                     @Override
                     public void call(Uri uri) {
-                        if (type == "share"){
+
+                    }
+                });*/
+
+        RxSaveImg.saveImg((Context) view, view.getIntentArgs())
+                .subscribe(new Consumer<Uri>() {
+                    @Override
+                    public void accept(Uri uri) throws Exception {
+                        if (type == "share") {
                             shareImg((Context) view, uri);
-                        }else{
+                        } else {
                             BaseApplication.showToast("保存成功! \n"
-                                    + "路径: "+ uri);
+                                    + "路径: " + uri);
                         }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        BaseApplication.showToast("error: " + throwable.toString());
                     }
                 });
     }

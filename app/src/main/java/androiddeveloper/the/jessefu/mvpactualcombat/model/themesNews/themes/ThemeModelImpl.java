@@ -8,7 +8,10 @@ import java.util.List;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseApplication;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.api.httpMethods.HttpMethodsZhihu;
-import rx.Subscriber;
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+
 
 /**
  * Created by Jesse Fu on 2017/3/1 0001.
@@ -17,7 +20,8 @@ import rx.Subscriber;
 public class ThemeModelImpl implements IThemeModel {
 
     private static final String TAG = ThemeModelImpl.class.getSimpleName();
-    private Subscriber<ThemeBean> subscriber;
+//    private Subscriber<ThemeBean> subscriber;
+    private Observer<ThemeBean> observer;
     private ThemeEntityDao themeEntityDao;
 
     public ThemeModelImpl() {
@@ -28,7 +32,7 @@ public class ThemeModelImpl implements IThemeModel {
     @Override
     public void getThemes(final ThemeModelImpl.onDataLoadedListener listener) {
 
-        subscriber = new Subscriber<ThemeBean>() {
+        /*subscriber = new Subscriber<ThemeBean>() {
             @Override
             public void onCompleted() {
 
@@ -44,10 +48,10 @@ public class ThemeModelImpl implements IThemeModel {
             public void onNext(final ThemeBean themeBean) {
                 Log.d(TAG, "获取主题列表 " + themeBean.toString());
 
-                /**将JavaBean转化为Entity*/
+                *//**将JavaBean转化为Entity*//*
                 List<ThemeEntity> entities = convertBeanToEntity(themeBean);
                 final List<ThemeEntity>  themeEntities = entities;
-                /**将Entity存储到数据库*/
+                *//**将Entity存储到数据库*//*
                 //存储到db
                 saveEntity(themeEntities);
 
@@ -58,8 +62,46 @@ public class ThemeModelImpl implements IThemeModel {
                     }
                 }, 1000);
             }
+            };*/
+
+            observer = new Observer<ThemeBean>() {
+                @Override
+                public void onSubscribe(@NonNull Disposable d) {
+                    Log.d(TAG, "onSubscribe: ");
+                }
+
+                @Override
+                public void onNext(@NonNull ThemeBean themeBean) {
+                    Log.d(TAG, "获取主题列表 " + themeBean.toString());
+
+                    /**将JavaBean转化为Entity*/
+                    List<ThemeEntity> entities = convertBeanToEntity(themeBean);
+                    final List<ThemeEntity>  themeEntities = entities;
+                    /**将Entity存储到数据库*/
+                    //存储到db
+                    saveEntity(themeEntities);
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.onSuccess(themeEntities);
+                        }
+                    }, 1000);
+                }
+
+                @Override
+                public void onError(@NonNull Throwable e) {
+                    Log.d(TAG, "获取主题列表error " + e.getMessage());
+                    listener.onError();
+                }
+
+                @Override
+                public void onComplete() {
+
+                }
             };
-            HttpMethodsZhihu.getInstance().getThemeNews(subscriber);
+
+            HttpMethodsZhihu.getInstance().getThemeNews(observer);
         }
 
 

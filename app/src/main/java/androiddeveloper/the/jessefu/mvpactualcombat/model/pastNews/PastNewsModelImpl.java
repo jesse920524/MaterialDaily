@@ -10,7 +10,12 @@ import androiddeveloper.the.jessefu.mvpactualcombat.anotations.HttpRequest;
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseApplication;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.api.httpMethods.HttpMethodsZhihu;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews.ZHNewsStoryEntity;
-import rx.Subscriber;
+import androiddeveloper.the.jessefu.mvpactualcombat.util.RxHelper;
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.internal.disposables.DisposableContainer;
+
 
 /**
  * Created by Jesse Fu on 2017/2/28 0028.
@@ -19,7 +24,9 @@ import rx.Subscriber;
 public class PastNewsModelImpl implements IPastNewsModel {
 
     private static final String TAG = PastNewsModelImpl.class.getSimpleName();
-    private Subscriber<PastNewsBean> subscriber;
+//    private Subscriber<PastNewsBean> subscriber;
+    private Observer<PastNewsBean> observer;
+    private RxHelper.MyDisposableContainer disposableContainer;
     private PastNewsStoryEntityDao pastNewsStoryEntityDao;
 
     public PastNewsModelImpl() {
@@ -31,7 +38,7 @@ public class PastNewsModelImpl implements IPastNewsModel {
     @HttpRequest(httpMethod = "get")
     @Override
     public void getPastNews(final onDataLoadedListener loadedListener, String date) {
-        subscriber = new Subscriber<PastNewsBean>() {
+        /*subscriber = new Subscriber<PastNewsBean>() {
             @Override
             public void onCompleted() {
 
@@ -45,6 +52,31 @@ public class PastNewsModelImpl implements IPastNewsModel {
 
             @Override
             public void onNext(PastNewsBean pastNewsBean) {
+                Log.d(TAG, "获取往期内容 success: " + pastNewsBean);
+                *//**将JavaBean转化为Entity*//*
+                List<PastNewsStoryEntity> storyEntities = convertBean2Entity(pastNewsBean);
+                final List<PastNewsStoryEntity> finalStoryEntities = storyEntities;
+                *//**将Entity存储到数据库*//*
+                //存储到db
+                saveStoryEntity(storyEntities);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+//                        loadedListener.onSuccess(finalStoryEntities);
+                    }
+                }, 1000);
+            }
+        };*/
+
+        observer = new Observer<PastNewsBean>() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+                disposableContainer.add(d);
+            }
+
+            @Override
+            public void onNext(@NonNull PastNewsBean pastNewsBean) {
                 Log.d(TAG, "获取往期内容 success: " + pastNewsBean);
                 /**将JavaBean转化为Entity*/
                 List<PastNewsStoryEntity> storyEntities = convertBean2Entity(pastNewsBean);
@@ -60,8 +92,19 @@ public class PastNewsModelImpl implements IPastNewsModel {
                     }
                 }, 1000);
             }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                Log.d(TAG, "获取往期内容error: " + e.getMessage());
+                loadedListener.onError();
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d(TAG, "onComplete: ");
+            }
         };
-        HttpMethodsZhihu.getInstance().getPastNews(subscriber, date);
+        HttpMethodsZhihu.getInstance().getPastNews(observer, date);
     }
 
     @Override

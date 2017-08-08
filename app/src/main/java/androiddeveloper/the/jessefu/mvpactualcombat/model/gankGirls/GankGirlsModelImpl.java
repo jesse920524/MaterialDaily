@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.model.api.httpMethods.HttpMethodsGank;
-import rx.Subscriber;
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+
 
 /**
  * Created by Jesse Fu on 2017/3/9 0009.
@@ -17,8 +20,9 @@ public class GankGirlsModelImpl implements IGankGirlsModel{
     private static final String TAG = GankGirlsModelImpl.class.getSimpleName();
 
     private HttpMethodsGank httpMethodsGank;
-    private Subscriber<GankGirlsBean> subscriber;
-
+//    private Subscriber<GankGirlsBean> subscriber;
+    private Observer<GankGirlsBean> observer;
+    private Disposable disposable;
     private static int page = 1;
 
     public GankGirlsModelImpl() {
@@ -28,7 +32,7 @@ public class GankGirlsModelImpl implements IGankGirlsModel{
 
     @Override
     public  synchronized void getGankGirls(final IGankGirlsModel.onDataLoadedListener listener, int count, int p) {
-        subscriber = new Subscriber<GankGirlsBean>() {
+        /*subscriber = new Subscriber<GankGirlsBean>() {
             @Override
             public void onCompleted() {
                 Log.d(TAG, "获取福利请求: onCompleted()");
@@ -57,8 +61,43 @@ public class GankGirlsModelImpl implements IGankGirlsModel{
                     }
                 }, 1000);
             }
+        };*/
+        observer = new Observer<GankGirlsBean>() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+                disposable = d;
+            }
+
+            @Override
+            public void onNext(@NonNull GankGirlsBean gankGirlsBean) {
+                Log.d(TAG, "获取福利请求: onNext() " + gankGirlsBean);
+                final List<GankGirlsEntity> entities = convertBean2Entity(gankGirlsBean);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (page == 1){
+                            listener.onSuccess(entities);
+                        }else{
+                            listener.onSuccessMore(entities);
+                        }
+
+                    }
+                }, 1000);
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                Log.d(TAG, "获取福利请求: onError() " + e.getMessage());
+                listener.onError(e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d(TAG, "获取福利请求: onCompleted()");
+            }
         };
-        httpMethodsGank.getGankGirls(subscriber, 10, page++);
+        httpMethodsGank.getGankGirls(observer, 10, page++);
 
     }
 
@@ -93,11 +132,14 @@ public class GankGirlsModelImpl implements IGankGirlsModel{
 
     @Override
     public void onDestroy() {
-
-        if (!subscriber.isUnsubscribed()){
-            subscriber.unsubscribe();
+        if (!disposable.isDisposed()){
+            disposable.dispose();
         }
+      /*  if (!subscriber.isUnsubscribed()){
+            subscriber.unsubscribe();
+        }*/
         page = 1;
     }
+
 
 }

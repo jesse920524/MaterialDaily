@@ -1,4 +1,4 @@
-package androiddeveloper.the.jessefu.mvpactualcombat.util;
+package androiddeveloper.the.jessefu.mvpactualcombat.common.util;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

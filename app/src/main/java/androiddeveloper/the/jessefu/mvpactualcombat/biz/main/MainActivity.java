@@ -8,7 +8,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.util.TimeUtils;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -22,6 +21,7 @@ import android.widget.TextView;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
+import com.jakewharton.rxbinding2.view.RxView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.R;
 import androiddeveloper.the.jessefu.mvpactualcombat.R2;
-import androiddeveloper.the.jessefu.mvpactualcombat.Service.PersistentService;
+import androiddeveloper.the.jessefu.mvpactualcombat.service.PersistentService;
 import androiddeveloper.the.jessefu.mvpactualcombat.adapter.AHViewpagerAdapter;
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseActivity;
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseApplication;
@@ -43,7 +43,7 @@ import androiddeveloper.the.jessefu.mvpactualcombat.event.EventRandomOneMomentAr
 import androiddeveloper.the.jessefu.mvpactualcombat.event.EventShowSnackbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import io.reactivex.functions.Consumer;
 
 public class MainActivity extends BaseActivity implements MainContract.IMainView {
 
@@ -125,6 +125,28 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
         initBottomNav();
         initViewPager();
         initPopupMenu();
+
+        initRxBinding();
+    }
+
+    private void initRxBinding() {
+        RxView.clicks(mIvMenu)
+                .throttleFirst(1, TimeUnit.SECONDS)
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                        mPopupMenu.show();
+                    }
+                });
+
+        RxView.clicks(mIvDrive)
+                .throttleFirst(1, TimeUnit.SECONDS)
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                        toGankGirlsActivity();
+                    }
+                });
     }
 
     private void initPopupMenu() {
@@ -240,10 +262,10 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
                         showDatePickDialog();
                         break;
                     case 1:
-                        EventBus.getDefault().post(new EventRandomOneMomentArticle(null));
+                        EventBus.getDefault().post(EventRandomOneMomentArticle.newInstance(null));
                         break;
                     case 2:
-                        EventBus.getDefault().post(new EventRandomGuokrArticle());
+                        EventBus.getDefault().post(EventRandomGuokrArticle.newInstance(null));
                         break;
                     default:
                         BaseApplication.showToast("curr status: error!!!");
@@ -254,15 +276,16 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
 
     }
 
-    @OnClick(R2.id.iv_main_menu)
+   /* @OnClick(R2.id.iv_main_menu)
     void onClickMenu(){
         mPopupMenu.show();
-    }
+    }*/
 
-    @OnClick(R2.id.iv_main_drive)
+    /*@OnClick(R2.id.iv_main_drive)
     void onClickDrive(){
         toGankGirlsActivity();
-    }
+    }*/
+
 
     @Subscribe
     public void onEventShowSnackbar(EventShowSnackbar event){
@@ -322,39 +345,11 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
             finish();
         }
 
-        /**
-         * 判断滑动位置? 滚回顶部 : 退出程序*/
-        /*if (currentFragment instanceof LatestNewsFragment){
-
-            if (((LatestNewsFragment) currentFragment).getRecyclerViewPosition(((LatestNewsFragment) currentFragment).linearLayoutManager) != 0){
-                ((LatestNewsFragment) currentFragment).recyclerViewSmoothScroll();
-                mBottomNavigation.restoreBottomNavigation();
-            }else{
-                finish();
-            }
-        }else if (currentFragment instanceof OneMomentFragment){
-            if (((OneMomentFragment) currentFragment).getRecyclerViewPosition(((OneMomentFragment) currentFragment).linearLayoutManager) != 0){
-                ((OneMomentFragment) currentFragment).recyclerViewSmoothScroll();
-                mBottomNavigation.restoreBottomNavigation();
-
-            }else{
-                finish();
-            }
-        }else if(currentFragment instanceof PastNewsFragment){
-            if (((PastNewsFragment) currentFragment).getRecyclerViewPosition(((PastNewsFragment) currentFragment).linearLayoutManager) != 0){
-                ((PastNewsFragment) currentFragment).recyclerViewSmoothScroll();
-                mBottomNavigation.restoreBottomNavigation();
-            }else{
-                finish();
-            }
-        }else{
-            finish();
-        }*/
     }
 
     @Override
-    public void setPresenter(MainContract.IMainPresenter presenter) {
-        this.presenter = presenter;
+    public void setPresenter(MainContract.IMainPresenter mPresenter) {
+        this.presenter = mPresenter;
     }
 
     @Override

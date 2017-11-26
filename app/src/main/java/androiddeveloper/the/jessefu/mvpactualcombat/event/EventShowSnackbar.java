@@ -8,23 +8,18 @@ package androiddeveloper.the.jessefu.mvpactualcombat.event;
  * 当无网络且成功读取持久化数据时,snackbar提示用户
  */
 
-public class EventShowSnackbar {
+public class EventShowSnackbar extends BaseEvent{
 
-    private String msg;
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public EventShowSnackbar() {
+    private EventShowSnackbar() {
 
     }
 
-    public EventShowSnackbar(String msg) {
-        this.msg = msg;
+    private EventShowSnackbar(String msg) {
+        super(msg);
+    }
+
+    public static EventShowSnackbar newInstance(String msg){
+        EventShowSnackbar instance = new EventShowSnackbar(msg);
+        return instance;
     }
 }

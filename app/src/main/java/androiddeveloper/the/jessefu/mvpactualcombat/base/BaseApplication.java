@@ -48,7 +48,7 @@ public class BaseApplication extends Application {
             Database db = devOpenHelper.getWritableDb();
             daoSession = new DaoMaster(db).newSession();
         }catch (Exception e){
-
+            e.printStackTrace();
         }
 
     }

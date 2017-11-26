@@ -6,7 +6,6 @@ import android.animation.ObjectAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,12 +16,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageButton;
 
 import com.bumptech.glide.Glide;
-import com.jude.swipbackhelper.SwipeBackHelper;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.R;
 import androiddeveloper.the.jessefu.mvpactualcombat.R2;
@@ -137,11 +134,13 @@ public class LargePicActivity extends AppCompatActivity implements LargePicContr
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        setupPhotoAttacher();
+
         Glide.with(BaseApplication.getContext())
                 .load(getIntentArgs())
                 .into(mPhotoView);
 
-        setupPhotoAttacher();
+
     }
 
 
@@ -179,8 +178,8 @@ public class LargePicActivity extends AppCompatActivity implements LargePicContr
     }
 
     @Override
-    public void setPresenter(LargePicContract.ILargePicPrensenter presenter) {
-        this.presenter = presenter;
+    public void setPresenter(LargePicContract.ILargePicPrensenter mPresenter) {
+        this.presenter = mPresenter;
     }
 
     @Override

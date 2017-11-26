@@ -27,19 +27,6 @@ public class BaseFragment extends Fragment {
          s = getArguments().getString(MyConstants.FRAGMENT_ARGUMENNT);
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_base, container, false);
-
-        Button button = (Button) view.findViewById(R.id.btn_fragment);
-        button.setText(s);
-
-        Log.d("  ", "base Fragment onCreateView");
-
-        return view;
-    }
-
     /**
      * create a new instance of Fragment*/
     public static BaseFragment newInstance(String arg){

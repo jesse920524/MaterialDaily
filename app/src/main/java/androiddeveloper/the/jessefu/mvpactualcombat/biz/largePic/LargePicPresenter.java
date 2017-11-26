@@ -7,8 +7,6 @@ import android.os.Handler;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.R;
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseApplication;
-import io.reactivex.Observable;
-import io.reactivex.Observer;
 import io.reactivex.functions.Consumer;
 
 

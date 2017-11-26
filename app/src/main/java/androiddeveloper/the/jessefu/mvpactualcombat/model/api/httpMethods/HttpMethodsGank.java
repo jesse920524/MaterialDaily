@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.gankGirls.GankGirlsBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.api.services.GankGirlsService;
-import androiddeveloper.the.jessefu.mvpactualcombat.util.RxHelper;
+import androiddeveloper.the.jessefu.mvpactualcombat.common.util.RxHelper;
 import io.reactivex.Observer;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;

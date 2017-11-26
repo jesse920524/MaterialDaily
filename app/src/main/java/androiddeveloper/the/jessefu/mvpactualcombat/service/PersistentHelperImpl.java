@@ -1,4 +1,4 @@
-package androiddeveloper.the.jessefu.mvpactualcombat.Service;
+package androiddeveloper.the.jessefu.mvpactualcombat.service;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -16,7 +16,6 @@ import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.articleDetail.ArticleDetailBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.articleDetail.ArticleDetailModelImpl;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.articleDetail.IArticleDetailModel;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNewsDetail.GuokrNewsDetailBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNewsDetail.GuokrNewsDetailModelImpl;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNewsDetail.IGuokrDetailModel;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.listener.OnDataLoadedListener;
@@ -29,14 +28,22 @@ import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreArticle.Restore
 import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreListItem.IRestoreListItemModel;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreListItem.RestoreListItemBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreListItem.RestoreListItemModelImpl;
-import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilConnection;
-import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilTime;
+import androiddeveloper.the.jessefu.mvpactualcombat.common.util.UtilConnection;
+import androiddeveloper.the.jessefu.mvpactualcombat.common.util.UtilTime;
+import io.reactivex.Observable;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Jesse Fu on 2017-05-13.
  */
 
-public class PersistentHelperImpl implements IPersistentHelper, OnDataLoadedListener, IGuokrDetailModel.OnGuokrNewsDetailLoadedListener {
+public class PersistentHelperImpl implements IPersistentHelper,
+        OnDataLoadedListener,
+        IGuokrDetailModel.OnGuokrNewsDetailLoadedListener {
     private static final String TAG = PersistentHelperImpl.class.getSimpleName();
     private static final int CLEAR_EXPIRE_DATA = 0;
 
@@ -49,13 +56,17 @@ public class PersistentHelperImpl implements IPersistentHelper, OnDataLoadedList
 
     private PersistentHandler handler;
 
-    public PersistentHelperImpl() {
+    public static IPersistentHelper newInstance(){
+        return new PersistentHelperImpl();
+    }
+
+    private PersistentHelperImpl() {
         modelRestoreArticle = new RestoreArticleModelImpl();
         modelRestoreListItem = new RestoreListItemModelImpl();
         modelZHDetail = new ArticleDetailModelImpl();
         modelOMDetail = new OneMomentDetailModelImpl();
         modelGKDetail = new GuokrNewsDetailModelImpl();
-        handler = new PersistentHandler();
+//        handler = new PersistentHandler();
         sp = BaseApplication.getContext().getSharedPreferences(MyConstants.USER_SETTINGS, Context.MODE_PRIVATE);
     }
 
@@ -85,25 +96,25 @@ public class PersistentHelperImpl implements IPersistentHelper, OnDataLoadedList
     }
 
     @Override
-    public List<ArticleDetailBean> getZHDetail(List<RestoreListItemBean> restoreListItemBeanList) {
-        return null;
-    }
-
-    @Override
-    public List<OneMomentDetailBean> getOMDetail(List<RestoreListItemBean> restoreListItemBeanList) {
-        return null;
-    }
-
-    @Override
-    public List<GuokrNewsDetailBean> getGuokrDetail(List<RestoreListItemBean> restoreListItemBeanList) {
-        return null;
-    }
-
-    @Override
     public void clearExpireData() {
         String cacheLife = sp.getString("cache_life", "");
         Log.d(TAG, "cache life: " + cacheLife);
-        Message message = Message.obtain();
+
+        Observable.just(cacheLife)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        int expireTime = convertExpireTime(s);
+                        modelRestoreArticle.deleteExpireArticles(expireTime);
+                        modelRestoreListItem.deleteExpireItems(expireTime);
+                        persistentData();
+                    }
+                });
+
+       /* Message message = Message.obtain();
         message.what = CLEAR_EXPIRE_DATA;
         switch (cacheLife){
             case "从不缓存数据":
@@ -119,7 +130,22 @@ public class PersistentHelperImpl implements IPersistentHelper, OnDataLoadedList
             default:
                 break;
         }
-        handler.sendMessage(message);
+        handler.sendMessage(message);*/
+    }
+
+    /**将从sharedPreference中读取的String类型的expireTimne转换为int类型*/
+    private int convertExpireTime(String expireTime) {
+        switch (expireTime){
+            case "从不缓存数据":
+                return 0;
+            case "":
+            case "3天":
+                return 3;
+            case "7天":
+                return 7;
+            default:
+                throw new IllegalArgumentException("Illegal expireTime");
+        }
     }
 
     @Override
@@ -127,20 +153,27 @@ public class PersistentHelperImpl implements IPersistentHelper, OnDataLoadedList
         try {
         if (UtilConnection.getWifiState()) {
 
-                List<RestoreListItemBean> list = this.getPersistentList();
-                for (RestoreListItemBean itemBean : list) {
-                    switch (itemBean.getArticleType()) {
-                        case MyConstants.ARTICLE_TYPE_ZHIHU:
-                            this.getZHDetail(itemBean.getArticleId());
-                            break;
-                        case MyConstants.ARTICLE_TYPE_ONEMOMENT:
-                            this.getOMDetail(itemBean.getArticleId());
-                            break;
-                        case MyConstants.ARTICLE_TYPE_GUOKR:
-                            this.getGuokrDetail(itemBean.getArticleId());
-                            break;
-                    }
-                }
+            Observable.fromIterable(this.getPersistentList())
+                    .subscribeOn(Schedulers.io())
+                    .unsubscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<RestoreListItemBean>() {
+                        @Override
+                        public void accept(RestoreListItemBean itemBean) throws Exception {
+
+                            switch (itemBean.getArticleType()) {
+                                case MyConstants.ARTICLE_TYPE_ZHIHU:
+                                    PersistentHelperImpl.this.getZHDetail(itemBean.getArticleId());
+                                    break;
+                                case MyConstants.ARTICLE_TYPE_ONEMOMENT:
+                                    PersistentHelperImpl.this.getOMDetail(itemBean.getArticleId());
+                                    break;
+                                case MyConstants.ARTICLE_TYPE_GUOKR:
+                                    PersistentHelperImpl.this.getGuokrDetail(itemBean.getArticleId());
+                                    break;
+                            }
+                        }
+                    });
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -191,6 +224,7 @@ public class PersistentHelperImpl implements IPersistentHelper, OnDataLoadedList
 
     }
 
+    @Deprecated
     class PersistentHandler extends Handler{
 
         @Override
@@ -202,7 +236,7 @@ public class PersistentHelperImpl implements IPersistentHelper, OnDataLoadedList
                     persistentData();
                     break;
                 default:
-                    break;
+                    throw new IllegalArgumentException("Illegal expire time");
             }
             super.handleMessage(msg);
         }

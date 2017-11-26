@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 
 import org.greenrobot.eventbus.EventBus;
@@ -114,8 +113,8 @@ public class GuokrNewsFragment extends BaseFragment implements GuokrNewsContract
     }
 
     @Override
-    public void setPresenter(GuokrNewsContract.GuokrNewsPresenter presenter) {
-        this.presenter = presenter;
+    public void setPresenter(GuokrNewsContract.GuokrNewsPresenter mPresenter) {
+        this.presenter = mPresenter;
     }
 
     @Override

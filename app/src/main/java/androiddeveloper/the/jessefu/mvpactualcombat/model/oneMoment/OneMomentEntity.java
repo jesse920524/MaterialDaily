@@ -16,6 +16,27 @@ public class OneMomentEntity implements Serializable, MultiItemEntity{
     public static final int TEXT = 1;//文字
     public static final int IMG = 2;//图片
 
+    public enum ArticleType{
+        TEXT_IMG("text_img", 0),
+        TEXT("text", 1),
+        IMG("img", 2);
+
+        private String typeName;
+        private int code;
+        private ArticleType(String typeName, int code){
+            this.typeName = typeName;
+            this.code = code;
+        }
+
+        public int getCode(){
+            return this.code;
+        }
+
+        public String getTypeName(){
+            return this.typeName;
+        }
+    }
+
     @Transient
     private static final long serialVersionUID = 1000;
     //PostBean -- id;

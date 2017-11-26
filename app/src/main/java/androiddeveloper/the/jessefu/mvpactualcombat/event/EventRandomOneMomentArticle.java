@@ -6,22 +6,17 @@ package androiddeveloper.the.jessefu.mvpactualcombat.event;
  * from MainActivity -> OneMomentFragment
  */
 
-public class EventRandomOneMomentArticle {
+public class EventRandomOneMomentArticle extends BaseEvent{
 
-    private String msg;
 
-    public EventRandomOneMomentArticle() {
+    private EventRandomOneMomentArticle() {
     }
 
-    public EventRandomOneMomentArticle(String msg) {
-        this.msg = msg;
+    private EventRandomOneMomentArticle(String msg) {
+        super(msg);
     }
 
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public static EventRandomOneMomentArticle newInstance(String msg){
+        return new EventRandomOneMomentArticle(msg);
     }
 }

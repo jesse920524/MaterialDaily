@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseApplication;
-import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilTime;
+import androiddeveloper.the.jessefu.mvpactualcombat.common.util.UtilTime;
 
 /**
  * Created by Jesse Fu on 2017-04-23.

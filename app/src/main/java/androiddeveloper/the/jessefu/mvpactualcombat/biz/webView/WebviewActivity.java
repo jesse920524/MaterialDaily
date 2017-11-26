@@ -11,7 +11,6 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
-import android.transition.Fade;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,13 +33,10 @@ import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseActivity;
 import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.articleDetail.ArticleDetailBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNews.GuokrNewsEntity;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNewsDetail.GuokrNewsDetailBean;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.latestNews.LatestNewsStoryEntity;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMoment.OneMomentEntity;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMomentDetail.OneMomentDetailBean;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.pastNews.PastNewsStoryEntity;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews.ZHNewsStoryEntity;
-import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilConnection;
+import androiddeveloper.the.jessefu.mvpactualcombat.common.util.UtilConnection;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -70,7 +66,7 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
     @BindView(R2.id.layout_web_ctb)
     CollapsingToolbarLayout mCollapsingToolbarLayout;
 
-    private WebviewContract.IWebviewPresenter presenter;
+    private WebviewContract.IWebviewPresenter mPresenter;
 
 
 
@@ -96,8 +92,8 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
 
         //intent = getIntent();//获取收到的intent
         initViews();
-        presenter = new WebviewPresenter(this);
-        presenter.start();
+        mPresenter = new WebviewPresenter(this);
+        mPresenter.start();
 
 
     }
@@ -176,12 +172,12 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
     @Override
     protected void onStart() {
         super.onStart();
-        webSettings.setBlockNetworkImage(presenter.checkNoPicMode());
+        webSettings.setBlockNetworkImage(mPresenter.checkNoPicMode());
     }
 
     @Override
-    public void setPresenter(WebviewContract.IWebviewPresenter presenter) {
-        this.presenter = presenter;
+    public void setPresenter(WebviewContract.IWebviewPresenter mPresenter) {
+        this.mPresenter = mPresenter;
     }
 
     @Override
@@ -204,7 +200,7 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
 
         /**根据sharedpreference取出的值 no_pic_mode,
          * 决定是否加载图片*/
-        if (!presenter.checkNoPicMode()){
+        if (!mPresenter.checkNoPicMode()){
             Glide.with(this)
                     .load(bean.getImage())
                     .asBitmap()
@@ -229,7 +225,7 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
             getSupportActionBar().setTitle(receivedTitle);
 
             articleUrl = oneMomentDetailBean.getShortUrl();//get shareUrl
-            if (!presenter.checkNoPicMode()) {
+            if (!mPresenter.checkNoPicMode()) {
                 /**豆瓣一刻文章有可能无图,需要在这里判断*/
 
                 if (oneMomentDetailBean.getThumbs().get(0).getMedium().getUrl() != null) {
@@ -294,7 +290,7 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
 
         /**根据sharedpreference取出的值 no_pic_mode,
          * 决定是否加载图片*/
-        if (!presenter.checkNoPicMode()){
+        if (!mPresenter.checkNoPicMode()){
             Glide.with(this)
                     .load(entity.getHeadline_img())
                     .asBitmap()
@@ -388,7 +384,7 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
                 finish();
                 break;
             case R.id.menu_web_share:
-                presenter.share(getArticleType(getIntent()), articleUrl, receivedTitle);
+                mPresenter.share(getArticleType(getIntent()), articleUrl, receivedTitle);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -398,19 +394,12 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
     @Override
     protected void onStop() {
         super.onStop();
-        /*Fade fade = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            fade = new Fade();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                getWindow().setExitTransition(fade);
-            }
-        }*/
     }
 
     @Override
     public void finish() {
         super.finish();
-        //overridePendingTransition(android.R.anim.accelerate_decelerate_interpolator, android.R.anim.slide_out_right);
+
     }
 
     @Override
@@ -424,6 +413,10 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
         Snackbar.make(mWebView, "无法连接到网络", Snackbar.LENGTH_LONG).show();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 
     class MyWebviewClient extends WebViewClient{
         @Override
@@ -434,6 +427,7 @@ public class WebviewActivity extends BaseActivity implements WebviewContract.IWe
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
+
         }
     }
 }

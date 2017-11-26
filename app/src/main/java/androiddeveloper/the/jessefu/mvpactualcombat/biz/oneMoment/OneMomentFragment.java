@@ -121,8 +121,8 @@ public class OneMomentFragment extends BaseFragment implements OneMomentContract
     }
 
     @Override
-    public void setPresenter(OneMomentContract.IOneMomentPresenter presenter) {
-        this.presenter = presenter;
+    public void setPresenter(OneMomentContract.IOneMomentPresenter mPresenter) {
+        this.presenter = mPresenter;
     }
 
     @Override

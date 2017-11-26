@@ -55,7 +55,7 @@
             ></activity>
         <!--android:theme="@style/LargePicActivityTheme"-->
 
-        <service android:name=".Service.PersistentService"></service>
+        <service android:name=".service.PersistentService"></service>
     </application>
 
 </manifest>

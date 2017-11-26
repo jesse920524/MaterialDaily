@@ -27,9 +27,9 @@ public class RecyclerOneMomentAdapter extends BaseMultiItemQuickAdapter<OneMomen
      */
     public RecyclerOneMomentAdapter(List<OneMomentEntity> data) {
         super(data);
-        addItemType(OneMomentEntity.TEXT_IMG, R.layout.item_om_0);
-        addItemType(OneMomentEntity.TEXT, R.layout.item_om_1);
-        addItemType(OneMomentEntity.IMG, R.layout.item_om_2);
+        addItemType(OneMomentEntity.ArticleType.TEXT_IMG.getCode(), R.layout.item_om_0);
+        addItemType(OneMomentEntity.ArticleType.TEXT.getCode(), R.layout.item_om_1);
+        addItemType(OneMomentEntity.ArticleType.IMG.getCode(), R.layout.item_om_2);
     }
 
     /**
@@ -46,12 +46,12 @@ public class RecyclerOneMomentAdapter extends BaseMultiItemQuickAdapter<OneMomen
                         .setText(R.id.tv_item_om0_description, item.getDescription())
                         .setText(R.id.tv_item_om0_name, item.getAuthorName())
                         .setText(R.id.tv_item_om0_column, item.getColumn());
-                Glide.with(BaseApplication.getContext())
+                Glide.with(mContext)
                         .load(item.getImg())
                         .centerCrop()
                         .animate(R.anim.alpha_in)
                         .into((ImageView) helper.getView(R.id.iv_item_om0_img));
-                Glide.with(BaseApplication.getContext())
+                Glide.with(mContext)
                         .load(item.getAuthorAvatar())
                         .centerCrop()
                         .bitmapTransform(new CropCircleTransformation(BaseApplication.getContext()))
@@ -63,7 +63,7 @@ public class RecyclerOneMomentAdapter extends BaseMultiItemQuickAdapter<OneMomen
                         .setText(R.id.tv_item_om1_description, item.getDescription())
                         .setText(R.id.tv_item_om1_name, item.getAuthorName())
                         .setText(R.id.tv_item_om1_column, item.getColumn());
-                Glide.with(BaseApplication.getContext())
+                Glide.with(mContext)
                         .load(item.getAuthorAvatar())
                         .centerCrop()
                         .bitmapTransform(new CropCircleTransformation(BaseApplication.getContext()))
@@ -73,12 +73,12 @@ public class RecyclerOneMomentAdapter extends BaseMultiItemQuickAdapter<OneMomen
                 helper.setText(R.id.tv_item_om2_title, item.getTitle())
                         .setText(R.id.tv_item_om2_name, item.getAuthorName())
                         .setText(R.id.tv_item_om2_column, item.getColumn());
-                Glide.with(BaseApplication.getContext())
+                Glide.with(mContext)
                         .load(item.getImg())
                         .centerCrop()
                         .animate(R.anim.alpha_in)
                         .into((ImageView) helper.getView(R.id.iv_item_om2_img));
-                Glide.with(BaseApplication.getContext())
+                Glide.with(mContext)
                         .load(item.getAuthorAvatar())
                         .centerCrop()
                         .bitmapTransform(new CropCircleTransformation(BaseApplication.getContext()))
@@ -86,7 +86,7 @@ public class RecyclerOneMomentAdapter extends BaseMultiItemQuickAdapter<OneMomen
                 break;
 
             default:
-                break;
+                throw new IllegalArgumentException("Illegal article type");
         }
     }
 }

@@ -19,33 +19,16 @@ public class ArticleDetailModelImpl implements IArticleDetailModel {
 
 //    private Subscriber<ArticleDetailBean> subscriber;
     private Observer<ArticleDetailBean> observer;
+    private Disposable mDisposable;
 
     @Override
     public void getArticleDetail(final OnDataLoadedListener  listener, String id) {
-        /*subscriber = new Subscriber<ArticleDetailBean>() {
-            @Override
-            public void onCompleted() {
-                Log.d(TAG, "获取文章详情 omCompleted: ");
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-                Log.d(TAG, "获取文章详情 onError: " + e.getMessage());
-                listener.onError(e.getMessage());
-            }
-
-            @Override
-            public void onNext(ArticleDetailBean articleDetailBean) {
-                Log.d(TAG, "获取文章详情 onNext: " + articleDetailBean);
-                listener.onSuccessZH(articleDetailBean);
-            }
-        };*/
 
         observer = new Observer<ArticleDetailBean>() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
                 Log.d(TAG, "onSubscribe: ");
+                mDisposable = d;
             }
 
             @Override
@@ -68,4 +51,10 @@ public class ArticleDetailModelImpl implements IArticleDetailModel {
         HttpMethodsZhihu.getInstance().getArticleDetail(observer, id);
     }
 
+    @Override
+    public void dispose() {
+        if (null != mDisposable){
+            mDisposable.dispose();
+        }
+    }
 }

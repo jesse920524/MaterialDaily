@@ -163,7 +163,7 @@ public class ThemeNewsActivity extends BaseActivity implements ThemeNewsContract
     }
 
     @Override
-    public void setPresenter(ThemeNewsContract.IThemeNewsPresenter presenter) {
-        this.presenter = presenter;
+    public void setPresenter(ThemeNewsContract.IThemeNewsPresenter mPresenter) {
+        this.presenter = mPresenter;
     }
 }

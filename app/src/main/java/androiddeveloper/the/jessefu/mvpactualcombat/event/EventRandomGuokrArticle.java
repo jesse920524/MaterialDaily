@@ -6,18 +6,17 @@ package androiddeveloper.the.jessefu.mvpactualcombat.event;
  * 由mainActivity -> GuokrNewsFragment
  */
 
-public class EventRandomGuokrArticle {
-    private String msg;
+public class EventRandomGuokrArticle extends BaseEvent{
 
-    public EventRandomGuokrArticle() {
+    private EventRandomGuokrArticle() {
 
     }
 
-    public String getMsg() {
-        return msg;
+    private EventRandomGuokrArticle(String msg){
+        super(msg);
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public static EventRandomGuokrArticle newInstance(String msg){
+        return new EventRandomGuokrArticle(msg);
     }
 }

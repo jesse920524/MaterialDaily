@@ -29,7 +29,7 @@ import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseFragment;
 import androiddeveloper.the.jessefu.mvpactualcombat.biz.webView.WebviewActivity;
 import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.pastNews.PastNewsStoryEntity;
-import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilTime;
+import androiddeveloper.the.jessefu.mvpactualcombat.common.util.UtilTime;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -137,8 +137,8 @@ public class PastNewsFragment extends BaseFragment implements PastNewsContract.I
     }
 
     @Override
-    public void setPresenter(PastNewsContract.IPastNewsPresenter presenter) {
-        this.presenter = presenter;
+    public void setPresenter(PastNewsContract.IPastNewsPresenter mPresenter) {
+        this.presenter = mPresenter;
     }
 
     /**

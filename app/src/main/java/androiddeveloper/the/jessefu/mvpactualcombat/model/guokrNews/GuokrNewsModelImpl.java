@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.model.api.httpMethods.HttpMethodGuokr;
-import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilConnection;
+import androiddeveloper.the.jessefu.mvpactualcombat.common.util.UtilConnection;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;

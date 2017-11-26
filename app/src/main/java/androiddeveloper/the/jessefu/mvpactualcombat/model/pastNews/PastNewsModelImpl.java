@@ -10,11 +10,10 @@ import androiddeveloper.the.jessefu.mvpactualcombat.anotations.HttpRequest;
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseApplication;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.api.httpMethods.HttpMethodsZhihu;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews.ZHNewsStoryEntity;
-import androiddeveloper.the.jessefu.mvpactualcombat.util.RxHelper;
+import androiddeveloper.the.jessefu.mvpactualcombat.common.util.RxHelper;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.internal.disposables.DisposableContainer;
 
 
 /**

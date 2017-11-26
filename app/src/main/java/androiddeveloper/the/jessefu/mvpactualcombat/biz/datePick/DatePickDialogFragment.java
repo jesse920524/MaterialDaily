@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 
+import com.jakewharton.rxbinding2.view.RxView;
+
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.Date;
@@ -18,10 +20,10 @@ import java.util.Date;
 import androiddeveloper.the.jessefu.mvpactualcombat.R;
 import androiddeveloper.the.jessefu.mvpactualcombat.R2;
 import androiddeveloper.the.jessefu.mvpactualcombat.event.EventOnDatePicked;
-import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilTime;
+import androiddeveloper.the.jessefu.mvpactualcombat.common.util.UtilTime;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by Jesse Fu on 2017/3/2 0002.
@@ -63,6 +65,37 @@ public class DatePickDialogFragment extends DialogFragment {
     private void initViews() {
         initDatePicker();
 
+        initRxBinding();
+
+    }
+
+    private void initRxBinding() {
+        RxView.clicks(mBtnBack)
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                        int[] ints = UtilTime.getIntArrayDate(UtilTime.get8StringDate(new Date()));
+                        mDatePicker.updateDate(ints[0], ints[1] -1 , ints[2]);
+                    }
+                });
+
+        RxView.clicks(mBtnConfirm)
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                        int selecDate = Integer.parseInt(selectedDate);
+                        EventBus.getDefault().post(EventOnDatePicked.newInstance(selecDate));//发送事件给订阅者
+                        DatePickDialogFragment.this.dismiss();
+                    }
+                });
+
+        RxView.clicks(mBtnCancel)
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                        DatePickDialogFragment.this.dismiss();
+                    }
+                });
     }
 
     private void initDatePicker() {
@@ -79,27 +112,26 @@ public class DatePickDialogFragment extends DialogFragment {
 
     /**
      * 参考: EventOnDatePicked*/
-    @OnClick(R2.id.btn_dialog_datepicker_confirm)
+  /*  @OnClick(R2.id.btn_dialog_datepicker_confirm)
     void onClickBtnConfirm(){
 
         int selecDate = Integer.parseInt(selectedDate);
         EventBus.getDefault().post(new EventOnDatePicked(selecDate));//发送事件给订阅者
         this.dismiss();
-
-    }
+    }*/
 
     /**
      * 回到今天*/
-    @OnClick(R2.id.btn_dialog_datepicker_back)
+  /*  @OnClick(R2.id.btn_dialog_datepicker_back)
     void onClickBtnBack(){
         int[] ints = UtilTime.getIntArrayDate(UtilTime.get8StringDate(new Date()));
         mDatePicker.updateDate(ints[0], ints[1] -1 , ints[2]);
-    }
+    }*/
 
-    @OnClick(R2.id.btn_dialog_dtepicker_cancel)
+    /*@OnClick(R2.id.btn_dialog_dtepicker_cancel)
     void onClickBtnCancel(){
         this.dismiss();
-    }
+    }*/
 
     @Override
     public void onDestroy() {

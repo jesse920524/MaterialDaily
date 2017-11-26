@@ -20,19 +20,15 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
-import java.util.Random;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.R;
 import androiddeveloper.the.jessefu.mvpactualcombat.R2;
-import androiddeveloper.the.jessefu.mvpactualcombat.adapter.RecyclerLatestAdatper;
 import androiddeveloper.the.jessefu.mvpactualcombat.adapter.RecyclerZHStoryAdapter;
-import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseApplication;
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseFragment;
 import androiddeveloper.the.jessefu.mvpactualcombat.biz.webView.WebviewActivity;
 import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
 import androiddeveloper.the.jessefu.mvpactualcombat.event.EventOnDatePicked;
 import androiddeveloper.the.jessefu.mvpactualcombat.event.EventShowSnackbar;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.latestNews.LatestNewsStoryEntity;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews.ZHNewsStoryEntity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -112,8 +108,8 @@ public class LatestNewsFragment extends BaseFragment implements LatestNewsContra
 
 
     @Override
-    public void setPresenter(LatestNewsContract.ILNPresenter presenter) {
-        this.presenter = presenter;
+    public void setPresenter(LatestNewsContract.ILNPresenter mPresenter) {
+        this.presenter = mPresenter;
     }
 
     public static LatestNewsFragment newInstance(String arg){
@@ -177,7 +173,7 @@ public class LatestNewsFragment extends BaseFragment implements LatestNewsContra
             @Override
             public void run() {
                 if (persistentData.size() > 0){
-                    EventBus.getDefault().post(new EventShowSnackbar("Network unavailable. Local data loaded."));
+                    EventBus.getDefault().post(EventShowSnackbar.newInstance("Network unavailable. Local data loaded."));
                     mRecyclerAdapter.setNewData(persistentData);
                     mRecyclerAdapter.loadMoreEnd();
                 }else{

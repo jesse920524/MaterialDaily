@@ -90,8 +90,8 @@ public class ThemeFragment extends BaseFragment implements ThemeContract.IThemeV
     }
 
     @Override
-    public void setPresenter(ThemeContract.IThemePresenter presenter) {
-        this.presenter = presenter;
+    public void setPresenter(ThemeContract.IThemePresenter mPresenter) {
+        this.presenter = mPresenter;
     }
 
     @Override

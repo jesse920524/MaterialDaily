@@ -12,11 +12,8 @@ import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseApplication;
 import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNews.GuokrNewsEntity;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMoment.OneMomentEntity;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreArticle.RestoreArticleBean;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreArticle.RestoreArticleBeanDao;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreArticle.RestoreArticleModelImpl;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews.ZHNewsStoryEntity;
-import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilTime;
+import androiddeveloper.the.jessefu.mvpactualcombat.common.util.UtilTime;
 
 /**
  * Created by Jesse Fu on 2017-05-06.

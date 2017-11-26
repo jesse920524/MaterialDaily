@@ -15,7 +15,7 @@ import androiddeveloper.the.jessefu.mvpactualcombat.model.themesNews.themes.Them
 import androiddeveloper.the.jessefu.mvpactualcombat.model.themesNews.themeNews.ThemeNewsBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews.ZHLatestNewsBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews.ZHPastNewsBean;
-import androiddeveloper.the.jessefu.mvpactualcombat.util.RxHelper;
+import androiddeveloper.the.jessefu.mvpactualcombat.common.util.RxHelper;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import okhttp3.OkHttpClient;

@@ -1,14 +1,9 @@
-package androiddeveloper.the.jessefu.mvpactualcombat.Service;
+package androiddeveloper.the.jessefu.mvpactualcombat.service;
 
 import android.app.Service;
 import android.content.Intent;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
-import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
-
-import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
 
 /**
  * Created by Jesse Fu on 2017-05-13.
@@ -24,7 +19,7 @@ public class PersistentService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        persistentHelper = new PersistentHelperImpl();
+        persistentHelper = PersistentHelperImpl.newInstance();
     }
 
     @Override
@@ -43,6 +38,7 @@ public class PersistentService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
+
         return null;
     }
 }

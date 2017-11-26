@@ -6,7 +6,7 @@ import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.guokrNews.GuokrNewsBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.api.services.GuokrNewsDetailService;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.api.services.GuokrNewsService;
-import androiddeveloper.the.jessefu.mvpactualcombat.util.RxHelper;
+import androiddeveloper.the.jessefu.mvpactualcombat.common.util.RxHelper;
 import io.reactivex.Observer;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;

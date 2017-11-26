@@ -1,5 +1,6 @@
 package androiddeveloper.the.jessefu.mvpactualcombat.model.api.services;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.gankGirls.GankGirlsBean;
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
@@ -12,5 +13,5 @@ public interface GankGirlsService {
     Observable<GankGirlsBean> getGankGirls(@Path("items") int itemsPerPage, @Path("page") int pageNum);*/
 
     @GET("api/data/福利/{items}/{page}")
-    io.reactivex.Observable getGankGirls(@Path("items") int itemsPerPage, @Path("page") int pageNum);
+    Observable<GankGirlsBean> getGankGirls(@Path("items") int itemsPerPage, @Path("page") int pageNum);
 }

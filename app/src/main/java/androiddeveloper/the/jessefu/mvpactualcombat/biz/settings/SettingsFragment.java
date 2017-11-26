@@ -13,11 +13,14 @@ import android.util.Log;
 
 import com.bumptech.glide.Glide;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import androiddeveloper.the.jessefu.mvpactualcombat.R;
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseApplication;
+import androiddeveloper.the.jessefu.mvpactualcombat.common.util.RxHelper;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by Jesse Fu on 2017/3/10 0010.
@@ -118,8 +121,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
 
 
     @Override
-    public void setPresenter(SettingsContract.ISettingsPresenter presenter) {
-        this.presenter = presenter;
+    public void setPresenter(SettingsContract.ISettingsPresenter mPresenter) {
+        this.presenter = mPresenter;
     }
 
     @Override
@@ -134,7 +137,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
 
     @Override
     public void showClearCacheResult() {
-       new Thread(new Runnable() {
+       /*new Thread(new Runnable() {
            @Override
            public void run() {
                Glide.get(BaseApplication.getContext())
@@ -143,7 +146,25 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
                message.what = CLEAR_CACHE_DONE;
                mHandler.sendMessage(message);
            }
-       }).start();
+       }).start();*/
+
+        Observable<Object> observable = Observable.create(new ObservableOnSubscribe<Object>() {
+            @Override
+            public void subscribe(@NonNull ObservableEmitter<Object> e) throws Exception {
+                Glide.get(BaseApplication.getContext())
+                        .clearDiskCache();
+                e.onNext("");
+            }
+        });
+        RxHelper.shiftSchedulers(observable)
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                        Snackbar.make(mToolbar, R.string.clear_cache_done, Snackbar.LENGTH_SHORT)
+                                .show();
+                    }
+                });
+
         Glide.get(BaseApplication.getContext())
                 .clearMemory();
     }

@@ -6,7 +6,7 @@ package androiddeveloper.the.jessefu.mvpactualcombat.base;
 
 public interface BaseView<T> {
 
-    void setPresenter(T presenter);
+    void setPresenter(T mPresenter);
 
     void showLoading();
 

@@ -7,7 +7,7 @@ import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMoment.OneMomentBea
 import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMomentDetail.OneMomentDetailBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.api.services.OneMomentDetailsService;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.api.services.OneMomentService;
-import androiddeveloper.the.jessefu.mvpactualcombat.util.RxHelper;
+import androiddeveloper.the.jessefu.mvpactualcombat.common.util.RxHelper;
 import io.reactivex.Observer;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;

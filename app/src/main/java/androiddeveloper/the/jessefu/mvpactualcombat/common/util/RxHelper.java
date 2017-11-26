@@ -1,4 +1,4 @@
-package androiddeveloper.the.jessefu.mvpactualcombat.util;
+package androiddeveloper.the.jessefu.mvpactualcombat.common.util;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;

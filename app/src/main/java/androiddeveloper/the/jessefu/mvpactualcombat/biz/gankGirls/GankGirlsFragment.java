@@ -72,15 +72,7 @@ public class GankGirlsFragment extends BaseFragment implements GankGirlsContract
                 GankGirlsEntity entity = (GankGirlsEntity) adapter.getData().get(position);
                 Intent intent = new Intent(getActivity(), LargePicActivity.class);
                 intent.putExtra(MyConstants.IMAGE_URL, entity.getUrl());
-                //主要的语句
-                //通过makeSceneTransitionAnimation传入多个Pair
-                //每个Pair将一个当前Activity的View和目标Activity中的一个Key绑定起来
-                //在目标Activity中会调用这个Key
-                /*ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                        getActivity(), view, MyConstants.IMAGE_URL);
 
-                // ActivityCompat是android支持库中用来适应不同android版本的
-                ActivityCompat.startActivity(getActivity(), intent, activityOptions.toBundle());*/
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                     ActivityOptions activityOptions  = ActivityOptions.makeSceneTransitionAnimation(getActivity(),
                             view, "transition");
@@ -115,8 +107,8 @@ public class GankGirlsFragment extends BaseFragment implements GankGirlsContract
 
 
     @Override
-    public void setPresenter(GankGirlsContract.IGankGirlsPresenter presenter) {
-        this.presenter = presenter;
+    public void setPresenter(GankGirlsContract.IGankGirlsPresenter mPresenter) {
+        this.presenter = mPresenter;
     }
 
     @Override

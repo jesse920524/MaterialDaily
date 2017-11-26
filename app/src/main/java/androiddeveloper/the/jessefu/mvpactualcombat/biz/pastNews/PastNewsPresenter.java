@@ -6,7 +6,7 @@ import java.util.List;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.pastNews.IPastNewsModel;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.pastNews.PastNewsModelImpl;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews.ZHNewsStoryEntity;
-import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilTime;
+import androiddeveloper.the.jessefu.mvpactualcombat.common.util.UtilTime;
 
 /**
  * Created by Jesse Fu on 2017/2/28 0028.

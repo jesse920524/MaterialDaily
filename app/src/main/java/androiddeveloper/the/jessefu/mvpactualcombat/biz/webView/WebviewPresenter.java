@@ -25,8 +25,8 @@ import androiddeveloper.the.jessefu.mvpactualcombat.model.oneMomentDetail.OneMom
 import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreArticle.IRestoreArticleModel;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreArticle.RestoreArticleBean;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreArticle.RestoreArticleModelImpl;
-import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilConnection;
-import androiddeveloper.the.jessefu.mvpactualcombat.util.UtilTime;
+import androiddeveloper.the.jessefu.mvpactualcombat.common.util.UtilConnection;
+import androiddeveloper.the.jessefu.mvpactualcombat.common.util.UtilTime;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -114,8 +114,11 @@ public class WebviewPresenter implements WebviewContract.IWebviewPresenter,
 
     @Override
     public void share(String type, String url, String title) {
-        if (!checkArticleType(type)){
-            BaseApplication.showToast("error");
+        /**检查文章类型合法性*/
+        try{
+            checkArticleType(type);
+        }catch (Exception e){
+            BaseApplication.showToast(e.getLocalizedMessage());
             return;
         }
 
@@ -150,7 +153,7 @@ public class WebviewPresenter implements WebviewContract.IWebviewPresenter,
                 ||type.equals(MyConstants.ARTICLE_TYPE_ZHIHU)
                 ||type.equals(MyConstants.ARTICLE_TYPE_GUOKR))
             return true;
-        return false;
+        throw new IllegalArgumentException("Illegal ArticleType!");
     }
 
     /**

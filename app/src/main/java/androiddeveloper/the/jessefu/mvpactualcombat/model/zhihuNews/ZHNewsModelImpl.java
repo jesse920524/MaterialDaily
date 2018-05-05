@@ -46,41 +46,7 @@ public class ZHNewsModelImpl implements IZHNewsModel {
     @Override
     public void getLatestNews(final onZHNewsStoryEntityLoadedListener loadedListener) {
         onDestroy();//这里是为了刷新当天日期
-        /*subscriberLatest = new Subscriber<ZHLatestNewsBean>() {
-            @Override
-            public void onCompleted() {
 
-                Log.d(TAG, "获取今日新闻列表 onCompleted() exec");
-                //得到前一天date(input -> date out -> date)
-                //currDate = UtilTime.getSpecifiedBefore(currDate);
-
-                Log.d(TAG, "更新后的currDate: " + currDate);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                if (!UtilConnection.getNetworkState()){
-                    loadedListener.onNetworkError();
-                }else{
-                    loadedListener.onError();
-                }
-
-            }
-
-            @Override
-            public void onNext(ZHLatestNewsBean bean) {
-                final List<ZHNewsStoryEntity> entities = convertBean2Entity(bean);
-
-                *//**呈现*//*
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        loadedListener.onSuccess(entities);
-                    }
-                }, 1000);
-
-            }
-        };*/
         observerLatest = new Observer<ZHLatestNewsBean>() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
@@ -143,33 +109,6 @@ public class ZHNewsModelImpl implements IZHNewsModel {
 
     @Override
     public void getPastNews(final onZHNewsStoryEntityLoadedListener loadedListener) {
-        /*subscriberPast = new Subscriber<ZHPastNewsBean>() {
-            @Override
-            public void onCompleted() {
-                Log.d(TAG, "获取往期新闻列表 onCompleted() exec");
-                //得到前一天date(input -> date out -> date)
-                currDate = UtilTime.getSpecifiedBefore(currDate);
-
-                Log.d(TAG, "更新后的currDate: " + currDate);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                loadedListener.onError();
-            }
-
-            @Override
-            public void onNext(final ZHPastNewsBean bean) {
-//                final List<ZHNewsStoryEntity> entityList = convertBean2Entity(bean);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        loadedListener.onSuccessMore(convertBean2Entity(bean));
-                    }
-                }, 1000);
-
-            }
-        };*/
 
         observerPast = new Observer<ZHPastNewsBean>() {
             @Override

@@ -73,49 +73,27 @@ public class HttpMethodsZhihu {
      * 用于获取知乎日报最新文章*/
     @Deprecated
     public void getLatestNews(Observer<LatestNewsBean> observer){
-        /*latestNewsService.getLatestNews()
-                .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(subscriber);*/
+
         RxHelper.shiftSchedulers(latestNewsService.getLatestNews())
                 .subscribe(observer);
     }
 
     /**new */
     public void getLatestNews1(Observer<ZHLatestNewsBean> observer){
-        /*latestNewsService.getLatestNews1()
-                .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(subscriber);*/
-        /*RxHelper.shiftSchedulers(latestNewsService.getLatestNews1())
-                .subscribe(observer);*/
 
-        latestNewsService.getLatestNews1()
-                .subscribeOn(io.reactivex.schedulers.Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        RxHelper.shiftSchedulers(latestNewsService.getLatestNews1())
                 .subscribe(observer);
+
     }
 
     /**用于获取知乎日报往期文章*/
     @Deprecated
     public void getPastNews(Observer<PastNewsBean> observer, String date){
-        /*pastNewsService.getPastNews(date)
-                .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(subscriber);*/
         RxHelper.shiftSchedulers(pastNewsService.getPastNews(date))
                 .subscribe(observer);
     }
 
     public void getPastNews1(Observer<ZHPastNewsBean> observer, String date){
-       /* pastNewsService.getPastNews1(date)
-                .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(subscriber);*/
        RxHelper.shiftSchedulers(pastNewsService.getPastNews1(date))
                .subscribe(observer);
     }
@@ -123,31 +101,20 @@ public class HttpMethodsZhihu {
     /**用于获取知乎日报主题列表*/
 
     public void getThemeNews(Observer<ThemeBean> observer){
-        /*themeNewsService.getThemeNews()
-                .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(subscriber);*/
+
         RxHelper.shiftSchedulers(themeNewsService.getThemeNews());
     }
 
     /**用于获取知乎日报主题新闻
      * @param themeId 主题id*/
     public void getThemeNewsList(Observer<ThemeNewsBean> observer, int themeId){
-        /*themeNewsListService.getThemeNewsList(themeId)
-                .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(subscriber);*/
+
         RxHelper.shiftSchedulers(themeNewsListService.getThemeNewsList(themeId));
     }
 
+    /**获取文章详情*/
     public void getArticleDetail(Observer<ArticleDetailBean> observer, String id){
-        /*articleDetailService.getArticleDetail(id)
-                .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(subscriber);*/
+
         RxHelper.shiftSchedulers(articleDetailService.getArticleDetail(id))
                 .subscribe(observer);
     }

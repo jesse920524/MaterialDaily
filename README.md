@@ -14,31 +14,19 @@ MaterialDaily提供了知乎日报,豆瓣一刻,果壳精选的每日文章聚�
 
 本项目采用的架构: [Google Android Architecture Blueprints [beta]](https://github.com/googlesamples/android-architecture)'s todo-mvp.
 
-使用的开源项目:
+使用的开源项目:  
 	[ButterKnife](https://github.com/JakeWharton/butterknife)  
-	
 	[Retrofit](https://github.com/square/retrofit)  
-	
 	[RxJava](https://github.com/ReactiveX/RxJava)  
-	
 	[RxBinding](https://github.com/JakeWharton/RxBinding)  
-	
 	[Gson](https://github.com/google/gson)  
-	
 	[Glide](https://github.com/bumptech/glide)  
-	
 	[Glide-Transformations](https://github.com/wasabeef/glide-transformations)  
-	
 	[BaseRecyclerViewAdapterHelper](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)  
-	
 	[GreenDAO](https://github.com/greenrobot/greenDAO)  
-	
 	[EventBus](https://github.com/greenrobot/EventBus)  
-	
 	[PhotoView](https://github.com/chrisbanes/PhotoView)  
-	
 	[PermissionGen](https://github.com/lovedise/PermissionGen)  
-	
 	[Ahbottomnavigation](https://github.com/aurelhubert/ahbottomnavigation)  
 	
 ## ScreenShots

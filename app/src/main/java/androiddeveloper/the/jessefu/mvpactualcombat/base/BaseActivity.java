@@ -9,6 +9,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 
+import com.squareup.leakcanary.RefWatcher;
+
 /**
  * Created by Jesse Fu on 2017/2/12.
  */
@@ -21,12 +23,17 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private FragmentManager mFragmentManager;
 
+    private RefWatcher mRefWatcher;
+
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//keep screen portrait
 
         mContext = getActivityContext();
+
+        mRefWatcher = BaseApplication.getRefWatcher(this.getActivityContext());
+        mRefWatcher.watch(this);
     }
 
     /**Activity.this*/

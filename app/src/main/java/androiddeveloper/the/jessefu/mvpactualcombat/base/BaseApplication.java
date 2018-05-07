@@ -6,6 +6,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
+
 import org.greenrobot.greendao.database.Database;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.model.latestNews.DaoMaster;
@@ -23,7 +26,7 @@ public class BaseApplication extends Application {
 
     private static Toast mToast;
 
-//    private static RefWatcher mRefWatcher;
+    private static RefWatcher mRefWatcher;
 
 
 
@@ -33,15 +36,16 @@ public class BaseApplication extends Application {
         mContext = getApplicationContext();
 
         initGreenDao();
-//        initLeakCanary();
+        initLeakCanary();
     }
 
-//    private void initLeakCanary() {
-//        if(LeakCanary.isInAnalyzerProcess(this)){
-//            return;
-//        }
-//        mRefWatcher = LeakCanary.install(this);
-//    }
+    private void initLeakCanary() {
+        if(LeakCanary.isInAnalyzerProcess(this)){
+            return;
+        }
+        mRefWatcher = LeakCanary.install(this);
+    }
+
     private void initGreenDao() {
         try {
             DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(this, "news-db");
@@ -92,7 +96,7 @@ public class BaseApplication extends Application {
         }
     }
 
-    /*public static RefWatcher getRefWatcher(Context context){
+    public static RefWatcher getRefWatcher(Context context){
         return mRefWatcher;
-    }*/
+    }
 }

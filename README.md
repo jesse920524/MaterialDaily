@@ -17,7 +17,7 @@ MaterialDaily提供了知乎日报,豆瓣一刻,果壳精选的每日文章聚�
 使用的开源项目:  
 	[ButterKnife](https://github.com/JakeWharton/butterknife)  
 	[Retrofit](https://github.com/square/retrofit)  
-	[RxJava](https://github.com/ReactiveX/RxJava)  
+	[RxJava2](https://github.com/ReactiveX/RxJava)  
 	[RxBinding](https://github.com/JakeWharton/RxBinding)  
 	[Gson](https://github.com/google/gson)  
 	[Glide](https://github.com/bumptech/glide)  
@@ -35,7 +35,7 @@ MaterialDaily提供了知乎日报,豆瓣一刻,果壳精选的每日文章聚�
 
 ## Features
 
-Mvp架构
+MVP架构
 
 无图模式
 

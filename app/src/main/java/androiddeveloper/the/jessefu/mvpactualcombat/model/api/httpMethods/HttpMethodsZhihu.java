@@ -4,8 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.constants.MyConstants;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.articleDetail.ArticleDetailBean;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.latestNews.LatestNewsBean;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.pastNews.PastNewsBean;
+
 import androiddeveloper.the.jessefu.mvpactualcombat.model.api.services.ArticleDetailService;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.api.services.LatestNewsService;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.api.services.PastNewsService;
@@ -69,14 +68,14 @@ public class HttpMethodsZhihu {
     }
 
 
-    /**
-     * 用于获取知乎日报最新文章*/
-    @Deprecated
-    public void getLatestNews(Observer<LatestNewsBean> observer){
-
-        RxHelper.shiftSchedulers(latestNewsService.getLatestNews())
-                .subscribe(observer);
-    }
+//    /**
+//     * 用于获取知乎日报最新文章*/
+//    @Deprecated
+//    public void getLatestNews(Observer<LatestNewsBean> observer){
+//
+//        RxHelper.shiftSchedulers(latestNewsService.getLatestNews())
+//                .subscribe(observer);
+//    }
 
     /**new */
     public void getLatestNews1(Observer<ZHLatestNewsBean> observer){
@@ -86,12 +85,12 @@ public class HttpMethodsZhihu {
 
     }
 
-    /**用于获取知乎日报往期文章*/
-    @Deprecated
-    public void getPastNews(Observer<PastNewsBean> observer, String date){
-        RxHelper.shiftSchedulers(pastNewsService.getPastNews(date))
-                .subscribe(observer);
-    }
+//    /**用于获取知乎日报往期文章*/
+//    @Deprecated
+//    public void getPastNews(Observer<PastNewsBean> observer, String date){
+//        RxHelper.shiftSchedulers(pastNewsService.getPastNews(date))
+//                .subscribe(observer);
+//    }
 
     public void getPastNews1(Observer<ZHPastNewsBean> observer, String date){
        RxHelper.shiftSchedulers(pastNewsService.getPastNews1(date))

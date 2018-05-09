@@ -6,7 +6,7 @@ import java.util.List;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BasePresenter;
 import androiddeveloper.the.jessefu.mvpactualcombat.base.BaseView;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.latestNews.LatestNewsStoryEntity;
+
 import androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews.ZHNewsStoryEntity;
 
 /**

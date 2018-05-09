@@ -1,6 +1,6 @@
 package androiddeveloper.the.jessefu.mvpactualcombat.model.api.services;
 
-import androiddeveloper.the.jessefu.mvpactualcombat.model.pastNews.PastNewsBean;
+
 import androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews.ZHPastNewsBean;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -14,9 +14,9 @@ import retrofit2.http.Path;
  */
 
 public interface PastNewsService {
-    @Deprecated
-    @GET("api/4/news/before/{date}")
-    Observable<PastNewsBean> getPastNews(@Path("date") String date);
+//    @Deprecated
+//    @GET("api/4/news/before/{date}")
+//    Observable<PastNewsBean> getPastNews(@Path("date") String date);
 
     @GET("api/4/news/before/{date}")
     Observable<ZHPastNewsBean> getPastNews1(@Path("date") String date);

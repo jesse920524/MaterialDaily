@@ -2,8 +2,6 @@ package androiddeveloper.the.jessefu.mvpactualcombat.model.zhihuNews;
 
 import java.util.List;
 
-import androiddeveloper.the.jessefu.mvpactualcombat.model.pastNews.PastNewsModelImpl;
-
 /**
  * Created by Jesse Fu on 2017-04-16.
  * 为了实现今日新闻列表页上拉加载更多,

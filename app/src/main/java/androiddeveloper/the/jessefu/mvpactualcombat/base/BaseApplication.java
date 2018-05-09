@@ -11,8 +11,9 @@ import com.squareup.leakcanary.RefWatcher;
 
 import org.greenrobot.greendao.database.Database;
 
-import androiddeveloper.the.jessefu.mvpactualcombat.model.latestNews.DaoMaster;
-import androiddeveloper.the.jessefu.mvpactualcombat.model.latestNews.DaoSession;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreArticle.DaoMaster;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.restoreArticle.DaoSession;
+
 
 /**
  * Created by Jesse Fu on 2017/2/12.

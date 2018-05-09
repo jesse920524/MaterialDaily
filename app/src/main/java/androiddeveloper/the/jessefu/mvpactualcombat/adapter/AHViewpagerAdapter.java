@@ -11,7 +11,6 @@ import java.util.List;
 import androiddeveloper.the.jessefu.mvpactualcombat.biz.guokrNews.GuokrNewsFragment;
 import androiddeveloper.the.jessefu.mvpactualcombat.biz.lastestNews.LatestNewsFragment;
 import androiddeveloper.the.jessefu.mvpactualcombat.biz.oneMoment.OneMomentFragment;
-import androiddeveloper.the.jessefu.mvpactualcombat.biz.pastNews.PastNewsFragment;
 
 /**
  * Created by Jesse Fu on 2017/2/19.

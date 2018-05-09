@@ -15,14 +15,13 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.jude.swipbackhelper.SwipeBackHelper;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import androiddeveloper.the.jessefu.mvpactualcombat.R;
 import androiddeveloper.the.jessefu.mvpactualcombat.R2;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import kr.co.namee.permissiongen.PermissionFail;
-import kr.co.namee.permissiongen.PermissionGen;
-import kr.co.namee.permissiongen.PermissionSuccess;
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by Jesse Fu on 2017/3/9 0009.
@@ -85,6 +84,21 @@ public class GankGirlsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    private void initPermissions(){
+        RxPermissions rxPermissions = new RxPermissions(this);
+        rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) throws Exception {
+                        if (aBoolean){
+                            dialog.dismiss();
+                        }else{
+                            finish();
+                        }
+                    }
+                });
+    }
     private void checkPermission(){
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
             showRequestPermissionAlertDialog();
@@ -92,48 +106,19 @@ public class GankGirlsActivity extends AppCompatActivity {
         }
     }
 
+    private AlertDialog dialog;
     private void showRequestPermissionAlertDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("about permission")
+        dialog = new AlertDialog.Builder(this)
+                .setTitle("about permission")
                 .setIcon(R.mipmap.ic_app_launcher)
                 .setMessage("\n如果您需要把图片下载到本地的功能,\n请允许WRITE_EXTERNAL_STORAGE权限!")
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
                         initPermissions();
                     }
-                }).show();
-    }
-    /**android6.0动态获取权限方法,使用了开源类库permissionGen*/
-    public void initPermissions() {
-        //测试mPermissions权限库
-        PermissionGen.with(GankGirlsActivity.this)
-                .addRequestCode(100)
-                .permissions(
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                        /*Manifest.permission.READ_PHONE_STATE,
-                        Manifest.permission.ACCESS_WIFI_STATE,
-                        Manifest.permission.ACCESS_NETWORK_STATE,
-                        Manifest.permission.ACCESS_WIFI_STATE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS*/
-                ).request();
-        //JPushInterface.requestPermission(FirstActivity.this);
-    }
-    /**
-     * 6.0权限请求结果*/
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
-    }
-
-    @PermissionSuccess(requestCode=100)
-    public void successGetPermission(){
-
-    }
-    @PermissionFail(requestCode=200)
-    public void failGetPermission(){
+                }).create();
+        dialog.show();
     }
 
     @Override

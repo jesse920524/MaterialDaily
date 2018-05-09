@@ -27,10 +27,15 @@ import io.reactivex.functions.Function;
 
 /**
  * Created by Jesse Fu on 2017/3/20 0020.
+ *
+ *
  */
 
 public class RxSaveImg {
 
+    /**根据指定url,将图片下载到本地
+     * @param context
+     * @param url the target url*/
     public static io.reactivex.Observable<Uri> saveImg(final Context context, final String url){
         io.reactivex.Observable<Uri> observable = io.reactivex.Observable.create(new ObservableOnSubscribe<Bitmap>() {
             @Override

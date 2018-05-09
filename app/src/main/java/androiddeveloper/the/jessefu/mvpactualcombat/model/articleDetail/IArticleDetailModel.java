@@ -1,6 +1,6 @@
 package androiddeveloper.the.jessefu.mvpactualcombat.model.articleDetail;
 
-import androiddeveloper.the.jessefu.mvpactualcombat.model.INetModel.INetModel;
+import androiddeveloper.the.jessefu.mvpactualcombat.model.iNetModel.INetModel;
 import androiddeveloper.the.jessefu.mvpactualcombat.model.listener.OnDataLoadedListener;
 
 /**

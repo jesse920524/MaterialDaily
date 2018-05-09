@@ -87,7 +87,6 @@ public class GuokrNewsFragment extends BaseFragment implements GuokrNewsContract
             BaseApplication.showToast("noting to show");
         }
 
-                ;
     }
     private void initViews(View view) {
         mSwiper.setColorSchemeColors(ActivityCompat.getColor(getActivity(), R.color.colorAccent));
